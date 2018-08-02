@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import IndexNav from "../navbars/indexnav"
-import "../../static/css/login.css"
+import "../../static/css/form.css"
 import axios from "axios";
 
 const url = "http://localhost:5000/api/v1/auth/login";
