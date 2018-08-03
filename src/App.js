@@ -16,8 +16,8 @@ class App extends Component {
             <Route exact path="" component={Index} ></Route>
             <Route path="/login" component={Login} ></Route>
             <Route path="/register" component={Register} ></Route>
-            <PrivateRoute path="/admin"> component={AdminDash}></PrivateRoute>
-            <PrivateRoute path="/user"> component={UserDash}></PrivateRoute>
+            <Route path="/admin" component={AdminDash}></Route>
+            <Route path="/user" component={UserDash}></Route>
           </div>
         </Router>
       </div>
