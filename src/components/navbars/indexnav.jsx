@@ -29,7 +29,7 @@ class IndexNav extends Component {
                             <a className="nav-link" href="/login">Log In</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Register</a>
+                            <a className="nav-link" href="/register">Register</a>
                         </li>
                     </ul>
                 </div>
