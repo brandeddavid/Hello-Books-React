@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import IndexNav from "../navbars/indexnav"
 import "../../static/css/forms.css"
 
+const url = "http://localhost:5000/api/v1/auth/register";
 class Register extends Component {
     constructor(props){
         super(props)
@@ -13,6 +14,15 @@ class Register extends Component {
             password: "",
             confirm_password: ""
         }
+    }
+    handleChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+    handleSubmit = (event) => {
+        event.PreventDefault();
+
     }
     render() { 
         return ( 
