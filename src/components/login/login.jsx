@@ -13,7 +13,8 @@ class Login extends Component {
       username: "",
       password: "",
       loggedIn: false,
-      error: null
+      error: null,
+      admin: true
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -51,7 +52,7 @@ class Login extends Component {
 
   render() {
     return (
-      this.state.loggedIn ? <Redirect to="/user" /> :
+      this.state.loggedIn && !this.state.admin ? <Redirect to="/user" /> : this.state.loggedIn && this.state.admin ? <Redirect to="/admin" /> :
       <React.Fragment>
         <IndexNav/>
         <div className="container">
