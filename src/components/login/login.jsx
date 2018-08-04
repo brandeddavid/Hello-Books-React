@@ -30,11 +30,13 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    axios.post(url, payload, axiosConfig).then((res) => {
+    axios.post(url, payload, axiosConfig)
+    .then((res) => {
       this.setState({loggedIn: true})
-      res.status != 200 ? this.setState({error:res.Message}) :
-      console.log("----->", res.status);
-    }).catch((error) => {
+      console.log("----->", res.data.Message);
+      // res.status === 200 ? this.setState({loggedIn: true}) : this.setState({ error: res.data.Message })
+    })
+    .catch((error) => {
       console.log('====\n', error, '\n====');
       this.setState({ error: error.message })
     });
