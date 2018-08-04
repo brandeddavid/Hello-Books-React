@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "../../static/css/index.css"
+import "../../static/css/main.css"
 import IndexNav from "../navbars/indexnav"
 
 class Index extends Component {
