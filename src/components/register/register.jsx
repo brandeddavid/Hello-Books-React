@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import IndexNav from "../navbars/indexnav"
 import "../../static/css/forms.css"
+import axios from "axios"
+import {Redirect} from "react-router-dom"
 
 const url = "http://localhost:5000/api/v1/auth/register";
 class Register extends Component {
@@ -12,8 +14,12 @@ class Register extends Component {
             email: "",
             username: "",
             password: "",
-            confirm_password: ""
-        }
+            confirm_password: "",
+            registered: false,
+            error: null
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleChange = (event) => {
         this.setState({
@@ -21,11 +27,34 @@ class Register extends Component {
         })
     }
     handleSubmit = (event) => {
-        event.PreventDefault();
+        event.preventDefault();
+        let axiosConfig = {
+            header: {
+                "Content-Type": "application/json",
+                AccessControlAllowOrigin: "http://localhost:5000/api/v1/auth/register"
+            } 
+        };
+        let payload = {
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            email: this.state.email,
+            username: this.state.username,
+            password: this.state.password,
+            confirm_password: this.state.confirm_password
+        };
+        axios.post(url, payload, axiosConfig)
+        .then(res => {
+            this.setState({registered: true})
+            console.log("====>", res)
+        })
+        .catch(error => {
+            this.setState({error: error.message})
+        });
 
     }
     render() { 
         return ( 
+            this.state.registered ? <Redirect to="/login"/> :
             <React.Fragment>
                 <IndexNav/>
                 <div className="container">
@@ -33,6 +62,7 @@ class Register extends Component {
                     <div className="col-md-4"/>
                         <div className="col-md-4">
                         <form onSubmit={this.handleSubmit} className="registration-form">
+                            <div>{this.state.error ? this.state.error : ""}</div>
                             <div className="form-group">
                             <label htmlFor="first_name">First Name</label>
                             <input
