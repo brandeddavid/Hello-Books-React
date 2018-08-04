@@ -34,9 +34,9 @@ class Login extends Component {
     };
     axios.post(url, payload, axiosConfig)
     .then((res) => {
+      localStorage.setItem("accessToken", res.data.Token)
       this.setState({loggedIn: true})
-      console.log("----->", res.data.Message);
-      // res.status === 200 ? this.setState({loggedIn: true}) : this.setState({ error: res.data.Message })
+      console.log("----->", res);
     })
     .catch((error) => {
       console.log('====\n', error, '\n====');
