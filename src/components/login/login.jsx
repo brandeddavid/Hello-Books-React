@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import IndexNav from "../navbars/indexnav"
 import "../../static/css/forms.css"
 import axios from "axios";
+import {Redirect} from "react-router-dom"
 
 const url = "http://localhost:5000/api/v1/auth/login";
 class Login extends Component {
@@ -9,15 +10,13 @@ class Login extends Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      loggedIn: false,
+      error: null
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  loginUser = () => {
-    fetch(url);
-  };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -31,8 +30,15 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    axios.post(url, payload, axiosConfig).then(function(res) {
-      console.log("----->", res);
+    axios.post(url, payload, axiosConfig)
+    .then((res) => {
+      this.setState({loggedIn: true})
+      console.log("----->", res.data.Message);
+      // res.status === 200 ? this.setState({loggedIn: true}) : this.setState({ error: res.data.Message })
+    })
+    .catch((error) => {
+      console.log('====\n', error, '\n====');
+      this.setState({ error: error.message })
     });
   };
 
@@ -44,6 +50,7 @@ class Login extends Component {
 
   render() {
     return (
+      this.state.loggedIn ? <Redirect to="/user" /> :
       <React.Fragment>
         <IndexNav/>
         <div className="container">
@@ -51,6 +58,7 @@ class Login extends Component {
             <div className="col-md-4" />
             <div className="col-md-4">
               <form onSubmit={this.handleSubmit} className="login-form">
+                <div>{ this.state.error ? this.state.error : "" }</div>
                 <div className="form-group">
                   <label htmlFor="username">Username</label>
                   <input
