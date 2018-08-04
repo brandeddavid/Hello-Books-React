@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import IndexNav from "../navbars/indexnav"
 import "../../static/css/forms.css"
+import "../../static/css/main.css"
 import axios from "axios"
 import {Redirect} from "react-router-dom"
 
@@ -62,7 +63,7 @@ class Register extends Component {
                     <div className="col-md-4"/>
                         <div className="col-md-4">
                         <form onSubmit={this.handleSubmit} className="registration-form">
-                            <div>{this.state.error ? this.state.error : ""}</div>
+                            <div className="error">{this.state.error ? this.state.error : ""}</div>
                             <div className="form-group">
                             <label htmlFor="first_name">First Name</label>
                             <input
