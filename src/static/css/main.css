@@ -25,4 +25,8 @@ body {
 .error {
     color: red;
 }
+
+.container {
+    margin-top: 50px;
+}
   
