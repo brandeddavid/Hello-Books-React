@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import IndexNav from "../navbars/indexnav"
-import "../../static/css/forms.css"
-import "../../static/css/main.css"
+import IndexNav from "../navbars/indexnav";
+import "../../static/css/forms.css";
+import "../../static/css/main.css";
 import axios from "axios";
-import {Redirect} from "react-router-dom"
+import { Redirect } from "react-router-dom";
 
 const url = "http://localhost:5000/api/v1/auth/login";
 class Login extends Component {
@@ -32,16 +32,16 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    axios.post(url, payload, axiosConfig)
-    .then((res) => {
-      this.setState({loggedIn: true})
-      console.log("----->", res.data.Message);
-      // res.status === 200 ? this.setState({loggedIn: true}) : this.setState({ error: res.data.Message })
-    })
-    .catch((error) => {
-      console.log('====\n', error, '\n====');
-      this.setState({ error: error.message })
-    });
+    axios
+      .post(url, payload, axiosConfig)
+      .then(res => {
+        localStorage.setItem("accessToken", res.data.Token);
+        this.setState({ loggedIn: true });
+        console.log("----->", res.data);
+      })
+      .catch(error => {
+        this.setState({ error: error.message });
+      });
   };
 
   handleChange = event => {
@@ -51,16 +51,21 @@ class Login extends Component {
   };
 
   render() {
-    return (
-      this.state.loggedIn && !this.state.admin ? <Redirect to="/user" /> : this.state.loggedIn && this.state.admin ? <Redirect to="/admin" /> :
+    return this.state.loggedIn && !this.state.admin ? (
+      <Redirect to="/user" />
+    ) : this.state.loggedIn && this.state.admin ? (
+      <Redirect to="/admin" />
+    ) : (
       <React.Fragment>
-        <IndexNav/>
+        <IndexNav />
         <div className="container">
           <div className="row">
             <div className="col-md-4" />
             <div className="col-md-4">
               <form onSubmit={this.handleSubmit} className="login-form">
-                <div className="error">{ this.state.error ? this.state.error : "" }</div>
+                <div className="error">
+                  {this.state.error ? this.state.error : ""}
+                </div>
                 <div className="form-group">
                   <label htmlFor="username">Username</label>
                   <input
