@@ -28,9 +28,6 @@ class Library extends Component {
       })
       .catch(err => {
         console.log({ Error: err });
-      })
-      .then(res => {
-        console.log(res);
       });
   }
   render() {
