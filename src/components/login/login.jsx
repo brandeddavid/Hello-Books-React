@@ -1,11 +1,11 @@
 import React, { Component } from "react";
+import axios from "axios";
+import { Redirect } from "react-router-dom";
 import IndexNav from "../navbars/indexnav";
 import "../../static/css/forms.css";
 import "../../static/css/main.css";
-import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { loginUser } from "../../utils/api";
 
-const url = "http://localhost:5000/api/v1/auth/login";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -13,35 +13,20 @@ class Login extends Component {
       username: "",
       password: "",
       loggedIn: false,
-      error: null,
+      error: {},
       admin: true
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
-
   handleSubmit = event => {
     event.preventDefault();
-    let axiosConfig = {
-      header: {
-        "Content-Type": "application/json",
-        AccessControlAllowOrigin: "http://localhost:5000/api/v1/auth/login"
-      }
-    };
-    let payload = {
-      username: this.state.username,
-      password: this.state.password
-    };
-    axios
-      .post(url, payload, axiosConfig)
-      .then(res => {
-        localStorage.setItem("accessToken", res.data.Token);
+    loginUser(this.state).then(res => {
+      if (res.status === "success") {
         this.setState({ loggedIn: true });
-        console.log("----->", res.data);
-      })
-      .catch(error => {
-        this.setState({ error: error.message });
-      });
+        localStorage.setItem("accessToken", res.accessToken);
+      } else {
+        this.setState({ error: res.error });
+      }
+    });
   };
 
   handleChange = event => {
@@ -63,11 +48,17 @@ class Login extends Component {
             <div className="col-md-4" />
             <div className="col-md-4">
               <form onSubmit={this.handleSubmit} className="login-form">
-                <div className="error">
-                  {this.state.error ? this.state.error : ""}
-                </div>
+                {this.state.error.Message ? (
+                  <div className="error">{this.state.error.Message}</div>
+                ) : (
+                  ""
+                )}
                 <div className="form-group">
                   <label htmlFor="username">Username</label>
+                  <br />
+                  <span className="error">
+                    {this.state.error.username ? this.state.error.username : ""}
+                  </span>
                   <input
                     type="text"
                     className="form-control"
@@ -81,6 +72,10 @@ class Login extends Component {
                 </div>
                 <div className="form-group">
                   <label htmlFor="password">Password</label>
+                  <br />
+                  <span className="error">
+                    {this.state.error.password ? this.state.error.password : ""}
+                  </span>
                   <input
                     type="password"
                     className="form-control"

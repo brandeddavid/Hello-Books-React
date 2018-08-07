@@ -8,7 +8,7 @@ let axiosConfig = {
   }
 };
 
-let registerUser = userData => {
+export const registerUser = userData => {
   let url = `${baseURL}/auth/register`;
   let payload = {
     first_name: userData.first_name,
@@ -18,14 +18,28 @@ let registerUser = userData => {
     password: userData.password,
     confirm_password: userData.confirm_password
   };
-  axios
+  return axios
     .post(url, payload, axiosConfig)
     .then(res => {
-      return { status: "success", data: res.data };
+      return { status: "success", registered: true };
     })
     .catch(error => {
-      return { error: error.message };
+      return { status: "failure", error: error.response.data };
     });
 };
 
-export { registerUser };
+export const loginUser = userData => {
+  let url = `${baseURL}/auth/login`;
+  let payload = {
+    username: userData.username,
+    password: userData.password
+  };
+  return axios
+    .post(url, payload, axiosConfig)
+    .then(res => {
+      return { status: "success", accessToken: res.data.Token };
+    })
+    .catch(error => {
+      return { status: "failure", error: error.response.data };
+    });
+};
