@@ -23,7 +23,6 @@ class Login extends Component {
       if (res.status === "success") {
         this.setState({ loggedIn: true });
         localStorage.setItem("accessToken", res.accessToken);
-        console.log(this.state)
       } else {
         this.setState({ error: res.error });
       }
