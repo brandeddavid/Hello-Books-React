@@ -24,6 +24,22 @@ export const registerUser = userData => {
       return { status: "success", registered: true };
     })
     .catch(error => {
-      return { status:"failure", error: error.response.data };
+      return { status: "failure", error: error.response.data };
+    });
+};
+
+export const loginUser = userData => {
+  let url = `${baseURL}/auth/login`;
+  let payload = {
+    username: userData.username,
+    password: userData.password
+  };
+  return axios
+    .post(url, payload, axiosConfig)
+    .then(res => {
+      return { status: "success", accessToken: res.data.Token };
+    })
+    .catch(error => {
+      return { status: "failure", error: error.response.data };
     });
 };
