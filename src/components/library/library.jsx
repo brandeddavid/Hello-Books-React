@@ -9,9 +9,11 @@ class Library extends Component {
     this.state = {
       library: []
     };
-    this.getBooks = this.getBooks.bind(this);
+  };
+  componentDidMount(){
+    this.getBooks();
   }
-  getBooks() {
+  getBooks = () => {
     let axiosConfig = {
       header: {
         "Content-Type": "application/json",
@@ -21,10 +23,7 @@ class Library extends Component {
     axios
       .get(url, axiosConfig)
       .then(res => {
-        let state = { ...this.state };
-        state.library = res.data.Books;
-        this.setState(state);
-        console.log(this.state);
+        this.setState({library: res.data.Books});
       })
       .catch(err => {
         console.log({ Error: err });
@@ -33,7 +32,6 @@ class Library extends Component {
   render() {
     return (
       <React.Fragment>
-        {this.getBooks()}
         <IndexNav />
         <div className="container">
           <h1>Book Library</h1>
