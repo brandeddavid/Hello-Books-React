@@ -6,6 +6,7 @@ import Register from "./components/register/register";
 import Library from "./components/library/library";
 import AdminDash from "./components/dashboards/admin";
 import ManageBooks from "./components/admin/manageBooks";
+import AddBook from "./components/admin/addBook";
 import UserDash from "./components/dashboards/user";
 import PrivateRoute from "./utils/privateRoutes";
 import history from "./utils/history";
@@ -23,6 +24,7 @@ class App extends Component {
             <PrivateRoute path="/admin" component={AdminDash} />
             <PrivateRoute path="/managebooks" component={ManageBooks} />
             <PrivateRoute path="/user" component={UserDash} />
+            <PrivateRoute path="/addbook" component={AddBook} />
           </div>
         </Router>
       </div>
