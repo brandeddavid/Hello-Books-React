@@ -30,8 +30,9 @@ class Library extends Component {
               <tr>
                 <th>Title</th>
                 <th>Author</th>
-                <th>Publisher</th>
                 <th>ISBN</th>
+                <th>Publisher</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -39,8 +40,9 @@ class Library extends Component {
                 <tr key={book.isbn}>
                   <td>{book.title}</td>
                   <td>{book.author}</td>
-                  <td>{book.publisher}</td>
                   <td>{book.isbn}</td>
+                  <td>{book.publisher}</td>
+                  <td>{book.availability ? "Available": "Not Available"}</td>
                 </tr>
               ))}
             </tbody>
