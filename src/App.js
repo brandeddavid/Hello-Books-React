@@ -5,8 +5,9 @@ import Index from "./components/index/index";
 import Register from "./components/register/register";
 import Library from "./components/library/library";
 import AdminDash from "./components/dashboards/admin";
+import ManageBooks from "./components/admin/manageBooks";
 import UserDash from "./components/dashboards/user";
-import PrivateRoute from "./utils/privateRoutes"
+import PrivateRoute from "./utils/privateRoutes";
 import history from "./utils/history";
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
             <Route path="/register" component={Register} />
             <Route path="/library" component={Library} />
             <PrivateRoute path="/admin" component={AdminDash} />
+            <PrivateRoute path="/managebooks" component={ManageBooks} />
             <PrivateRoute path="/user" component={UserDash} />
           </div>
         </Router>
