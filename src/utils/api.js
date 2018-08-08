@@ -43,3 +43,15 @@ export const loginUser = userData => {
       return { status: "failure", error: error.response.data };
     });
 };
+
+export const fetchBooks = () => {
+  let url = `${baseURL}/books`;
+  return axios
+    .get(url, axiosConfig)
+    .then(res => {
+      return { status: "success", books: res.data.Books };
+    })
+    .catch(error => {
+      return { status: "failure", error: error.response.data };
+    });
+};
