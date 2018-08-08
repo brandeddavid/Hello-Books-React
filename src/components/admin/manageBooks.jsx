@@ -10,7 +10,7 @@ class ManageBooks extends Component {
     };
   }
   componentDidMount() {
-      this.getBooks()
+    this.getBooks();
   }
   getBooks = () => {
     fetchBooks().then(res => {
@@ -23,9 +23,11 @@ class ManageBooks extends Component {
     return (
       <div className="container">
         <div>
-          <button className="btn btn-lg btn-success add-book-btn">
-            Add Book
-          </button>
+          <a href="/addbook">
+            <button className="btn btn-lg btn-success add-book-btn">
+              Add Book
+            </button>
+          </a>
         </div>
         {this.state.error ? <span>{this.state.error.Message}</span> : ""}
         <div className="table-responsive">
@@ -48,7 +50,7 @@ class ManageBooks extends Component {
                   <td>{book.author}</td>
                   <td>{book.isbn}</td>
                   <td>{book.publisher}</td>
-                  <td>{book.availability ? "Available": "Not Available"}</td>
+                  <td>{book.availability ? "Available" : "Not Available"}</td>
                   <td className="text-center">
                     <button className="btn btn-primary">Edit</button>
                   </td>

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseURL = "http://localhost:5000/api/v1";
 let axiosConfig = {
-  header: {
+  headers: {
     "Content-Type": "application/json",
     AccessControlAllowOrigin: "*"
   }
@@ -50,6 +50,32 @@ export const fetchBooks = () => {
     .get(url, axiosConfig)
     .then(res => {
       return { status: "success", books: res.data.Books };
+    })
+    .catch(error => {
+      return { status: "failure", error: error.response.data };
+    });
+};
+
+export const addBook = (bookData, accessToken) => {
+  let url = `${baseURL}/books`;
+  let payload = {
+    title: bookData.title,
+    author: bookData.author,
+    isbn: bookData.isbn,
+    publisher: bookData.publisher,
+    quantity: bookData.quantity
+  };
+  let axiosConfigAuth = {
+    headers: {
+      "Content-Type": "application/json",
+      AccessControlAllowOrigin: "*",
+      Authorization: "Bearer " + accessToken
+    }
+  };
+  return axios
+    .post(url, payload, axiosConfigAuth)
+    .then(res => {
+      return { status: "success", bookAdded: true };
     })
     .catch(error => {
       return { status: "failure", error: error.response.data };
