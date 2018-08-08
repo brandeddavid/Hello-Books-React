@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import IndexNav from "../navbars/indexnav";
 import { fetchBooks } from "../../utils/api";
-class Library extends Component {
+
+class ManageBooks extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,7 +10,7 @@ class Library extends Component {
     };
   }
   componentDidMount() {
-    this.getBooks();
+      this.getBooks()
   }
   getBooks = () => {
     fetchBooks().then(res => {
@@ -21,18 +21,24 @@ class Library extends Component {
   };
   render() {
     return (
-      <React.Fragment>
-        <IndexNav />
-        <div className="container">
-          <h1>Book Library</h1>
-          <table className="table table-striped">
+      <div className="container">
+        <div>
+          <button className="btn btn-lg btn-success add-book-btn">
+            Add Book
+          </button>
+        </div>
+        {this.state.error ? <span>{this.state.error.Message}</span> : ""}
+        <div className="table-responsive">
+          <table className="table table-striped table-hover">
             <thead className="thead-dark">
               <tr>
                 <th>Title</th>
                 <th>Author</th>
                 <th>ISBN</th>
                 <th>Publisher</th>
-                <th>Status</th>
+                <th>Quantity</th>
+                <th />
+                <th />
               </tr>
             </thead>
             <tbody>
@@ -43,14 +49,20 @@ class Library extends Component {
                   <td>{book.isbn}</td>
                   <td>{book.publisher}</td>
                   <td>{book.availability ? "Available": "Not Available"}</td>
+                  <td className="text-center">
+                    <button className="btn btn-primary">Edit</button>
+                  </td>
+                  <td className="text-center">
+                    <button className="btn btn-danger">Delete</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
 
-export default Library;
+export default ManageBooks;

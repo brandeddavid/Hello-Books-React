@@ -20,7 +20,7 @@ class AdminDash extends Component {
                   </div>
                   <div className="panel-body">
                     <h1 className="text-center admin-panel-link">
-                      <a href="#">Manage Books</a>
+                      <a href="/managebooks">Manage Books</a>
                     </h1>
                   </div>
                 </div>
