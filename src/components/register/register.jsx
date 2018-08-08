@@ -6,7 +6,6 @@ import "../../static/css/forms.css";
 import "../../static/css/main.css";
 import { registerUser } from "../../utils/api";
 
-// const url = "http://localhost:5000/api/v1/auth/register";
 class Register extends Component {
   constructor(props) {
     super(props);
