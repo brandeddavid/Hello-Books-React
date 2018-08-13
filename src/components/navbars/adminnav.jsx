@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
-class IndexNav extends Component {
+class AdminNav extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <a className="navbar-brand" href="#">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top index-nav">
+        <a className="navbar-brand" href="/admin">
           Hello Books
         </a>
         <button
@@ -22,18 +22,18 @@ class IndexNav extends Component {
         <div className="collapse navbar-collapse" id="">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
-              <a className="nav-link" href="/">
+              <a className="nav-link" href="/admin">
                 Home <span className="sr-only">(current)</span>
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                About Us
+              <a className="nav-link" href="/managebooks">
+                Manage Books
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/library">
-                Library
+              <a className="nav-link" href="">
+                Manage Users
               </a>
             </li>
           </ul>
@@ -42,13 +42,8 @@ class IndexNav extends Component {
         <div>
           <ul className="nav">
             <li className="nav-item">
-              <a className="nav-link" href="/login">
-                Log In
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/register">
-                Register
+              <a className="nav-link" href="">
+                Log Out
               </a>
             </li>
           </ul>
@@ -58,4 +53,4 @@ class IndexNav extends Component {
   }
 }
 
-export default IndexNav;
+export default AdminNav;

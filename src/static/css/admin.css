@@ -27,10 +27,18 @@
   }
 
   .panel {
-    box-shadow: 0 2px 2px;
+    box-shadow: 0 10px 30px;
   }
   
   .panel-heading {
   
     text-align: center;
+  }
+
+  .admin-container {
+    margin-top: 80px;
+  }
+
+  .add-book-btn {
+    margin-bottom: 10px;
   }

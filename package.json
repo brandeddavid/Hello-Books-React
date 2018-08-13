@@ -12,6 +12,8 @@
     "i": "^0.3.6",
     "npm": "^6.3.0",
     "react": "^16.4.1",
+    "react-bootstrap": "^0.32.1",
+    "react-bootstrap-modal": "^4.1.1",
     "react-dom": "^16.4.1",
     "react-fontawesome": "^1.6.1",
     "react-router-dom": "^4.3.1",
