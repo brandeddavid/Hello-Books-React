@@ -82,8 +82,15 @@ export const addBook = (bookData, accessToken) => {
     });
 };
 
-export const deleteBook = (bookId, accessToken) => {
-  let url = `${baseURL}/book/${bookId}`
+export const editBook = (bookData, bookId, accessToken) => {
+  let url = `${baseURL}/book/${bookId}`;
+  let payload = {
+    title: bookData.title,
+    author: bookData.author,
+    isbn: bookData.isbn,
+    publisher: bookData.publisher,
+    quantity: bookData.quantity
+  };
   let axiosConfigAuth = {
     headers: {
       "Content-Type": "application/json",
@@ -92,11 +99,30 @@ export const deleteBook = (bookId, accessToken) => {
     }
   };
   return axios
-  .delete(url, axiosConfigAuth)
-  .then(res => {
-    return {status: "success", bookDeleted: true}
-  })
-  .catch(error => {
-    return {status: "failure"}
-  })
-}
+    .put(url, payload, axiosConfigAuth)
+    .then(res => {
+      return { status: "success", bookUpdated: true };
+    })
+    .catch(error => {
+      return { status: "failure", error: error.response.data };
+    });
+};
+
+export const deleteBook = (bookId, accessToken) => {
+  let url = `${baseURL}/book/${bookId}`;
+  let axiosConfigAuth = {
+    headers: {
+      "Content-Type": "application/json",
+      AccessControlAllowOrigin: "*",
+      Authorization: "Bearer " + accessToken
+    }
+  };
+  return axios
+    .delete(url, axiosConfigAuth)
+    .then(res => {
+      return { status: "success", bookDeleted: true };
+    })
+    .catch(error => {
+      return { status: "failure" };
+    });
+};
