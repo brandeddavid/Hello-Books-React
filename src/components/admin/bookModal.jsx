@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
-import { addBook } from "../../utils/api";
+import { addBook, editBook } from "../../utils/api";
 
 class BookModel extends Component {
   constructor(props) {
@@ -12,6 +12,7 @@ class BookModel extends Component {
       publisher: this.props.book ? this.props.book.publisher : "",
       quantity: this.props.book ? this.props.book.quantity : "",
       bookAdded: false,
+      bookUpdated: false,
       error: {}
     };
   }
@@ -20,7 +21,7 @@ class BookModel extends Component {
       [event.target.name]: event.target.value
     });
   };
-  handleSubmit = event => {
+  newBook = event => {
     event.preventDefault();
     let accessToken = localStorage.getItem("accessToken");
     addBook(this.state, accessToken).then(res => {
@@ -29,17 +30,32 @@ class BookModel extends Component {
         : this.setState({ error: res.error });
     });
   };
-  updateBook = () => {
-    console.log("Hello")
-  }
+  updateBook = bookId => {
+    // event.preventDefault();
+    // console.log("Book Id", bookId);
+    let accessToken = localStorage.getItem("accessToken");
+    editBook(this.state, bookId, accessToken).then(res => {
+      res.status === "success"
+        ? this.setState({ bookUpdated: res.bookUpdated })
+        : this.setState({ error: res.error });
+    });
+  };
   render() {
-    console.log(this.props.books, "books");
     return (
       <React.Fragment>
-        <Modal.Dialog show={this.props.show} hide={this.props.onHide}>
-          <Modal.Header>Add or Edit Form</Modal.Header>
+        <Modal.Dialog>
+          <Modal.Header>
+            {this.props.book ? "Edit Book Info" : "Add New Book"}
+          </Modal.Header>
           <Modal.Body>
-            <form onSubmit={this.props.book ? this.updateBook : this.handleSubmit} className="add-book-form">
+            <form
+              onSubmit={
+                this.props.book
+                  ? this.updateBook(this.props.book.id)
+                  : this.newBook
+              }
+              className="add-book-form"
+            >
               <div className="error">
                 {this.state.error.Message ? this.state.error.Message : ""}
               </div>
@@ -120,7 +136,7 @@ class BookModel extends Component {
                 />
               </div>
               <button type="submit" className="btn btn-primary">
-                Add Book
+                Save
               </button>
             </form>
           </Modal.Body>

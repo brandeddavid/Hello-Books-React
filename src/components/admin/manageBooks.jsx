@@ -23,9 +23,6 @@ class ManageBooks extends Component {
         : this.setState({ error: res.error });
     });
   };
-  editBook = (event, id) => {
-    console.log("Hello", id);
-  };
 
   renderAddModal = () => {
     this.setState({
