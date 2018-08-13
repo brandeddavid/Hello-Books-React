@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { Button } from "react-bootstrap";
 import { fetchBooks, deleteBook } from "../../utils/api";
 import BookModel from "./bookModal";
-import { Button } from "react-bootstrap";
+import IndexNav from "../navbars/adminnav";
+import "../../static/css/admin.css";
 
 class ManageBooks extends Component {
   constructor(props) {
@@ -60,65 +62,65 @@ class ManageBooks extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div>
-          <Button
-            className="btn btn-lg btn-success add-book-btn"
-            onClick={() => this.renderAddModal()}
-          >
-            Add Book
-          </Button>
-        </div>
-        {this.state.renderModal ? (
-          <BookModel
-            onHide={this.closeModal}
-            book={this.state.currentBook}
-          />
-        ) : null}
-        {this.state.error ? <span>{this.state.error.Message}</span> : ""}
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead className="thead-dark">
-              <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>ISBN</th>
-                <th>Publisher</th>
-                <th>Quantity</th>
-                <th />
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.library.map(book => (
-                <tr key={book.id}>
-                  <td>{book.title}</td>
-                  <td>{book.author}</td>
-                  <td>{book.isbn}</td>
-                  <td>{book.publisher}</td>
-                  <td>{book.quantity}</td>
-                  <td className="text-center">
-                    <button
-                      onClick={() => this.renderEditModal(book)}
-                      className="btn btn-primary"
-                    >
-                      Edit
-                    </button>
-                  </td>
-                  <td className="text-center">
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => this.removeBook(book.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
+      <React.Fragment>
+        <IndexNav />
+        <div className="container admin-container">
+          <div>
+            <Button
+              className="btn btn-lg btn-success add-book-btn"
+              onClick={() => this.renderAddModal()}
+            >
+              Add Book
+            </Button>
+          </div>
+          {this.state.renderModal ? (
+            <BookModel onHide={this.closeModal} book={this.state.currentBook} />
+          ) : null}
+          {this.state.error ? <span>{this.state.error.Message}</span> : ""}
+          <div className="table-responsive">
+            <table className="table table-striped table-hover book-table">
+              <thead className="thead-dark">
+                <tr>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>ISBN</th>
+                  <th>Publisher</th>
+                  <th>Quantity</th>
+                  <th />
+                  <th />
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {this.state.library.map(book => (
+                  <tr key={book.id}>
+                    <td>{book.title}</td>
+                    <td>{book.author}</td>
+                    <td>{book.isbn}</td>
+                    <td>{book.publisher}</td>
+                    <td>{book.quantity}</td>
+                    <td className="text-center">
+                      <button
+                        onClick={() => this.renderEditModal(book)}
+                        className="btn btn-primary"
+                      >
+                        Edit
+                      </button>
+                    </td>
+                    <td className="text-center">
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => this.removeBook(book.id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
