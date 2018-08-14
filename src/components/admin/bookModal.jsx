@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import { addBook, editBook } from "../../utils/api";
 
 class BookModal extends Component {
@@ -43,15 +43,15 @@ class BookModal extends Component {
   render() {
     return (
       <React.Fragment>
-        <Modal.Dialog show={this.props.show} onHide={this.props.toggleModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>{this.props.book ? "Edit Book Info" : "Add New Book"}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
+        <Modal isOpen={this.props.show} toggle={this.props.toggleModal}>
+          <ModalHeader toggle={this.props.toggleModal}>
+            <h4>{this.props.book ? "Edit Book Info" : "Add New Book"}</h4>
+          </ModalHeader>
+          <ModalBody>
             <form
               onSubmit={
                 this.props.book
-                  ? (event) => this.updateBook(event, this.props.book.id)
+                  ? event => this.updateBook(event, this.props.book.id)
                   : this.newBook
               }
               className="add-book-form"
@@ -139,9 +139,8 @@ class BookModal extends Component {
                 Save
               </button>
             </form>
-          </Modal.Body>
-          <Modal.Footer />
-        </Modal.Dialog>
+          </ModalBody>
+        </Modal>
       </React.Fragment>
     );
   }
