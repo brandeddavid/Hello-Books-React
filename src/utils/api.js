@@ -1,5 +1,10 @@
 import axios from "axios";
 
+const errorHandler = error => {
+  const err = error.response ? error.response.data : { Message: error.message };
+  return { status: "failure", error: err };
+};
+
 const baseURL = "http://localhost:5000/api/v1";
 let axiosConfig = {
   headers: {
@@ -38,6 +43,26 @@ export const loginUser = userData => {
     .post(url, payload, axiosConfig)
     .then(res => {
       return { status: "success", accessToken: res.data.Token };
+    })
+    .catch(error => {
+      return { status: "failure", error: error.response.data };
+    });
+};
+
+export const logoutUser = accessToken => {
+  let url = `${baseURL}/auth/logout`;
+  let axiosConfigAuth = {
+    headers: {
+      "Content-Type": "application/json",
+      AccessControlAllowOrigin: "*",
+      Authorization: "Bearer " + accessToken
+    }
+  };
+  return axios
+    .post(url, axiosConfigAuth)
+    .then(res => {
+      console.log("========>", res);
+      return { status: true, loggedOut: true };
     })
     .catch(error => {
       return { status: "failure", error: error.response.data };
@@ -103,9 +128,7 @@ export const editBook = (bookData, bookId, accessToken) => {
     .then(res => {
       return { status: "success", bookUpdated: true };
     })
-    .catch(error => {
-      return { status: "failure", error: error.response.data };
-    });
+    .catch(errorHandler);
 };
 
 export const deleteBook = (bookId, accessToken) => {
