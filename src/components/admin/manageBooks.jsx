@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button } from "react-bootstrap";
+import { Button } from "reactstrap";
 import { fetchBooks, deleteBook } from "../../utils/api";
 import BookModal from "./bookModal";
 import IndexNav from "../navbars/adminnav";
@@ -28,7 +28,8 @@ class ManageBooks extends Component {
 
   renderAddModal = () => {
     this.setState({
-      renderModal: !this.state.renderModal
+      renderModal: !this.state.renderModal,
+      currentBook: null
     });
   };
 
