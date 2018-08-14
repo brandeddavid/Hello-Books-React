@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Router, Route } from "react-router-dom";
 import Login from "./components/login/login";
+import Logout from "./components/logout/logout"
 import Index from "./components/index/index";
 import Register from "./components/register/register";
 import Library from "./components/library/library";
@@ -23,6 +24,7 @@ class App extends Component {
             <PrivateRoute path="/admin" component={AdminDash} />
             <PrivateRoute path="/managebooks" component={ManageBooks} />
             <PrivateRoute path="/user" component={UserDash} />
+            <PrivateRoute path="/logout" component={Logout} />
           </div>
         </Router>
       </div>
