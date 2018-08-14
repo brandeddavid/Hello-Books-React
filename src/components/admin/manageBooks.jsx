@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import { fetchBooks, deleteBook } from "../../utils/api";
-import BookModel from "./bookModal";
+import BookModal from "./bookModal";
 import IndexNav from "../navbars/adminnav";
 import "../../static/css/admin.css";
 
@@ -12,7 +12,7 @@ class ManageBooks extends Component {
       library: [],
       error: {},
       renderModal: false,
-      currentBook: undefined
+      currentBook: null
     };
   }
   componentDidMount() {
@@ -28,13 +28,13 @@ class ManageBooks extends Component {
 
   renderAddModal = () => {
     this.setState({
-      renderModal: true
+      renderModal: !this.state.renderModal
     });
   };
 
   renderEditModal = book => {
     this.setState({
-      renderModal: true,
+      renderModal: !this.state.renderModal,
       currentBook: book
     });
   };
@@ -74,7 +74,12 @@ class ManageBooks extends Component {
             </Button>
           </div>
           {this.state.renderModal ? (
-            <BookModel onHide={this.closeModal} book={this.state.currentBook} />
+            <BookModal
+              onHide={this.closeModal}
+              book={this.state.currentBook}
+              toggleModal={this.renderAddModal}
+              show={this.state.renderModal}
+            />
           ) : null}
           {this.state.error ? <span>{this.state.error.Message}</span> : ""}
           <div className="table-responsive">

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
 import { addBook, editBook } from "../../utils/api";
 
-class BookModel extends Component {
+class BookModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,11 +30,11 @@ class BookModel extends Component {
         : this.setState({ error: res.error });
     });
   };
-  updateBook = bookId => {
-    // event.preventDefault();
+  updateBook = (event, bookId) => {
+    event.preventDefault();
     // console.log("Book Id", bookId);
     let accessToken = localStorage.getItem("accessToken");
-    editBook(this.state, bookId, accessToken).then(res => {
+    return editBook(this.state, bookId, accessToken).then(res => {
       res.status === "success"
         ? this.setState({ bookUpdated: res.bookUpdated })
         : this.setState({ error: res.error });
@@ -43,15 +43,15 @@ class BookModel extends Component {
   render() {
     return (
       <React.Fragment>
-        <Modal.Dialog>
-          <Modal.Header>
-            {this.props.book ? "Edit Book Info" : "Add New Book"}
+        <Modal.Dialog show={this.props.show} onHide={this.props.toggleModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>{this.props.book ? "Edit Book Info" : "Add New Book"}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <form
               onSubmit={
                 this.props.book
-                  ? this.updateBook(this.props.book.id)
+                  ? (event) => this.updateBook(event, this.props.book.id)
                   : this.newBook
               }
               className="add-book-form"
@@ -147,4 +147,4 @@ class BookModel extends Component {
   }
 }
 
-export default BookModel;
+export default BookModal;
