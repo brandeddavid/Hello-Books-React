@@ -8,6 +8,7 @@ class Logout extends Component {
   };
   logout = () => {
     let accessToken = localStorage.getItem("accessToken");
+    console.log("=====>", accessToken)
     localStorage.removeItem("accessToken");
     logoutUser(accessToken).then(res => {
       if (res.status === "success") {

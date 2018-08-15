@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
-import { fetchBooks, deleteBook } from "../../utils/api";
+import { fetchBooks } from "../../utils/api";
 import BookModal from "./bookModal";
+import DeleteBook from "../alerts/deleteBook";
 import IndexNav from "../navbars/adminnav";
 import "../../static/css/admin.css";
 
@@ -12,7 +13,9 @@ class ManageBooks extends Component {
       library: [],
       error: {},
       renderModal: false,
-      currentBook: null
+      currentBook: null,
+      renderDeleteAlert: false,
+      book: null
     };
   }
   componentDidMount() {
@@ -46,19 +49,17 @@ class ManageBooks extends Component {
     });
   };
 
-  removeBook = bookId => {
-    let token = localStorage.getItem("accessToken");
-    deleteBook(bookId, token)
-      .then(res => {
-        if (res.status === "success") {
-          console.log("Success");
-        } else {
-          console.log("Failure");
-        }
-      })
-      .catch(error => {
-        console.log("++++", error);
-      });
+  deleteAlert = book => {
+    this.setState({
+      renderDeleteAlert: true,
+      book: book
+    });
+  };
+
+  toggleDeleteAlert = () => {
+    this.setState({
+      renderDeleteAlert: !this.state.renderDeleteAlert
+    });
   };
 
   render() {
@@ -80,6 +81,13 @@ class ManageBooks extends Component {
               book={this.state.currentBook}
               toggleModal={this.renderAddModal}
               show={this.state.renderModal}
+            />
+          ) : null}
+          {this.state.renderDeleteAlert ? (
+            <DeleteBook
+              book={this.state.book}
+              show={this.state.renderDeleteAlert}
+              toggleDeleteAlert={this.toggleDeleteAlert}
             />
           ) : null}
           {this.state.error ? <span>{this.state.error.Message}</span> : ""}
@@ -115,7 +123,7 @@ class ManageBooks extends Component {
                     <td className="text-center">
                       <button
                         className="btn btn-danger"
-                        onClick={() => this.removeBook(book.id)}
+                        onClick={() => this.deleteAlert(book)}
                       >
                         Delete
                       </button>

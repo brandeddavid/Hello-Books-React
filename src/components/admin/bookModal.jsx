@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Redirect } from "react-router-dom";
 import { addBook, editBook } from "../../utils/api";
 
 class BookModal extends Component {
@@ -41,7 +42,9 @@ class BookModal extends Component {
     });
   };
   render() {
-    return (
+    return this.state.bookAdded || this.state.bookUpdated ? (
+      <Redirect to="/managebooks" />
+    ) : (
       <React.Fragment>
         <Modal isOpen={this.props.show} toggle={this.props.toggleModal}>
           <ModalHeader toggle={this.props.toggleModal}>
