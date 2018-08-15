@@ -145,7 +145,5 @@ export const deleteBook = (bookId, accessToken) => {
     .then(res => {
       return { status: "success", bookDeleted: true };
     })
-    .catch(error => {
-      return { status: "failure" };
-    });
+    .catch(errorHandler);
 };
