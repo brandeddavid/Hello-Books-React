@@ -1,5 +1,11 @@
 body {
     font-family: 'EB Garamond', serif;
+    background: #261447 !important; 
+    color: aliceblue !important;
+  }
+
+  .navbar {
+      background: #847996 !important;
   }
 
 .header{
@@ -25,4 +31,10 @@ body {
 .error {
     color: red;
 }
-  
+
+.modal{
+    color: black;
+}
+ tr:hover {
+     background-color: #847996 !important;
+ }

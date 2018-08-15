@@ -44,53 +44,60 @@ class Login extends Component {
         <IndexNav />
         <div className="container">
           <div className="row">
-            <div className="col-md-4" />
-            <div className="col-md-4">
-              <form onSubmit={this.handleSubmit} className="login-form">
-                {this.state.error.Message ? (
-                  <div className="error">{this.state.error.Message}</div>
-                ) : (
-                  ""
-                )}
-                <div className="form-group">
-                  <label htmlFor="username">Username</label>
-                  <br />
-                  <span className="error">
-                    {this.state.error.username ? this.state.error.username : ""}
-                  </span>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="username"
-                    aria-describedby="emailHelp"
-                    placeholder="Enter username"
-                    onChange={this.handleChange}
-                    name="username"
-                    value={this.state.username}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <br />
-                  <span className="error">
-                    {this.state.error.password ? this.state.error.password : ""}
-                  </span>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="password"
-                    placeholder="Password"
-                    onChange={this.handleChange}
-                    name="password"
-                    value={this.state.password}
-                  />
-                </div>
-                <button type="submit" className="btn btn-primary">
-                  Login
-                </button>
-              </form>
+            <div className="col-md-6 login-left" />
+            <div className="col-md-6">
+              <div className="login-form">
+                <legend>Login</legend>
+                <form onSubmit={this.handleSubmit}>
+                  {this.state.error.Message ? (
+                    <div className="error">{this.state.error.Message}</div>
+                  ) : (
+                    ""
+                  )}
+                  <div className="form-group">
+                    <label htmlFor="username">Username</label>
+                    <br />
+                    <span className="error">
+                      {this.state.error.username
+                        ? this.state.error.username
+                        : ""}
+                    </span>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="username"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter username"
+                      onChange={this.handleChange}
+                      name="username"
+                      value={this.state.username}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <br />
+                    <span className="error">
+                      {this.state.error.password
+                        ? this.state.error.password
+                        : ""}
+                    </span>
+                    <input
+                      type="password"
+                      className="form-control"
+                      id="password"
+                      placeholder="Enter password"
+                      onChange={this.handleChange}
+                      name="password"
+                      value={this.state.password}
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-primary">
+                    Login
+                  </button>
+                </form>
+                <p className="no-account">Don't have an account? <a href="/register">Register</a></p>
+              </div>
             </div>
-            <div className="col-md-4" />
           </div>
         </div>
       </React.Fragment>
