@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Router, Route } from "react-router-dom";
+import { Switch, BrowserRouter as Router, Route, Link } from "react-router-dom";
+import AdminNav from "./components/navbars/adminnav";
+import IndexNav from "./components/navbars/indexnav";
 import Login from "./components/login/login";
-import Logout from "./components/logout/logout"
+import Logout from "./components/logout/logout";
 import Index from "./components/index/index";
 import Register from "./components/register/register";
 import Library from "./components/library/library";
@@ -10,24 +12,50 @@ import ManageBooks from "./components/admin/manageBooks";
 import UserDash from "./components/dashboards/user";
 import PrivateRoute from "./utils/privateRoutes";
 import history from "./utils/history";
+import { fetchBooks } from "./utils/api";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isAdmin: null,
+      library: [],
+      error: {}
+    };
+  }
+  getBooks = () => {
+    fetchBooks().then(res => {
+      res.status === "success"
+        ? this.setState({ library: res.books })
+        : this.setState({ error: res.error });
+    });
+  };
   render() {
     return (
-      <div>
-        <Router history={history}>
-          <div>
-            <Route exact path="" component={Index} />
-            <Route path="/login" component={Login} />
+      <Router>
+        <div>
+          <IndexNav />
+          <AdminNav />
+          <Switch>
+            <Route exact path="/" component={Index} />
+            <Route
+              path="/login"
+              render={props => <Login {...props} {...this.state} />}
+            />
             <Route path="/register" component={Register} />
             <Route path="/library" component={Library} />
             <PrivateRoute path="/admin" component={AdminDash} />
-            <PrivateRoute path="/managebooks" component={ManageBooks} />
+            <PrivateRoute
+              path="/managebooks"
+              component={ManageBooks}
+              {...this.state}
+              getBooks={this.getBooks}
+            />
             <PrivateRoute path="/user" component={UserDash} />
             <PrivateRoute path="/logout" component={Logout} />
-          </div>
-        </Router>
-      </div>
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
