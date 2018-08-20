@@ -20,8 +20,11 @@ class Login extends Component {
     event.preventDefault();
     loginUser(this.state).then(res => {
       if (res.status === "success") {
-        this.setState({ loggedIn: true });
         localStorage.setItem("accessToken", res.accessToken);
+        // set state is an asynchronous function
+        // Pass function to make it deterministic
+        this.setState(() => ({ loggedIn: true }));
+        // () => this.props.history.push("/admin")
       } else {
         this.setState({ error: res.error });
       }
@@ -95,7 +98,9 @@ class Login extends Component {
                     Login
                   </button>
                 </form>
-                <p className="no-account">Don't have an account? <a href="/register">Register</a></p>
+                <p className="no-account">
+                  Don't have an account? <a href="/register">Register</a>
+                </p>
               </div>
             </div>
           </div>
