@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { logoutUser } from "../../utils/api";
 
 class Logout extends Component {
@@ -6,13 +7,22 @@ class Logout extends Component {
     error: {},
     loggedOut: false
   };
+  componentDidMount() {
+    this.logout();
+  }
   logout = () => {
     let accessToken = localStorage.getItem("accessToken");
-    console.log("=====>", accessToken)
+    console.log("=====>", accessToken);
     localStorage.removeItem("accessToken");
     logoutUser(accessToken).then(res => {
       if (res.status === "success") {
-        this.setState({ loggedOut: res.loggedOut });
+        this.setState(
+          () => {
+            loggedOut: res.loggedOut;
+          },
+          () => this.props.history.push("/")
+        );
+        localStorage.removeItem("accessToken");
       } else {
         this.setState({ error: res.error });
       }
@@ -20,11 +30,8 @@ class Logout extends Component {
   };
   render() {
     return (
-      <div className="container">
-        {this.state.loggedOut
-          ? console.log("Logged Out")
-          : console.log("Error =====>", this.state.error)}
-        <p>You have been logged out</p>
+      <div>
+        <Redirect to="/login" />
       </div>
     );
   }
