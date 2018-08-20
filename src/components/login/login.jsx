@@ -13,7 +13,7 @@ class Login extends Component {
       password: "",
       loggedIn: false,
       error: {},
-      admin: true
+      admin: null
     };
   }
   handleSubmit = event => {
@@ -23,7 +23,8 @@ class Login extends Component {
         localStorage.setItem("accessToken", res.accessToken);
         // set state is an asynchronous function
         // Pass function to make it deterministic
-        this.setState(() => ({ loggedIn: true }));
+        console.log(res)
+        this.setState(() => ({ loggedIn: true, admin: res.user.is_admin }));
         // () => this.props.history.push("/admin")
       } else {
         this.setState({ error: res.error });
