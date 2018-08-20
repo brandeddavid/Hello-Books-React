@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Link} from "react-router-dom";
 import "../../static/css/admin.css";
 import IndexNav from "../navbars/adminnav";
 
@@ -24,7 +25,7 @@ class AdminDash extends Component {
                     </div>
                     <div className="panel-body">
                       <h1 className="text-center admin-panel-link">
-                        <a href="/managebooks">Manage Books</a>
+                        <Link to="/managebooks">Manage Books</Link>
                       </h1>
                     </div>
                   </div>
@@ -40,7 +41,7 @@ class AdminDash extends Component {
                     </div>
                     <div className="panel-body">
                       <h1 className="text-center admin-panel-link">
-                        <a href="#">Manage Users</a>
+                        <Link to="/managebooks">Manage Users</Link>
                       </h1>
                     </div>
                   </div>

@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 class AdminNav extends Component {
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top index-nav">
-        <a className="navbar-brand" href="/admin">
+        <Link className="navbar-brand" to="/admin">
           Hello Books
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -22,19 +23,19 @@ class AdminNav extends Component {
         <div className="collapse navbar-collapse" id="">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
-              <a className="nav-link" href="/admin">
+              <Link className="nav-link" to="/admin">
                 Home <span className="sr-only">(current)</span>
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/managebooks">
+              <Link className="nav-link" to="/managebooks">
                 Manage Books
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="">
+              <Link className="nav-link" to="">
                 Manage Users
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -42,9 +43,9 @@ class AdminNav extends Component {
         <div>
           <ul className="nav">
             <li className="nav-item">
-              <a className="nav-link" href="/logout">
+              <Link className="nav-link" to="/logout">
                 Log Out
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

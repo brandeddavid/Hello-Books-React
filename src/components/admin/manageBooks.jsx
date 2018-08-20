@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
-import { fetchBooks } from "../../utils/api";
 import BookModal from "./bookModal";
 import DeleteBook from "../alerts/deleteBook";
 import IndexNav from "../navbars/adminnav";
@@ -10,7 +9,6 @@ class ManageBooks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      library: [],
       error: {},
       renderModal: false,
       currentBook: null,
@@ -19,15 +17,8 @@ class ManageBooks extends Component {
     };
   }
   componentDidMount() {
-    this.getBooks();
+    this.props.getBooks();
   }
-  getBooks = () => {
-    fetchBooks().then(res => {
-      res.status === "success"
-        ? this.setState({ library: res.books })
-        : this.setState({ error: res.error });
-    });
-  };
 
   renderAddModal = () => {
     this.setState({
@@ -105,7 +96,7 @@ class ManageBooks extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.library.map(book => (
+                {this.props.library.map(book => (
                   <tr key={book.id}>
                     <td>{book.title}</td>
                     <td>{book.author}</td>

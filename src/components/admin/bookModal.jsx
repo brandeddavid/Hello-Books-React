@@ -33,7 +33,6 @@ class BookModal extends Component {
   };
   updateBook = (event, bookId) => {
     event.preventDefault();
-    // console.log("Book Id", bookId);
     let accessToken = localStorage.getItem("accessToken");
     return editBook(this.state, bookId, accessToken).then(res => {
       res.status === "success"
