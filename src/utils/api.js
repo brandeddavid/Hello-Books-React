@@ -130,7 +130,7 @@ export const editBook = (bookData, bookId, accessToken) => {
   return axios
     .put(url, payload, axiosConfigAuth)
     .then(res => {
-      return { status: "success", bookUpdated: true };
+      return { status: "success", bookUpdated: true, book: res.data.Book };
     })
     .catch(errorHandler);
 };

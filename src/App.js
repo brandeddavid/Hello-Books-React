@@ -20,8 +20,7 @@ class App extends Component {
     this.state = {
       isAdmin: null,
       library: [],
-      bookAdded: false,
-      bookUpdated: false,
+      renderModal: false,
       error: {}
     };
   }
@@ -33,28 +32,37 @@ class App extends Component {
         : this.setState({ error: res.error });
     });
   };
+
+  toggleModal = () => {
+    this.setState({ renderModal: !this.state.renderModal });
+  };
+
   newBook = (event, bookData) => {
     event.preventDefault();
-    console.log("=====>", bookData);
     let accessToken = localStorage.getItem("accessToken");
     addBook(bookData, accessToken).then(res => {
       res.status === "success"
         ? this.setState(() => ({
-            bookAdded: true,
-            library: [...this.state.library, res.book]
+            library: [...this.state.library, res.book],
+            renderModal: false
           }))
         : this.setState(() => ({ error: res.error }));
     });
   };
+
   updateBook = (event, bookId, bookData) => {
     event.preventDefault();
     let accessToken = localStorage.getItem("accessToken");
     return editBook(bookData, bookId, accessToken).then(res => {
       res.status === "success"
-        ? this.setState({ bookUpdated: res.bookUpdated })
-        : this.setState({ error: res.error });
+        ? this.setState(() => ({
+            library: [...this.state.library, res.book],
+            renderModal: false
+          }))
+        : this.setState(() => ({ error: res.error }));
     });
   };
+
   render() {
     return (
       <Router>
@@ -80,10 +88,9 @@ class App extends Component {
               component={ManageBooks}
               {...this.state}
               getBooks={this.getBooks}
+              toggleModal={this.toggleModal}
               newBook={this.newBook}
-              bookAdded={this.state.bookAdded}
               updateBook={this.updateBook}
-              bookUpdated={this.state.bookUpdated}
               error={this.state.error}
             />
             <PrivateRoute path="/user" component={UserDash} />
