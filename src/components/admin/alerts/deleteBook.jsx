@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { deleteBook } from "../../utils/api";
+import { deleteBook } from "../../../utils/api";
 
 class DeleteBook extends Component {
   constructor(props) {

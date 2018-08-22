@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Button } from "reactstrap";
 import BookModal from "./bookModal";
 import DeleteBook from "../alerts/deleteBook";
-import IndexNav from "../navbars/adminnav";
-import "../../static/css/admin.css";
+import IndexNav from "../../navbars/adminnav";
+import "../../../static/css/admin.css";
 
 class ManageBooks extends Component {
   constructor(props) {

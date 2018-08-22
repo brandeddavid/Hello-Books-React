@@ -3,8 +3,8 @@ import { Icon } from "react-icons-kit";
 import { book } from "react-icons-kit/icomoon/book";
 import { users } from "react-icons-kit/icomoon/users";
 import { Link } from "react-router-dom";
-import "../../static/css/admin.css";
-import IndexNav from "../navbars/adminnav";
+import "../../../static/css/admin.css";
+import IndexNav from "../../navbars/adminnav";
 
 class AdminDash extends Component {
   state = {};
