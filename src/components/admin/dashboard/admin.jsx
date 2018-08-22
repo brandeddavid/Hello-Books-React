@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { Icon } from "react-icons-kit";
 import { book } from "react-icons-kit/icomoon/book";
 import { users } from "react-icons-kit/icomoon/users";
@@ -9,7 +10,7 @@ import IndexNav from "../../navbars/adminnav";
 class AdminDash extends Component {
   state = {};
   render() {
-    return (
+    return this.props.isAdmin ? (
       <React.Fragment>
         <IndexNav />
         <div className="admin-body">
@@ -55,7 +56,7 @@ class AdminDash extends Component {
           </div>
         </div>
       </React.Fragment>
-    );
+    ) : <Redirect to="/login" />
   }
 }
 
