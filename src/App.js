@@ -24,6 +24,7 @@ class App extends Component {
       error: {}
     };
   }
+
   getBooks = () => {
     fetchBooks().then(res => {
       res.status === "success"
@@ -37,7 +38,10 @@ class App extends Component {
     let accessToken = localStorage.getItem("accessToken");
     addBook(bookData, accessToken).then(res => {
       res.status === "success"
-        ? this.setState(() => ({ bookAdded: true, library: [...this.state.library, res.book] }))
+        ? this.setState(() => ({
+            bookAdded: true,
+            library: [...this.state.library, res.book]
+          }))
         : this.setState(() => ({ error: res.error }));
     });
   };
@@ -54,7 +58,12 @@ class App extends Component {
               render={props => <Login {...props} {...this.state} />}
             />
             <Route path="/register" component={Register} />
-            <Route path="/library" component={Library} />
+            <Route
+              path="/library"
+              render={props => (
+                <Library {...props} {...this.state} getBooks={this.getBooks} />
+              )}
+            />
             <PrivateRoute path="/admin" component={AdminDash} />
             <PrivateRoute
               path="/managebooks"

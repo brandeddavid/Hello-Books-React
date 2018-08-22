@@ -2,23 +2,9 @@ import React, { Component } from "react";
 import IndexNav from "../navbars/indexnav";
 import { fetchBooks } from "../../utils/api";
 class Library extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      library: [],
-      error: {}
-    };
-  }
   componentDidMount() {
-    this.getBooks();
+    this.props.getBooks();
   }
-  getBooks = () => {
-    fetchBooks().then(res => {
-      res.status === "success"
-        ? this.setState({ library: res.books })
-        : this.setState({ error: res.error });
-    });
-  };
   render() {
     return (
       <React.Fragment>
@@ -36,13 +22,13 @@ class Library extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.library.map(book => (
+              {this.props.library.map(book => (
                 <tr key={book.isbn}>
                   <td>{book.title}</td>
                   <td>{book.author}</td>
                   <td>{book.isbn}</td>
                   <td>{book.publisher}</td>
-                  <td>{book.availability ? "Available": "Not Available"}</td>
+                  <td>{book.availability ? "Available" : "Not Available"}</td>
                 </tr>
               ))}
             </tbody>
