@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
-import { Redirect } from "react-router-dom";
 
 class BookModal extends Component {
   constructor(props) {
@@ -10,8 +9,7 @@ class BookModal extends Component {
       author: this.props.book ? this.props.book.author : "",
       isbn: this.props.book ? this.props.book.isbn : "",
       publisher: this.props.book ? this.props.book.publisher : "",
-      quantity: this.props.book ? this.props.book.quantity : "",
-      bookUpdated: false,
+      quantity: this.props.book ? this.props.book.quantity : ""
     };
   }
   handleChange = event => {
@@ -20,9 +18,7 @@ class BookModal extends Component {
     });
   };
   render() {
-    return this.props.bookAdded || this.props.bookUpdated ? (
-      <Redirect to="/managebooks" />
-    ) : (
+    return (
       <React.Fragment>
         <Modal isOpen={this.props.show} toggle={this.props.toggleModal}>
           <ModalHeader toggle={this.props.toggleModal}>
@@ -32,7 +28,12 @@ class BookModal extends Component {
             <form
               onSubmit={
                 this.props.book
-                  ? event => this.props.updateBook(event, this.props.book.id, this.state)
+                  ? event =>
+                      this.props.updateBook(
+                        event,
+                        this.props.book.id,
+                        this.state
+                      )
                   : event => this.props.newBook(event, this.state)
               }
               className="add-book-form"
