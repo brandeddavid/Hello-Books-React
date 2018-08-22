@@ -16,12 +16,9 @@ class Logout extends Component {
     localStorage.removeItem("accessToken");
     logoutUser(accessToken).then(res => {
       if (res.status === "success") {
-        this.setState(
-          () => {
-            loggedOut: res.loggedOut;
-          },
-          () => this.props.history.push("/")
-        );
+        this.setState(() => ({
+          loggedOut: res.loggedOut
+        }));
         localStorage.removeItem("accessToken");
       } else {
         this.setState({ error: res.error });
