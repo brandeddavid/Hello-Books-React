@@ -3,33 +3,18 @@ import { Redirect } from "react-router-dom";
 import IndexNav from "../../navbars/indexnav";
 import "../../../static/css/forms.css";
 import "../../../static/css/main.css";
-import { loginUser } from "../../../utils/api";
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
-      password: "",
-      loggedIn: false,
-      error: {},
-      admin: null
+      password: ""
     };
   }
   handleSubmit = event => {
     event.preventDefault();
-    loginUser(this.state).then(res => {
-      if (res.status === "success") {
-        localStorage.setItem("accessToken", res.accessToken);
-        // set state is an asynchronous function
-        // Pass function to make it deterministic
-        console.log(res)
-        this.setState(() => ({ loggedIn: true, admin: res.user.is_admin }));
-        // () => this.props.history.push("/admin")
-      } else {
-        this.setState({ error: res.error });
-      }
-    });
+    this.props.signIn(this.state);
   };
 
   handleChange = event => {
@@ -39,9 +24,9 @@ class Login extends Component {
   };
 
   render() {
-    return this.state.loggedIn && !this.state.admin ? (
+    return this.props.loggedIn && !this.props.isAdmin ? (
       <Redirect to="/user" />
-    ) : this.state.loggedIn && this.state.admin ? (
+    ) : this.props.loggedIn && this.props.isAdmin ? (
       <Redirect to="/admin" />
     ) : (
       <React.Fragment>
@@ -53,8 +38,8 @@ class Login extends Component {
               <div className="login-form">
                 <legend>Login</legend>
                 <form onSubmit={this.handleSubmit}>
-                  {this.state.error.Message ? (
-                    <div className="error">{this.state.error.Message}</div>
+                  {this.props.error.Message ? (
+                    <div className="error">{this.props.error.Message}</div>
                   ) : (
                     ""
                   )}
@@ -62,8 +47,8 @@ class Login extends Component {
                     <label htmlFor="username">Username</label>
                     <br />
                     <span className="error">
-                      {this.state.error.username
-                        ? this.state.error.username
+                      {this.props.error.username
+                        ? this.props.error.username
                         : ""}
                     </span>
                     <input
@@ -81,8 +66,8 @@ class Login extends Component {
                     <label htmlFor="password">Password</label>
                     <br />
                     <span className="error">
-                      {this.state.error.password
-                        ? this.state.error.password
+                      {this.props.error.password
+                        ? this.props.error.password
                         : ""}
                     </span>
                     <input

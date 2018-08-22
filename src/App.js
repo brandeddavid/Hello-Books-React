@@ -12,18 +12,32 @@ import ManageBooks from "./components/admin/managebooks/manageBooks";
 import UserDash from "./components/user/dashboard/user";
 import PrivateRoute from "./utils/privateRoutes";
 import history from "./utils/history";
-import { fetchBooks, addBook, editBook } from "./utils/api";
+import { fetchBooks, addBook, editBook, loginUser } from "./utils/api";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loggedIn: false,
       isAdmin: null,
       library: [],
       renderModal: false,
       error: {}
     };
   }
+
+  signIn = loginData => {
+    loginUser(loginData).then(res => {
+      if (res.status === "success") {
+        localStorage.setItem("accessToken", res.accessToken);
+        // set state is an asynchronous function
+        // Pass function to make it deterministic
+        this.setState(() => ({ loggedIn: true, isAdmin: res.user.is_admin }));
+      } else {
+        this.setState(() => ({ error: res.error }));
+      }
+    });
+  };
 
   getBooks = () => {
     fetchBooks().then(res => {
@@ -73,7 +87,9 @@ class App extends Component {
             <Route exact path="/" component={Index} />
             <Route
               path="/login"
-              render={props => <Login {...props} {...this.state} />}
+              render={props => (
+                <Login {...props} {...this.state} signIn={this.signIn} />
+              )}
             />
             <Route path="/register" component={Register} />
             <Route
