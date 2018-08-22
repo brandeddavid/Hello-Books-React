@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import IndexNav from "../navbars/indexnav";
-import "../../static/css/forms.css";
-import "../../static/css/main.css";
-import { registerUser } from "../../utils/api";
+import IndexNav from "../../navbars/indexnav";
+import "../../../static/css/forms.css";
+import "../../../static/css/main.css";
+import { registerUser } from "../../../utils/api";
 
 class Register extends Component {
   constructor(props) {
