@@ -12,27 +12,25 @@ class BookModal extends Component {
       isbn: this.props.book ? this.props.book.isbn : "",
       publisher: this.props.book ? this.props.book.publisher : "",
       quantity: this.props.book ? this.props.book.quantity : "",
-      bookAdded: false,
+      bookAdded: null,
       bookUpdated: false,
       error: {}
     };
+  }
+  componentDidMount() {
+    this.setState(prevState => ({
+      bookAdded: this.props.bookAdded,
+      error: this.props.error
+    }));
   }
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
   };
-  newBook = event => {
-    event.preventDefault();
-    let accessToken = localStorage.getItem("accessToken");
-    addBook(this.state, accessToken).then(res => {
-      res.status === "success"
-        ? this.setState({ bookAdded: res.bookAdded })
-        : this.setState({ error: res.error });
-    });
-  };
   updateBook = (event, bookId) => {
     event.preventDefault();
+    console.log("=======>", this.props.library);
     let accessToken = localStorage.getItem("accessToken");
     return editBook(this.state, bookId, accessToken).then(res => {
       res.status === "success"
@@ -41,20 +39,20 @@ class BookModal extends Component {
     });
   };
   render() {
-    return this.state.bookAdded || this.state.bookUpdated ? (
+    return this.props.bookAdded || this.props.bookUpdated ? (
       <Redirect to="/managebooks" />
     ) : (
       <React.Fragment>
         <Modal isOpen={this.props.show} toggle={this.props.toggleModal}>
           <ModalHeader toggle={this.props.toggleModal}>
-            <h4>{this.props.book ? "Edit Book Info" : "Add New Book"}</h4>
+            <div>{this.props.book ? "Edit Book Info" : "Add New Book"}</div>
           </ModalHeader>
           <ModalBody>
             <form
               onSubmit={
                 this.props.book
                   ? event => this.updateBook(event, this.props.book.id)
-                  : this.newBook
+                  : event => this.props.newBook(event, this.state)
               }
               className="add-book-form"
             >

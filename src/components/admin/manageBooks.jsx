@@ -72,6 +72,10 @@ class ManageBooks extends Component {
               book={this.state.currentBook}
               toggleModal={this.renderAddModal}
               show={this.state.renderModal}
+              library={this.props.library}
+              newBook={this.props.newBook}
+              bookAdded={this.props.bookAdded}
+              error={this.props.error}
             />
           ) : null}
           {this.state.renderDeleteAlert ? (
