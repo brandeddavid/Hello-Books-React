@@ -14,14 +14,7 @@ class BookModal extends Component {
       quantity: this.props.book ? this.props.book.quantity : "",
       bookAdded: null,
       bookUpdated: false,
-      error: {}
     };
-  }
-  componentDidMount() {
-    this.setState(prevState => ({
-      bookAdded: this.props.bookAdded,
-      error: this.props.error
-    }));
   }
   handleChange = event => {
     this.setState({
@@ -57,12 +50,12 @@ class BookModal extends Component {
               className="add-book-form"
             >
               <div className="error">
-                {this.state.error.Message ? this.state.error.Message : ""}
+                {this.props.error.Message ? this.props.error.Message : ""}
               </div>
               <div className="form-group">
                 <label htmlFor="title">Title</label>
                 <div className="error">
-                  {this.state.error.title ? this.state.error.title : ""}
+                  {this.props.error.title ? this.props.error.title : ""}
                 </div>
                 <input
                   type="text"
@@ -77,7 +70,7 @@ class BookModal extends Component {
               <div className="form-group">
                 <label htmlFor="author">Author</label>
                 <div className="error">
-                  {this.state.error.author ? this.state.error.author : ""}
+                  {this.props.error.author ? this.props.error.author : ""}
                 </div>
                 <input
                   type="text"
@@ -92,7 +85,7 @@ class BookModal extends Component {
               <div className="form-group">
                 <label htmlFor="isbn">ISBN</label>
                 <div className="error">
-                  {this.state.error.isbn ? this.state.error.isbn : ""}
+                  {this.props.error.isbn ? this.props.error.isbn : ""}
                 </div>
                 <input
                   type="text"
@@ -107,7 +100,7 @@ class BookModal extends Component {
               <div className="form-group">
                 <label htmlFor="publisher">Publisher</label>
                 <div className="error">
-                  {this.state.error.publisher ? this.state.error.publisher : ""}
+                  {this.props.error.publisher ? this.props.error.publisher : ""}
                 </div>
                 <input
                   type="text"
@@ -122,7 +115,7 @@ class BookModal extends Component {
               <div className="form-group">
                 <label htmlFor="quantity">Quantity</label>
                 <div className="error">
-                  {this.state.error.quantity ? this.state.error.quantity : ""}
+                  {this.props.error.quantity ? this.props.error.quantity : ""}
                 </div>
                 <input
                   type="number"
