@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { logoutUser } from "../../utils/api";
+import { logoutUser } from "../../../utils/api";
 
 class Logout extends Component {
   state = {
