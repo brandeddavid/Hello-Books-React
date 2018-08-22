@@ -12,7 +12,7 @@ import ManageBooks from "./components/admin/manageBooks";
 import UserDash from "./components/dashboards/user";
 import PrivateRoute from "./utils/privateRoutes";
 import history from "./utils/history";
-import { fetchBooks, addBook } from "./utils/api";
+import { fetchBooks, addBook, editBook } from "./utils/api";
 
 class App extends Component {
   constructor(props) {
@@ -21,6 +21,7 @@ class App extends Component {
       isAdmin: null,
       library: [],
       bookAdded: false,
+      bookUpdated: false,
       error: {}
     };
   }
@@ -43,6 +44,15 @@ class App extends Component {
             library: [...this.state.library, res.book]
           }))
         : this.setState(() => ({ error: res.error }));
+    });
+  };
+  updateBook = (event, bookId, bookData) => {
+    event.preventDefault();
+    let accessToken = localStorage.getItem("accessToken");
+    return editBook(bookData, bookId, accessToken).then(res => {
+      res.status === "success"
+        ? this.setState({ bookUpdated: res.bookUpdated })
+        : this.setState({ error: res.error });
     });
   };
   render() {
@@ -72,6 +82,8 @@ class App extends Component {
               getBooks={this.getBooks}
               newBook={this.newBook}
               bookAdded={this.state.bookAdded}
+              updateBook={this.updateBook}
+              bookUpdated={this.state.bookUpdated}
               error={this.state.error}
             />
             <PrivateRoute path="/user" component={UserDash} />

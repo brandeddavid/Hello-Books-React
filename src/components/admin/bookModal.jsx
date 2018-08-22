@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import { Redirect } from "react-router-dom";
-import { addBook, editBook } from "../../utils/api";
 
 class BookModal extends Component {
   constructor(props) {
@@ -12,23 +11,12 @@ class BookModal extends Component {
       isbn: this.props.book ? this.props.book.isbn : "",
       publisher: this.props.book ? this.props.book.publisher : "",
       quantity: this.props.book ? this.props.book.quantity : "",
-      bookAdded: null,
       bookUpdated: false,
     };
   }
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
-    });
-  };
-  updateBook = (event, bookId) => {
-    event.preventDefault();
-    console.log("=======>", this.props.library);
-    let accessToken = localStorage.getItem("accessToken");
-    return editBook(this.state, bookId, accessToken).then(res => {
-      res.status === "success"
-        ? this.setState({ bookUpdated: res.bookUpdated })
-        : this.setState({ error: res.error });
     });
   };
   render() {
@@ -44,7 +32,7 @@ class BookModal extends Component {
             <form
               onSubmit={
                 this.props.book
-                  ? event => this.updateBook(event, this.props.book.id)
+                  ? event => this.props.updateBook(event, this.props.book.id, this.state)
                   : event => this.props.newBook(event, this.state)
               }
               className="add-book-form"

@@ -9,11 +9,9 @@ class ManageBooks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: {},
       renderModal: false,
       currentBook: null,
       renderDeleteAlert: false,
-      book: null
     };
   }
   componentDidMount() {
@@ -75,6 +73,8 @@ class ManageBooks extends Component {
               library={this.props.library}
               newBook={this.props.newBook}
               bookAdded={this.props.bookAdded}
+              updateBook={this.props.updateBook}
+              bookUpdated={this.props.bookUpdated}
               error={this.props.error}
             />
           ) : null}
