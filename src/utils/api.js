@@ -104,7 +104,7 @@ export const addBook = (bookData, accessToken) => {
   return axios
     .post(url, payload, axiosConfigAuth)
     .then(res => {
-      return { status: "success", bookAdded: true };
+      return { status: "success", bookAdded: true, book:res.data.Book };
     })
     .catch(error => {
       return { status: "failure", error: error.response.data };
@@ -130,7 +130,7 @@ export const editBook = (bookData, bookId, accessToken) => {
   return axios
     .put(url, payload, axiosConfigAuth)
     .then(res => {
-      return { status: "success", bookUpdated: true };
+      return { status: "success", bookUpdated: true, book: res.data.Book };
     })
     .catch(errorHandler);
 };

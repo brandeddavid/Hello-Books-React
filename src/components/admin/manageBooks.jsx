@@ -9,11 +9,8 @@ class ManageBooks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: {},
-      renderModal: false,
       currentBook: null,
       renderDeleteAlert: false,
-      book: null
     };
   }
   componentDidMount() {
@@ -21,22 +18,16 @@ class ManageBooks extends Component {
   }
 
   renderAddModal = () => {
+    this.props.toggleModal()
     this.setState({
-      renderModal: !this.state.renderModal,
       currentBook: null
     });
   };
 
   renderEditModal = book => {
+    this.props.toggleModal()
     this.setState({
-      renderModal: !this.state.renderModal,
       currentBook: book
-    });
-  };
-
-  closeModal = () => {
-    this.setState({
-      renderModal: false
     });
   };
 
@@ -66,12 +57,18 @@ class ManageBooks extends Component {
               Add Book
             </Button>
           </div>
-          {this.state.renderModal ? (
+          {this.props.renderModal ? (
             <BookModal
               onHide={this.closeModal}
               book={this.state.currentBook}
               toggleModal={this.renderAddModal}
-              show={this.state.renderModal}
+              show={this.props.renderModal}
+              library={this.props.library}
+              newBook={this.props.newBook}
+              bookAdded={this.props.bookAdded}
+              updateBook={this.props.updateBook}
+              bookUpdated={this.props.bookUpdated}
+              error={this.props.error}
             />
           ) : null}
           {this.state.renderDeleteAlert ? (
