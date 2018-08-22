@@ -1,6 +1,10 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import IndexNav from "../navbars/indexnav";
 import { fetchBooks } from "../../utils/api";
+
+// Stateless Component: Has no state and operates with props only. Easy to follow and test
+
 class Library extends Component {
   componentDidMount() {
     this.props.getBooks();
@@ -38,5 +42,9 @@ class Library extends Component {
     );
   }
 }
+
+Library.propTypes = {
+  library: PropTypes.array.isRequired
+};
 
 export default Library;
