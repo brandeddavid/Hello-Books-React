@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import {Link} from "react-router-dom";
+import { Icon } from "react-icons-kit";
+import { book } from "react-icons-kit/icomoon/book";
+import { users } from "react-icons-kit/icomoon/users";
+import { Link } from "react-router-dom";
 import "../../static/css/admin.css";
 import IndexNav from "../navbars/adminnav";
 
@@ -18,9 +21,9 @@ class AdminDash extends Component {
                   <div className="panel panel-default book white-background">
                     <div className="panel-heading">
                       <hr />
-                      <h3>
-                        <i className="fas fa-book fa-3x" />
-                      </h3>
+                      <div style={{ color: "#261447" }}>
+                        <Icon size={100} icon={book} />
+                      </div>
                       <hr />
                     </div>
                     <div className="panel-body">
@@ -34,9 +37,9 @@ class AdminDash extends Component {
                   <div className="panel panel-default book white-background">
                     <div className="panel-heading">
                       <hr />
-                      <h3>
-                        <i className="fas fa-user fa-3x" />
-                      </h3>
+                      <div style={{ color: "#261447" }}>
+                        <Icon size={100} icon={users} />
+                      </div>
                       <hr />
                     </div>
                     <div className="panel-body">
