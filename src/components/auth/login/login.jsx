@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import IndexNav from "../../navbars/indexnav";
 import "../../../static/css/forms.css";
 import "../../../static/css/main.css";
@@ -85,7 +85,7 @@ class Login extends Component {
                   </button>
                 </form>
                 <p className="no-account">
-                  Don't have an account? <a href="/register">Register</a>
+                  Don't have an account? <Link to="/register">Register</Link>
                 </p>
               </div>
             </div>

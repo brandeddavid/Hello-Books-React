@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import IndexNav from "../../navbars/indexnav";
 import "../../../static/css/forms.css";
 import "../../../static/css/main.css";
@@ -152,7 +152,7 @@ class Register extends Component {
                     Register
                   </button>
                 </form>
-                <p className="member-already">Already a member? <a href="/login">Log in</a></p>
+                <p className="member-already">Already a member? <Link to="/login">Log in</Link></p>
               </div>
             </div>
           </div>
