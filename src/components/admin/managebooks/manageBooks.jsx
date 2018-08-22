@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Redirect} from "react-router-dom";
 import { Button } from "reactstrap";
 import BookModal from "./bookModal";
 import DeleteBook from "../alerts/deleteBook";
@@ -45,7 +46,7 @@ class ManageBooks extends Component {
   };
 
   render() {
-    return (
+    return this.props.isAdmin ? (
       <React.Fragment>
         <IndexNav />
         <div className="container admin-container">
@@ -123,7 +124,7 @@ class ManageBooks extends Component {
           </div>
         </div>
       </React.Fragment>
-    );
+    ) : <Redirect to="/login" />
   }
 }
 

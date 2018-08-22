@@ -26,7 +26,7 @@ class App extends Component {
     };
   }
 
-  signIn = loginData => {
+  logIn = loginData => {
     loginUser(loginData).then(res => {
       if (res.status === "success") {
         localStorage.setItem("accessToken", res.accessToken);
@@ -37,6 +37,15 @@ class App extends Component {
         this.setState(() => ({ error: res.error }));
       }
     });
+  };
+
+  logOut = () => {
+    let accessToken = localStorage.getItem("accessToken");
+    localStorage.removeItem("accessToken");
+    this.setState(() => ({
+      loggedIn: false,
+      isAdmin: null
+    }));
   };
 
   getBooks = () => {
@@ -88,7 +97,7 @@ class App extends Component {
             <Route
               path="/login"
               render={props => (
-                <Login {...props} {...this.state} signIn={this.signIn} />
+                <Login {...props} {...this.state} logIn={this.logIn} />
               )}
             />
             <Route path="/register" component={Register} />
@@ -98,7 +107,7 @@ class App extends Component {
                 <Library {...props} {...this.state} getBooks={this.getBooks} />
               )}
             />
-            <PrivateRoute path="/admin" component={AdminDash} />
+            <PrivateRoute path="/admin" component={AdminDash} {...this.state} />
             <PrivateRoute
               path="/managebooks"
               component={ManageBooks}
@@ -109,8 +118,12 @@ class App extends Component {
               updateBook={this.updateBook}
               error={this.state.error}
             />
-            <PrivateRoute path="/user" component={UserDash} />
-            <PrivateRoute path="/logout" component={Logout} />
+            <PrivateRoute path="/user" component={UserDash} {...this.state} />
+            <PrivateRoute
+              path="/logout"
+              component={Logout}
+              logOut={this.logOut}
+            />
           </Switch>
         </div>
       </Router>
