@@ -1,40 +1,31 @@
 body {
-    font-family: 'EB Garamond', serif;
-    background: #261447 !important; 
-    color: aliceblue !important;
-  }
+  font-family: "EB Garamond", sans-serif;
+  background: #261447 !important;
+  color: aliceblue !important;
+}
 
-  .navbar {
-      background: #847996 !important;
-  }
+.navbar {
+  background: #847996 !important;
+}
 
-.header{
-    background: url("../img/header1.jpeg") no-repeat center center fixed;
-    background-size: cover;
-    text-align: center;
-    min-height: 700px;
-    color: white;
-    padding-top: 50px;
+.header {
+  background-size: cover;
+  text-align: center;
+  padding-top: 50px;
 }
 
 .jumbotron {
-    background: rgb(200, 54, 54); /*This is for ie8 and below*/
-    background: rgba(200, 54, 54, 0.3) !important; 
-    margin-top: 150px;
-}
-
-.bg-overlay{
-    background:rgba(0,0,0, 0.7);
-    min-height: 700px;
+  background: #586f7c !important;
+  margin-top: 150px;
 }
 
 .error {
-    color: red;
+  color: red;
 }
 
-.modal{
-    color: black;
+.modal {
+  color: black;
 }
- tr:hover {
-     background-color: #847996 !important;
- }
+tr:hover {
+  background-color: #847996 !important;
+}
