@@ -104,7 +104,7 @@ export const addBook = (bookData, accessToken) => {
   return axios
     .post(url, payload, axiosConfigAuth)
     .then(res => {
-      return { status: "success", bookAdded: true, book:res.data.Book };
+      return { status: "success", bookAdded: true, book: res.data.Book };
     })
     .catch(error => {
       return { status: "failure", error: error.response.data };
@@ -148,6 +148,40 @@ export const deleteBook = (bookId, accessToken) => {
     .delete(url, axiosConfigAuth)
     .then(res => {
       return { status: "success", bookDeleted: true };
+    })
+    .catch(errorHandler);
+};
+
+export const notReturned = accessToken => {
+  let url = "http://localhost:5000/api/users/books?returned=false";
+  let axiosConfigAuth = {
+    headers: {
+      "Content-Type": "application/json",
+      AccessControlAllowOrigin: "*",
+      Authorization: "Bearer " + accessToken
+    }
+  };
+  return axios
+    .get(url, axiosConfigAuth)
+    .then(res => {
+      return {status: "success", borrowedBooks: res.data.unreturned}
+    })
+    .catch(errorHandler);
+};
+
+export const borrowingHistory = accessToken => {
+  let url = "http://localhost:5000/api/users/books";
+  let axiosConfigAuth = {
+    headers: {
+      "Content-Type": "application/json",
+      AccessControlAllowOrigin: "*",
+      Authorization: "Bearer " + accessToken
+    }
+  };
+  return axios
+    .get(url, axiosConfigAuth)
+    .then(res => {
+      return {status: "success", history: res.data.borrowHistory}
     })
     .catch(errorHandler);
 };
