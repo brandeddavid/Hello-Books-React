@@ -11,6 +11,7 @@ import AdminDash from "./components/admin/dashboard/admin";
 import ManageBooks from "./components/admin/managebooks/manageBooks";
 import UserDash from "./components/user/dashboard/user";
 import BorrowHistory from "./components/user/history/borrowHistory";
+import Borrow from "./components/user/borrow/borrow";
 import PrivateRoute from "./utils/privateRoutes";
 import history from "./utils/history";
 import {
@@ -18,10 +19,11 @@ import {
   addBook,
   editBook,
   loginUser,
+  borrow,
   notReturned,
+  returnABook,
   borrowingHistory
 } from "./utils/api";
-
 
 class App extends Component {
   constructor(props) {
@@ -101,6 +103,24 @@ class App extends Component {
     });
   };
 
+  borrowBook = (event, bookId) => {
+    event.preventDefault();
+    let accessToken = localStorage.getItem("accessToken");
+    return borrow(bookId, accessToken).then(res => {
+      res.status === "success"
+        ? this.setState(() => {
+            const library = this.state.library.map(book => {
+              if (book.id === res.book.id) {
+                return res.book;
+              }
+              return book;
+            });
+            return { library };
+          })
+        : this.setState(() => ({ error: res.error }));
+    });
+  };
+
   borrowed = () => {
     let accessToken = localStorage.getItem("accessToken");
     notReturned(accessToken).then(res => {
@@ -108,7 +128,22 @@ class App extends Component {
         ? this.setState(() => ({
             borrowedBooks: res.borrowedBooks
           }))
-        : null;
+        : this.setState(() => ({ error: res.error }));
+    });
+  };
+
+  returnBook = (event, bookId) => {
+    event.preventDefault();
+    let accessToken = localStorage.getItem("accessToken");
+    return returnABook(bookId, accessToken).then(res => {
+      res.status === "success"
+        ? this.setState(() => {
+            const borrowedBooks = this.state.borrowedBooks.filter(
+              book => book.id !== bookId
+            );
+            return { borrowedBooks };
+          })
+        : this.setState(() => ({ error: res.error }));
     });
   };
 
@@ -163,6 +198,14 @@ class App extends Component {
               {...this.state}
               borrowed={this.borrowed}
               borrowedBooks={this.state.borrowedBooks}
+              returnBook={this.returnBook}
+            />
+            <PrivateRoute
+              path="/borrow"
+              component={Borrow}
+              {...this.state}
+              getBooks={this.getBooks}
+              borrowBook={this.borrowBook}
             />
             <PrivateRoute
               path="/history"

@@ -54,36 +54,49 @@ class UserDash extends Component {
           <div className="row">
             <div className="col-lg-12">
               <div className="text-center">
+                <hr />
                 <h1>Borrowed Books</h1>
+                <hr />
               </div>
-              <div className="table-responsive">
-                <table className="table table-hover">
-                  <thead className="thead-dark">
-                    <th>Book Title</th>
-                    <th>Book Author</th>
-                    <th>Book ISBN</th>
-                    <th>Date Borrowed</th>
-                    <th>Date Due</th>
-                    <th>Action</th>
-                  </thead>
-                  <tbody>
-                    {this.props.borrowedBooks.map(book => (
-                      <tr key={book.id}>
-                        <td>{book.title}</td>
-                        <td>{book.author}</td>
-                        <td>{book.isbn}</td>
-                        <td>{book.borrowDate}</td>
-                        <td>{book.dueDate}</td>
-                        <td>
-                          <Button className="btn btn-success">
-                            Return Book
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              {this.props.borrowedBooks.length === 0 ? (
+                <div className="text-center error">
+                  You do not have borrowed books
+                </div>
+              ) : (
+                <div className="table-responsive">
+                  <table className="table table-hover">
+                    <thead className="thead-dark">
+                      <th>Book Title</th>
+                      <th>Book Author</th>
+                      <th>Book ISBN</th>
+                      <th>Date Borrowed</th>
+                      <th>Date Due</th>
+                      <th>Action</th>
+                    </thead>
+                    <tbody>
+                      {this.props.borrowedBooks.map(book => (
+                        <tr key={book.id}>
+                          <td>{book.title}</td>
+                          <td>{book.author}</td>
+                          <td>{book.isbn}</td>
+                          <td>{book.borrowDate}</td>
+                          <td>{book.dueDate}</td>
+                          <td>
+                            <Button
+                              className="btn btn-success"
+                              onClick={event =>
+                                this.props.returnBook(event, book.id)
+                              }
+                            >
+                              Return Book
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           </div>
         </div>
