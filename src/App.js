@@ -107,7 +107,6 @@ class App extends Component {
     event.preventDefault();
     let accessToken = localStorage.getItem("accessToken");
     return borrow(bookId, accessToken).then(res => {
-      console.log(res);
       res.status === "success"
         ? this.setState(() => {
             const library = this.state.library.map(book => {
@@ -129,7 +128,7 @@ class App extends Component {
         ? this.setState(() => ({
             borrowedBooks: res.borrowedBooks
           }))
-        : null;
+        : this.setState(() => ({ error: res.error }));
     });
   };
 
@@ -137,7 +136,14 @@ class App extends Component {
     event.preventDefault();
     let accessToken = localStorage.getItem("accessToken");
     return returnABook(bookId, accessToken).then(res => {
-      console.log(res);
+      res.status === "success"
+        ? this.setState(() => {
+            const borrowedBooks = this.state.borrowedBooks.filter(
+              book => book.id !== bookId
+            );
+            return { borrowedBooks };
+          })
+        : this.setState(() => ({ error: res.error }));
     });
   };
 
