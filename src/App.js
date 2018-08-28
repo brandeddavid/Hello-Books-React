@@ -19,10 +19,10 @@ import {
   addBook,
   editBook,
   loginUser,
+  borrow,
   notReturned,
   borrowingHistory
 } from "./utils/api";
-
 
 class App extends Component {
   constructor(props) {
@@ -102,6 +102,14 @@ class App extends Component {
     });
   };
 
+  borrowBook = (event, bookId) => {
+    event.preventDefault();
+    let accessToken = localStorage.getItem("accessToken");
+    return borrow(bookId, accessToken).then(res => {
+      console.log(res);
+    });
+  };
+
   borrowed = () => {
     let accessToken = localStorage.getItem("accessToken");
     notReturned(accessToken).then(res => {
@@ -170,6 +178,7 @@ class App extends Component {
               component={Borrow}
               {...this.state}
               getBooks={this.getBooks}
+              borrowBook={this.borrowBook}
             />
             <PrivateRoute
               path="/history"
