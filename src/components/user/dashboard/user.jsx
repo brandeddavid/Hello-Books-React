@@ -75,7 +75,12 @@ class UserDash extends Component {
                         <td>{book.borrowDate}</td>
                         <td>{book.dueDate}</td>
                         <td>
-                          <Button className="btn btn-success">
+                          <Button
+                            className="btn btn-success"
+                            onClick={event =>
+                              this.props.returnBook(event, book.id)
+                            }
+                          >
                             Return Book
                           </Button>
                         </td>
