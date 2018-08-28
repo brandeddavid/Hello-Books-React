@@ -11,6 +11,7 @@ import AdminDash from "./components/admin/dashboard/admin";
 import ManageBooks from "./components/admin/managebooks/manageBooks";
 import UserDash from "./components/user/dashboard/user";
 import BorrowHistory from "./components/user/history/borrowHistory";
+import Borrow from "./components/user/borrow/borrow";
 import PrivateRoute from "./utils/privateRoutes";
 import history from "./utils/history";
 import {
@@ -163,6 +164,12 @@ class App extends Component {
               {...this.state}
               borrowed={this.borrowed}
               borrowedBooks={this.state.borrowedBooks}
+            />
+            <PrivateRoute
+              path="/borrow"
+              component={Borrow}
+              {...this.state}
+              getBooks={this.getBooks}
             />
             <PrivateRoute
               path="/history"
