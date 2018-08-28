@@ -1,0 +1,44 @@
+/* .admin-body{
+
+    background: url("../img/about.jpg") no-repeat center fixed;
+    background-size: cover;
+    min-height: 700px;
+    font-family: 'EB Garamond', serif;
+  } */
+
+  .white-background {
+    background: rgb(255, 255, 255); /* This is for ie8 and below */
+    background: rgba(255, 255, 255, 0.8) !important; 
+  }
+
+  .admin-panel {
+
+    margin-top: 200px;
+  }
+  
+  .admin-panel-link {
+    padding-bottom: 10px;
+  }
+
+  .book {
+    /* Styling for the book panel, library page */
+    margin-left: 30px;
+    margin-bottom: 50px;
+  }
+
+  .panel {
+    box-shadow: 0 2px 2px;
+  }
+  
+  .panel-heading {
+  
+    text-align: center;
+  }
+
+  .admin-container {
+    margin-top: 80px;
+  }
+
+  .add-book-btn {
+    margin-bottom: 10px;
+  }

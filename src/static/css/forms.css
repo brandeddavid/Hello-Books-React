@@ -1,0 +1,15 @@
+.login-form{
+    margin-top: 200px;
+    padding-right: 150px;
+    padding-left: 50px;
+}
+
+.registration-form {
+    margin-top: 60px;
+    padding-right: 150px;
+    padding-left: 50px;
+}
+
+.no-account, .member-already {
+    margin-top: 15px;
+}

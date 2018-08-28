@@ -1,0 +1,31 @@
+body {
+  font-family: "EB Garamond", sans-serif;
+  background: #261447 !important;
+  color: aliceblue !important;
+}
+
+.navbar {
+  background: #847996 !important;
+}
+
+.header {
+  background-size: cover;
+  text-align: center;
+  padding-top: 50px;
+}
+
+.jumbotron {
+  background: #586f7c !important;
+  margin-top: 150px;
+}
+
+.error {
+  color: red;
+}
+
+.modal {
+  color: black;
+}
+tr:hover {
+  background-color: #847996 !important;
+}
