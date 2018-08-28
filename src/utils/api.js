@@ -187,6 +187,24 @@ export const notReturned = accessToken => {
     .catch(errorHandler);
 };
 
+export const returnABook = (bookId, accessToken) => {
+  let url = `${baseURL}/users/books/${bookId}`;
+  let axiosConfigAuth = {
+    headers: {
+      "Content-Type": "application/json",
+      AccessControlAllowOrigin: "*",
+      Authorization: "Bearer " + accessToken
+    }
+  };
+  let payload=null
+  return axios
+    .put(url, payload, axiosConfigAuth)
+    .then(res => {
+      return { status: "success", data: res.data };
+    })
+    .catch(errorHandler);
+};
+
 export const borrowingHistory = accessToken => {
   let url = `${baseURL}/users/books`;
   let axiosConfigAuth = {

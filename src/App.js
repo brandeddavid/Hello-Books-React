@@ -21,6 +21,7 @@ import {
   loginUser,
   borrow,
   notReturned,
+  returnABook,
   borrowingHistory
 } from "./utils/api";
 
@@ -121,6 +122,14 @@ class App extends Component {
     });
   };
 
+  returnBook = (event, bookId) => {
+    event.preventDefault();
+    let accessToken = localStorage.getItem("accessToken");
+    return returnABook(bookId, accessToken).then(res => {
+      console.log(res);
+    });
+  };
+
   borrowHistory = () => {
     let accessToken = localStorage.getItem("accessToken");
     borrowingHistory(accessToken).then(res => {
@@ -172,6 +181,7 @@ class App extends Component {
               {...this.state}
               borrowed={this.borrowed}
               borrowedBooks={this.state.borrowedBooks}
+              returnBook={this.returnBook}
             />
             <PrivateRoute
               path="/borrow"
