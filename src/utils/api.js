@@ -153,7 +153,7 @@ export const deleteBook = (bookId, accessToken) => {
 };
 
 export const notReturned = accessToken => {
-  let url = "http://localhost:5000/api/users/books?returned=false";
+  let url = `${baseURL}/users/books?returned=false`;
   let axiosConfigAuth = {
     headers: {
       "Content-Type": "application/json",
@@ -170,7 +170,7 @@ export const notReturned = accessToken => {
 };
 
 export const borrowingHistory = accessToken => {
-  let url = "http://localhost:5000/api/users/books";
+  let url = `${baseURL}/users/books`;
   let axiosConfigAuth = {
     headers: {
       "Content-Type": "application/json",
