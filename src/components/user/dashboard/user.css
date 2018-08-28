@@ -1,0 +1,12 @@
+.container {
+    margin-top: 50px;
+}
+
+.prof-pic-panel {
+	float: left;
+}
+
+.prof-pic {
+	border-radius: 50%;
+
+}

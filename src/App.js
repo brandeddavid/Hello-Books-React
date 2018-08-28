@@ -10,9 +10,17 @@ import Library from "./components/library/library";
 import AdminDash from "./components/admin/dashboard/admin";
 import ManageBooks from "./components/admin/managebooks/manageBooks";
 import UserDash from "./components/user/dashboard/user";
+import BorrowHistory from "./components/user/history/borrowHistory";
 import PrivateRoute from "./utils/privateRoutes";
 import history from "./utils/history";
-import { fetchBooks, addBook, editBook, loginUser } from "./utils/api";
+import {
+  fetchBooks,
+  addBook,
+  editBook,
+  loginUser,
+  notReturned,
+  borrowingHistory
+} from "./utils/api";
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +30,9 @@ class App extends Component {
       isAdmin: null,
       library: [],
       renderModal: false,
-      error: {}
+      error: {},
+      borrowedBooks: [],
+      borrowedBooksHistory: []
     };
   }
 
@@ -40,7 +50,6 @@ class App extends Component {
   };
 
   logOut = () => {
-    let accessToken = localStorage.getItem("accessToken");
     localStorage.removeItem("accessToken");
     this.setState(() => ({
       loggedIn: false,
@@ -78,11 +87,41 @@ class App extends Component {
     let accessToken = localStorage.getItem("accessToken");
     return editBook(bookData, bookId, accessToken).then(res => {
       res.status === "success"
-        ? this.setState(() => ({
-            library: [...this.state.library, res.book],
-            renderModal: false
-          }))
+        ? this.setState(() => {
+            const library = this.state.library.map(book => {
+              if (book.id === res.book.id) {
+                return res.book;
+              }
+              return book;
+            });
+            return { renderModal: false, library };
+          })
         : this.setState(() => ({ error: res.error }));
+    });
+  };
+
+  borrowed = () => {
+    let accessToken = localStorage.getItem("accessToken");
+    notReturned(accessToken).then(res => {
+      res.status === "success"
+        ? this.setState(() => ({
+            borrowedBooks: res.borrowedBooks
+          }))
+        : null;
+    });
+  };
+
+  borrowHistory = () => {
+    let accessToken = localStorage.getItem("accessToken");
+    borrowingHistory(accessToken).then(res => {
+      console.log(res);
+      res.status === "success"
+        ? this.setState(() => ({
+            borrowedBooksHistory: res.history
+          }))
+        : this.setState(() => ({
+            error: res.error
+          }));
     });
   };
 
@@ -90,8 +129,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <IndexNav />
-          <AdminNav />
+          {/* {this.state.loggedIn ? <IndexNav /> : <AdminNav />} */}
           <Switch>
             <Route exact path="/" component={Index} />
             <Route
@@ -118,7 +156,19 @@ class App extends Component {
               updateBook={this.updateBook}
               error={this.state.error}
             />
-            <PrivateRoute path="/user" component={UserDash} {...this.state} />
+            <PrivateRoute
+              path="/user"
+              component={UserDash}
+              {...this.state}
+              borrowed={this.borrowed}
+              borrowedBooks={this.state.borrowedBooks}
+            />
+            <PrivateRoute
+              path="/history"
+              component={BorrowHistory}
+              {...this.state}
+              borrowHistory={this.borrowHistory}
+            />
             <PrivateRoute
               path="/logout"
               component={Logout}
