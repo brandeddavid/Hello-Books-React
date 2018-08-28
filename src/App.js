@@ -108,6 +108,17 @@ class App extends Component {
     let accessToken = localStorage.getItem("accessToken");
     return borrow(bookId, accessToken).then(res => {
       console.log(res);
+      res.status === "success"
+        ? this.setState(() => {
+            const library = this.state.library.map(book => {
+              if (book.id === res.book.id) {
+                return res.book;
+              }
+              return book;
+            });
+            return { library };
+          })
+        : this.setState(() => ({ error: res.error }));
     });
   };
 

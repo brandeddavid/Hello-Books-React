@@ -165,7 +165,7 @@ export const borrow = (bookId, accessToken) => {
   return axios
     .post(url, payload, axiosConfigAuth)
     .then(res => {
-      return { status: "success", data: res.data };
+      return { status: "success", book: res.data.Book };
     })
     .catch(errorHandler);
 };
