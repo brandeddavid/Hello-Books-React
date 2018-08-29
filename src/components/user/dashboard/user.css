@@ -1,12 +1,13 @@
 .container {
-    margin-top: 50px;
+    margin-top: 80px;
 }
 
-.prof-pic-panel {
+.prof-pic-div {
 	float: left;
 }
 
 .prof-pic {
 	border-radius: 50%;
+	height: 200px;
 
 }
