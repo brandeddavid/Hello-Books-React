@@ -135,7 +135,7 @@ export const editBook = (bookData, bookId, accessToken) => {
     .catch(errorHandler);
 };
 
-export const deleteBook = (bookId, accessToken) => {
+export const removeBook = (bookId, accessToken) => {
   let url = `${baseURL}/book/${bookId}`;
   let axiosConfigAuth = {
     headers: {

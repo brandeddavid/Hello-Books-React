@@ -10,8 +10,7 @@ class ManageBooks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentBook: null,
-      renderDeleteAlert: false,
+      currentBook: null
     };
   }
   componentDidMount() {
@@ -33,20 +32,14 @@ class ManageBooks extends Component {
   };
 
   deleteAlert = book => {
+    this.props.toggleDeleteAlert()
     this.setState({
-      renderDeleteAlert: true,
       book: book
     });
   };
 
-  toggleDeleteAlert = () => {
-    this.setState({
-      renderDeleteAlert: !this.state.renderDeleteAlert
-    });
-  };
-
   render() {
-    return this.props.isAdmin ? (
+    return (
       <React.Fragment>
         <IndexNav />
         <div className="container admin-container">
@@ -72,11 +65,12 @@ class ManageBooks extends Component {
               error={this.props.error}
             />
           ) : null}
-          {this.state.renderDeleteAlert ? (
+          {this.props.renderDeleteAlert ? (
             <DeleteBook
               book={this.state.book}
-              show={this.state.renderDeleteAlert}
-              toggleDeleteAlert={this.toggleDeleteAlert}
+              show={this.props.renderDeleteAlert}
+              deleteBook={this.props.deleteBook}
+              toggleDeleteAlert={this.props.toggleDeleteAlert}
             />
           ) : null}
           {this.state.error ? <span>{this.state.error.Message}</span> : ""}
@@ -124,7 +118,7 @@ class ManageBooks extends Component {
           </div>
         </div>
       </React.Fragment>
-    ) : <Redirect to="/login" />
+    )
   }
 }
 

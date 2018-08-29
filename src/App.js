@@ -18,6 +18,7 @@ import {
   fetchBooks,
   addBook,
   editBook,
+  removeBook,
   loginUser,
   borrow,
   notReturned,
@@ -34,6 +35,7 @@ class App extends Component {
       isAdmin: null,
       library: [],
       renderModal: false,
+      renderDeleteAlert: false,
       error: {},
       borrowedBooks: [],
       borrowedBooksHistory: []
@@ -46,7 +48,11 @@ class App extends Component {
         localStorage.setItem("accessToken", res.accessToken);
         // set state is an asynchronous function
         // Pass function to make it deterministic
-        this.setState(() => ({ loggedIn: true, isAdmin: res.user.is_admin, user: res.user }));
+        this.setState(() => ({
+          loggedIn: true,
+          isAdmin: res.user.is_admin,
+          user: res.user
+        }));
       } else {
         this.setState(() => ({ error: res.error }));
       }
@@ -70,7 +76,7 @@ class App extends Component {
   };
 
   toggleModal = () => {
-    this.setState({ renderModal: !this.state.renderModal });
+    this.setState(() => ({ renderModal: !this.state.renderModal }));
   };
 
   newBook = (event, bookData) => {
@@ -102,6 +108,29 @@ class App extends Component {
           })
         : this.setState(() => ({ error: res.error }));
     });
+  };
+
+  deleteBook = (event, bookId) => {
+    event.preventDefault();
+    let accessToken = localStorage.getItem("accessToken");
+    removeBook(bookId, accessToken).then(res => {
+      res.status === "success"
+        ? this.setState(() => {
+            const library = this.state.library.filter(
+              book => book.id !== bookId
+            );
+            return { renderDeleteAlert: false, library };
+          })
+        : this.setState(() => ({
+            error: res.error
+          }));
+    });
+  };
+
+  toggleDeleteAlert = () => {
+    this.setState(() => ({
+      renderDeleteAlert: !this.state.renderDeleteAlert
+    }));
   };
 
   borrowBook = (event, bookId) => {
@@ -192,6 +221,8 @@ class App extends Component {
               newBook={this.newBook}
               updateBook={this.updateBook}
               error={this.state.error}
+              toggleDeleteAlert={this.toggleDeleteAlert}
+              deleteBook={this.deleteBook}
             />
             <PrivateRoute
               path="/user"

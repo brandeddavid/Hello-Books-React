@@ -10,7 +10,7 @@ import IndexNav from "../../navbars/adminnav";
 class AdminDash extends Component {
   state = {};
   render() {
-    return this.props.isAdmin ? (
+    return (
       <React.Fragment>
         <IndexNav />
         <div className="admin-body">
@@ -56,7 +56,7 @@ class AdminDash extends Component {
           </div>
         </div>
       </React.Fragment>
-    ) : <Redirect to="/login" />
+    );
   }
 }
 
