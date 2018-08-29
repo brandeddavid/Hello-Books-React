@@ -12,7 +12,9 @@ class BorrowHistory extends Component {
           <div className="row">
             <div className="col-lg-12">
               <div className="text-center">
+                <hr />
                 <h1>Borrow History</h1>
+                <hr />
               </div>
               <div className="table-responsive">
                 <table className="table table-hover">
