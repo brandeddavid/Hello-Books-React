@@ -29,6 +29,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: {},
       loggedIn: false,
       isAdmin: null,
       library: [],
@@ -45,7 +46,7 @@ class App extends Component {
         localStorage.setItem("accessToken", res.accessToken);
         // set state is an asynchronous function
         // Pass function to make it deterministic
-        this.setState(() => ({ loggedIn: true, isAdmin: res.user.is_admin }));
+        this.setState(() => ({ loggedIn: true, isAdmin: res.user.is_admin, user: res.user }));
       } else {
         this.setState(() => ({ error: res.error }));
       }
