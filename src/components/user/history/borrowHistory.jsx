@@ -13,7 +13,7 @@ class BorrowHistory extends Component {
             <div className="col-lg-12">
               <div className="text-center">
                 <hr />
-                <h1>Borrow History</h1>
+                <h1>Borrowing History</h1>
                 <hr />
               </div>
               <div className="table-responsive">
