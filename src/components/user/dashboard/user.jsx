@@ -15,7 +15,7 @@ class UserDash extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-6">
-              <div className="panel panel-deafault prof-pic-panel">
+              <div className="panel panel-default prof-pic-panel">
                 <div className="panel-body">
                   <img
                     src="./prof.gif"
@@ -32,19 +32,19 @@ class UserDash extends Component {
                   <tbody>
                     <tr>
                       <th>First Name:</th>
-                      <td>John</td>
+                      <td>{this.props.user.firstName}</td>
                     </tr>
                     <tr>
                       <th>Last Name:</th>
-                      <td>John</td>
+                      <td>{this.props.user.lastName}</td>
                     </tr>
                     <tr>
                       <th>Username:</th>
-                      <td>John</td>
+                      <td>{this.props.user.username}</td>
                     </tr>
                     <tr>
                       <th>Email Address:</th>
-                      <td>John</td>
+                      <td>{this.props.user.email}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -66,12 +66,14 @@ class UserDash extends Component {
                 <div className="table-responsive">
                   <table className="table table-hover">
                     <thead className="thead-dark">
-                      <th>Book Title</th>
-                      <th>Book Author</th>
-                      <th>Book ISBN</th>
-                      <th>Date Borrowed</th>
-                      <th>Date Due</th>
-                      <th>Action</th>
+                      <tr>
+                        <th>Book Title</th>
+                        <th>Book Author</th>
+                        <th>Book ISBN</th>
+                        <th>Date Borrowed</th>
+                        <th>Date Due</th>
+                        <th>Action</th>
+                      </tr>
                     </thead>
                     <tbody>
                       {this.props.borrowedBooks.map(book => (
