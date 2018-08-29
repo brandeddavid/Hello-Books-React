@@ -14,16 +14,13 @@ class UserDash extends Component {
         <UserNav />
         <div className="container">
           <div className="row">
-            <div className="col-md-6">
-              <div className="panel panel-default prof-pic-panel">
-                <div className="panel-body">
-                  <img
-                    src="./prof.gif"
-                    alt="Profile Picture"
-                    className="prof-pic"
-                    height="200"
-                  />
-                </div>
+            <div className="col-md-3">
+              <div className="prof-pic-div img-responsive">
+                <img
+                  src="https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-shadow-circle-512.png"
+                  alt="Profile Picture"
+                  className="prof-pic"
+                />
               </div>
             </div>
             <div className="col-md-6">
@@ -50,6 +47,7 @@ class UserDash extends Component {
                 </table>
               </div>
             </div>
+            <div className="col-md-3" />
           </div>
           <div className="row">
             <div className="col-lg-12">
