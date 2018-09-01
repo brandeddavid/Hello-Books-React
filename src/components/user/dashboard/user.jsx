@@ -4,7 +4,6 @@ import UserNav from "../../navbars/usernav";
 import "./user.css";
 
 class UserDash extends Component {
-  state = {};
   componentDidMount() {
     this.props.borrowed();
   }
@@ -58,7 +57,7 @@ class UserDash extends Component {
               </div>
               {this.props.borrowedBooks.length === 0 ? (
                 <div className="text-center error">
-                  You do not have borrowed books
+                  <h3>You do not have borrowed books</h3>
                 </div>
               ) : (
                 <div className="table-responsive">

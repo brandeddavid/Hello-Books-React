@@ -106,7 +106,7 @@ class App extends Component {
             });
             return { renderModal: false, library };
           })
-        : this.setState(() => ({ error: res.error }));
+        : this.setState(prevState => ({ error: res.error }));
     });
   };
 
@@ -201,7 +201,13 @@ class App extends Component {
             <Route
               path="/login"
               render={props => (
-                <Login {...props} {...this.state} logIn={this.logIn} />
+                <Login
+                  {...props}
+                  error={this.state.error}
+                  loggedIn={this.state.loggedIn}
+                  isAdmin={this.state.isAdmin}
+                  logIn={this.logIn}
+                />
               )}
             />
             <Route path="/register" component={Register} />
@@ -227,7 +233,7 @@ class App extends Component {
             <PrivateRoute
               path="/user"
               component={UserDash}
-              {...this.state}
+              user={this.state.user}
               borrowed={this.borrowed}
               borrowedBooks={this.state.borrowedBooks}
               returnBook={this.returnBook}
