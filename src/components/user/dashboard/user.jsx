@@ -55,7 +55,9 @@ class UserDash extends Component {
                 <h1>Borrowed Books</h1>
                 <hr />
               </div>
-              {this.props.borrowedBooks.length === 0 ? (
+              {this.props.loading ? (
+                this.props.loader
+              ) : this.props.borrowedBooks.length === 0 ? (
                 <div className="text-center error">
                   <h3>You do not have borrowed books</h3>
                 </div>

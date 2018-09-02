@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import IndexNav from "../../navbars/indexnav";
+import Loader from "../loader/loader";
 import "../../../static/css/forms.css";
 import "../../../static/css/main.css";
 
@@ -14,6 +15,7 @@ class Login extends Component {
   }
   handleSubmit = event => {
     event.preventDefault();
+    this.props.toggleLoading();
     this.props.logIn(this.state);
   };
 
@@ -80,9 +82,15 @@ class Login extends Component {
                       value={this.state.password}
                     />
                   </div>
-                  <button type="submit" className="btn btn-primary">
-                    Login
-                  </button>
+                  <div>
+                    {this.props.loading ? (
+                      this.props.loader
+                    ) : (
+                      <button type="submit" className="btn btn-primary">
+                        Login
+                      </button>
+                    )}
+                  </div>
                 </form>
                 <p className="no-account">
                   Don't have an account? <Link to="/register">Register</Link>

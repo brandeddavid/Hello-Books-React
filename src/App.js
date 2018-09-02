@@ -3,6 +3,7 @@ import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import AdminNav from "./components/navbars/adminnav";
 import IndexNav from "./components/navbars/indexnav";
 import Login from "./components/auth/login/login";
+import Loader from "./components/auth/loader/loader";
 import Logout from "./components/auth/logout/logout";
 import Index from "./components/index/index";
 import Register from "./components/auth/register/register";
@@ -30,6 +31,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       user: {},
       loggedIn: false,
       isAdmin: null,
@@ -42,6 +44,10 @@ class App extends Component {
     };
   }
 
+  toggleLoading = () => {
+    this.setState(() => ({ loading: !this.state.loading }));
+  };
+
   logIn = loginData => {
     loginUser(loginData).then(res => {
       if (res.status === "success") {
@@ -51,10 +57,11 @@ class App extends Component {
         this.setState(() => ({
           loggedIn: true,
           isAdmin: res.user.is_admin,
-          user: res.user
+          user: res.user,
+          loading: false
         }));
       } else {
-        this.setState(() => ({ error: res.error }));
+        this.setState(() => ({ error: res.error, loading: false }));
       }
     });
   };
@@ -135,6 +142,7 @@ class App extends Component {
 
   borrowBook = (event, bookId) => {
     event.preventDefault();
+    this.toggleLoading();
     let accessToken = localStorage.getItem("accessToken");
     return borrow(bookId, accessToken).then(res => {
       res.status === "success"
@@ -145,25 +153,28 @@ class App extends Component {
               }
               return book;
             });
-            return { library };
+            return { library, loading: false };
           })
-        : this.setState(() => ({ error: res.error }));
+        : this.setState(() => ({ error: res.error, loading: false }));
     });
   };
 
   borrowed = () => {
     let accessToken = localStorage.getItem("accessToken");
+    this.toggleLoading();
     notReturned(accessToken).then(res => {
       res.status === "success"
         ? this.setState(() => ({
-            borrowedBooks: res.borrowedBooks
+            borrowedBooks: res.borrowedBooks,
+            loading: false
           }))
-        : this.setState(() => ({ error: res.error }));
+        : this.setState(() => ({ error: res.error, loading: false }));
     });
   };
 
   returnBook = (event, bookId) => {
     event.preventDefault();
+    this.toggleLoading();
     let accessToken = localStorage.getItem("accessToken");
     return returnABook(bookId, accessToken).then(res => {
       res.status === "success"
@@ -171,22 +182,25 @@ class App extends Component {
             const borrowedBooks = this.state.borrowedBooks.filter(
               book => book.id !== bookId
             );
-            return { borrowedBooks };
+            return { borrowedBooks, loading: false };
           })
-        : this.setState(() => ({ error: res.error }));
+        : this.setState(() => ({ error: res.error, loading: false }));
     });
   };
 
   borrowHistory = () => {
     let accessToken = localStorage.getItem("accessToken");
+    this.toggleLoading();
     borrowingHistory(accessToken).then(res => {
       console.log(res);
       res.status === "success"
         ? this.setState(() => ({
-            borrowedBooksHistory: res.history
+            borrowedBooksHistory: res.history,
+            loading: false
           }))
         : this.setState(() => ({
-            error: res.error
+            error: res.error,
+            loading: false
           }));
     });
   };
@@ -198,6 +212,7 @@ class App extends Component {
           {/* {this.state.loggedIn ? <IndexNav /> : <AdminNav />} */}
           <Switch>
             <Route exact path="/" component={Index} />
+            <Route path="/loader" component={Loader} />
             <Route
               path="/login"
               render={props => (
@@ -207,10 +222,19 @@ class App extends Component {
                   loggedIn={this.state.loggedIn}
                   isAdmin={this.state.isAdmin}
                   logIn={this.logIn}
+                  toggleLoading={this.toggleLoading}
+                  loader={<Loader />}
+                  loading={this.state.loading}
                 />
               )}
             />
-            <Route path="/register" component={Register} />
+            <Route
+              path="/register"
+              component={Register}
+              toggleLoading={this.toggleLoading}
+              loading={this.state.loading}
+              loader={<Loader />}
+            />
             <Route
               path="/library"
               render={props => (
@@ -237,6 +261,8 @@ class App extends Component {
               borrowed={this.borrowed}
               borrowedBooks={this.state.borrowedBooks}
               returnBook={this.returnBook}
+              loader={<Loader />}
+              loading={this.state.loading}
             />
             <PrivateRoute
               path="/borrow"
@@ -244,12 +270,16 @@ class App extends Component {
               {...this.state}
               getBooks={this.getBooks}
               borrowBook={this.borrowBook}
+              loading={this.state.loading}
+              loader={<Loader />}
             />
             <PrivateRoute
               path="/history"
               component={BorrowHistory}
               {...this.state}
               borrowHistory={this.borrowHistory}
+              loading={this.state.loading}
+              loader={<Loader />}
             />
             <PrivateRoute
               path="/logout"

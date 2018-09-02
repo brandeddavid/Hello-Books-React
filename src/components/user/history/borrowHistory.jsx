@@ -16,34 +16,38 @@ class BorrowHistory extends Component {
                 <h1>Borrowing History</h1>
                 <hr />
               </div>
-              <div className="table-responsive">
-                <table className="table table-hover">
-                  <thead className="thead-dark">
-                    <tr>
-                      <th>Book Title</th>
-                      <th>Book Author</th>
-                      <th>Book ISBN</th>
-                      <th>Date Borrowed</th>
-                      <th>Date Due</th>
-                      <th>Date Returned</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.props.borrowedBooksHistory.map(book => (
-                      <tr key={null}>
-                        <td>{book.title}</td>
-                        <td>{book.author}</td>
-                        <td>{book.isbn}</td>
-                        <td>{book.borrowDate}</td>
-                        <td>{book.dueDate ? book.dueDate : "Returned"}</td>
-                        <td>
-                          {book.returnDate ? book.returnDate : "Not Returned"}
-                        </td>
+              {this.props.loading ? (
+                this.props.loader
+              ) : (
+                <div className="table-responsive">
+                  <table className="table table-hover">
+                    <thead className="thead-dark">
+                      <tr>
+                        <th>Book Title</th>
+                        <th>Book Author</th>
+                        <th>Book ISBN</th>
+                        <th>Date Borrowed</th>
+                        <th>Date Due</th>
+                        <th>Date Returned</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody>
+                      {this.props.borrowedBooksHistory.map(book => (
+                        <tr key={null}>
+                          <td>{book.title}</td>
+                          <td>{book.author}</td>
+                          <td>{book.isbn}</td>
+                          <td>{book.borrowDate}</td>
+                          <td>{book.dueDate ? book.dueDate : "Returned"}</td>
+                          <td>
+                            {book.returnDate ? book.returnDate : "Not Returned"}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           </div>
         </div>
