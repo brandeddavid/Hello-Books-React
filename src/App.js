@@ -3,7 +3,7 @@ import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import AdminNav from "./components/navbars/adminnav";
 import IndexNav from "./components/navbars/indexnav";
 import Login from "./components/auth/login/login";
-import Loader from "./components/auth/loader/loader";
+import Loader from "./utils/loader/loader";
 import Logout from "./components/auth/logout/logout";
 import Index from "./components/index/index";
 import Register from "./components/auth/register/register";
