@@ -158,7 +158,7 @@ class App extends Component {
           });
           return { library, loading: false };
         });
-        swal(`Borrowed ${res.book.title}`, "", "success");
+        swal(`Borrowed ${res.book.title}`, { buttons: false, timer: 3000 });
       } else {
         this.setState(() => ({ loading: false }));
         swal(`${res.error.Message}`, "", "warning");
@@ -270,6 +270,8 @@ class App extends Component {
               error={this.state.error}
               toggleDeleteAlert={this.toggleDeleteAlert}
               deleteBook={this.deleteBook}
+              loader={<Loader />}
+              loading={this.state.loading}
             />
             <PrivateRoute
               path="/user"
