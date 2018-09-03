@@ -1,2 +1,3 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/464fecf0a77d440999aca3aa56c9e336)](https://app.codacy.com/app/brandeddavid/Hello-Books-React?utm_source=github.com&utm_medium=referral&utm_content=brandeddavid/Hello-Books-React&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/brandeddavid/Hello-Books-React.svg?branch=master)](https://travis-ci.org/brandeddavid/Hello-Books-React)
 [![Coverage Status](https://coveralls.io/repos/github/brandeddavid/Hello-Books-React/badge.svg?branch=master)](https://coveralls.io/github/brandeddavid/Hello-Books-React?branch=master)
