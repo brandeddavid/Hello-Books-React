@@ -63,6 +63,8 @@ class ManageBooks extends Component {
               updateBook={this.props.updateBook}
               bookUpdated={this.props.bookUpdated}
               error={this.props.error}
+              loader={this.props.loader}
+              loading={this.props.loading}
             />
           ) : null}
           {this.props.renderDeleteAlert ? (
@@ -71,6 +73,8 @@ class ManageBooks extends Component {
               show={this.props.renderDeleteAlert}
               deleteBook={this.props.deleteBook}
               toggleDeleteAlert={this.props.toggleDeleteAlert}
+              loader={this.props.loader}
+              loading={this.props.loading}
             />
           ) : null}
           {this.state.error ? <span>{this.state.error.Message}</span> : ""}

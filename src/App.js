@@ -61,7 +61,7 @@ class App extends Component {
           user: res.user,
           loading: false
         }));
-        swal("Logged In Successfully", "", "success");
+        swal("Logged In Successfully", { buttons: false, timer: 1000 });
       } else {
         this.setState(() => ({ error: res.error, loading: false }));
       }
@@ -91,32 +91,41 @@ class App extends Component {
 
   newBook = (event, bookData) => {
     event.preventDefault();
+    this.toggleLoading();
     let accessToken = localStorage.getItem("accessToken");
     addBook(bookData, accessToken).then(res => {
-      res.status === "success"
-        ? this.setState(() => ({
-            library: [...this.state.library, res.book],
-            renderModal: false
-          }))
-        : this.setState(() => ({ error: res.error }));
+      if (res.status === "success") {
+        this.setState(() => ({
+          library: [...this.state.library, res.book],
+          renderModal: false,
+          loading: false
+        }));
+        swal(`Added ${res.book.title}`, { buttons: false, timer: 3000 });
+      } else {
+        this.setState(() => ({ error: res.error, loading: false }));
+      }
     });
   };
 
   updateBook = (event, bookId, bookData) => {
     event.preventDefault();
+    this.toggleLoading();
     let accessToken = localStorage.getItem("accessToken");
     return editBook(bookData, bookId, accessToken).then(res => {
-      res.status === "success"
-        ? this.setState(() => {
-            const library = this.state.library.map(book => {
-              if (book.id === res.book.id) {
-                return res.book;
-              }
-              return book;
-            });
-            return { renderModal: false, library };
-          })
-        : this.setState(prevState => ({ error: res.error }));
+      if (res.status === "success") {
+        this.setState(() => {
+          const library = this.state.library.map(book => {
+            if (book.id === res.book.id) {
+              return res.book;
+            }
+            return book;
+          });
+          return { renderModal: false, library, loading: false };
+        });
+        swal(`Updated ${res.book.title}`, { buttons: false, timer: 3000 });
+      } else {
+        this.setState(prevState => ({ error: res.error, loading: false }));
+      }
     });
   };
 
@@ -124,16 +133,17 @@ class App extends Component {
     event.preventDefault();
     let accessToken = localStorage.getItem("accessToken");
     removeBook(bookId, accessToken).then(res => {
-      res.status === "success"
-        ? this.setState(() => {
-            const library = this.state.library.filter(
-              book => book.id !== bookId
-            );
-            return { renderDeleteAlert: false, library };
-          })
-        : this.setState(() => ({
-            error: res.error
-          }));
+      if (res.status === "success") {
+        this.setState(() => {
+          const library = this.state.library.filter(book => book.id !== bookId);
+          return { renderDeleteAlert: false, library };
+        });
+        swal("Book deleted successfully", { buttons: false, timer: 3000 });
+      } else {
+        this.setState(() => ({
+          error: res.error
+        }));
+      }
     });
   };
 
