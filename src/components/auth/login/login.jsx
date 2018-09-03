@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import IndexNav from "../../navbars/indexnav";
-import Loader from "../loader/loader";
 import "../../../static/css/forms.css";
 import "../../../static/css/main.css";
 

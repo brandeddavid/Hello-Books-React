@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
+import swal from "sweetalert";
 import AdminNav from "./components/navbars/adminnav";
 import IndexNav from "./components/navbars/indexnav";
 import Login from "./components/auth/login/login";
@@ -60,6 +61,7 @@ class App extends Component {
           user: res.user,
           loading: false
         }));
+        swal("Logged In Successfully", "", "success");
       } else {
         this.setState(() => ({ error: res.error, loading: false }));
       }
@@ -145,17 +147,21 @@ class App extends Component {
     this.toggleLoading();
     let accessToken = localStorage.getItem("accessToken");
     return borrow(bookId, accessToken).then(res => {
-      res.status === "success"
-        ? this.setState(() => {
-            const library = this.state.library.map(book => {
-              if (book.id === res.book.id) {
-                return res.book;
-              }
-              return book;
-            });
-            return { library, loading: false };
-          })
-        : this.setState(() => ({ error: res.error, loading: false }));
+      if (res.status === "success") {
+        this.setState(() => {
+          const library = this.state.library.map(book => {
+            if (book.id === res.book.id) {
+              return res.book;
+            }
+            return book;
+          });
+          return { library, loading: false };
+        });
+        swal(`Borrowed ${res.book.title}`, "", "success");
+      } else {
+        this.setState(() => ({ loading: false }));
+        swal(`${res.error.Message}`, "", "warning");
+      }
     });
   };
 
@@ -177,14 +183,18 @@ class App extends Component {
     this.toggleLoading();
     let accessToken = localStorage.getItem("accessToken");
     return returnABook(bookId, accessToken).then(res => {
-      res.status === "success"
-        ? this.setState(() => {
-            const borrowedBooks = this.state.borrowedBooks.filter(
-              book => book.id !== bookId
-            );
-            return { borrowedBooks, loading: false };
-          })
-        : this.setState(() => ({ error: res.error, loading: false }));
+      if (res.status === "success") {
+        this.setState(() => {
+          const borrowedBooks = this.state.borrowedBooks.filter(
+            book => book.id !== bookId
+          );
+          return { borrowedBooks, loading: false };
+        });
+        swal("Returned successfully", "", "success");
+      } else {
+        this.setState(() => ({ loading: false }));
+        swal(`${res.error.Message}`, "", "warning");
+      }
     });
   };
 
