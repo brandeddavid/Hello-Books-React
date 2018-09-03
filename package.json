@@ -20,7 +20,8 @@
     "react-icons-kit": "^1.1.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
-    "reactstrap": "^6.3.1"
+    "reactstrap": "^6.3.1",
+    "sweetalert": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

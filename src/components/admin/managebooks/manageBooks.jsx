@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Button } from "reactstrap";
 import BookModal from "./bookModal";
 import DeleteBook from "../alerts/deleteBook";
@@ -18,21 +18,21 @@ class ManageBooks extends Component {
   }
 
   renderAddModal = () => {
-    this.props.toggleModal()
+    this.props.toggleModal();
     this.setState({
       currentBook: null
     });
   };
 
   renderEditModal = book => {
-    this.props.toggleModal()
+    this.props.toggleModal();
     this.setState({
       currentBook: book
     });
   };
 
   deleteAlert = book => {
-    this.props.toggleDeleteAlert()
+    this.props.toggleDeleteAlert();
     this.setState({
       book: book
     });
@@ -63,6 +63,8 @@ class ManageBooks extends Component {
               updateBook={this.props.updateBook}
               bookUpdated={this.props.bookUpdated}
               error={this.props.error}
+              loader={this.props.loader}
+              loading={this.props.loading}
             />
           ) : null}
           {this.props.renderDeleteAlert ? (
@@ -71,54 +73,60 @@ class ManageBooks extends Component {
               show={this.props.renderDeleteAlert}
               deleteBook={this.props.deleteBook}
               toggleDeleteAlert={this.props.toggleDeleteAlert}
+              loader={this.props.loader}
+              loading={this.props.loading}
             />
           ) : null}
           {this.state.error ? <span>{this.state.error.Message}</span> : ""}
-          <div className="table-responsive">
-            <table className="table table-striped table-hover book-table">
-              <thead className="thead-dark">
-                <tr>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th>ISBN</th>
-                  <th>Publisher</th>
-                  <th>Quantity</th>
-                  <th />
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.library.map(book => (
-                  <tr key={book.id}>
-                    <td>{book.title}</td>
-                    <td>{book.author}</td>
-                    <td>{book.isbn}</td>
-                    <td>{book.publisher}</td>
-                    <td>{book.quantity}</td>
-                    <td className="text-center">
-                      <button
-                        onClick={() => this.renderEditModal(book)}
-                        className="btn btn-primary"
-                      >
-                        Edit
-                      </button>
-                    </td>
-                    <td className="text-center">
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => this.deleteAlert(book)}
-                      >
-                        Delete
-                      </button>
-                    </td>
+          {this.props.loading ? (
+            this.props.loader
+          ) : (
+            <div className="table-responsive">
+              <table className="table table-striped table-hover book-table">
+                <thead className="thead-dark">
+                  <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>ISBN</th>
+                    <th>Publisher</th>
+                    <th>Quantity</th>
+                    <th />
+                    <th />
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {this.props.library.map(book => (
+                    <tr key={book.id}>
+                      <td>{book.title}</td>
+                      <td>{book.author}</td>
+                      <td>{book.isbn}</td>
+                      <td>{book.publisher}</td>
+                      <td>{book.quantity}</td>
+                      <td className="text-center">
+                        <button
+                          onClick={() => this.renderEditModal(book)}
+                          className="btn btn-primary"
+                        >
+                          Edit
+                        </button>
+                      </td>
+                      <td className="text-center">
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => this.deleteAlert(book)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </React.Fragment>
-    )
+    );
   }
 }
 
