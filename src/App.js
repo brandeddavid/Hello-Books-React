@@ -77,10 +77,11 @@ class App extends Component {
   };
 
   getBooks = () => {
+    this.toggleLoading();
     fetchBooks().then(res => {
       res.status === "success"
-        ? this.setState({ library: res.books })
-        : this.setState({ error: res.error });
+        ? this.setState({ library: res.books, loading: false })
+        : this.setState({ error: res.error, loading: false });
     });
   };
 
@@ -248,7 +249,13 @@ class App extends Component {
             <Route
               path="/library"
               render={props => (
-                <Library {...props} {...this.state} getBooks={this.getBooks} />
+                <Library
+                  {...props}
+                  {...this.state}
+                  getBooks={this.getBooks}
+                  loader={<Loader />}
+                  loading={this.state.loading}
+                />
               )}
             />
             <PrivateRoute path="/admin" component={AdminDash} {...this.state} />
