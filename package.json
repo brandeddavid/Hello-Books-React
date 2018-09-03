@@ -28,7 +28,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "lint": "eslint src",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "coveralls": "react-scripts test --env=jsdom --coverage --coverageReporters=text-lcov | coveralls"
   },
   "devDependencies": {
     "eslint": "^5.3.0",
