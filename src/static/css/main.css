@@ -4,6 +4,10 @@ body {
   color: aliceblue !important;
 }
 
+hr {
+  border-color: aliceblue !important;
+}
+
 .navbar {
   background: #847996 !important;
 }

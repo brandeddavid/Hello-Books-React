@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import IndexNav from "../navbars/indexnav";
+import UserNav from "../../navbars/usernav";
+import { Button } from "reactstrap";
+import "./loader.css";
 
-// Stateless Component: Has no state and operates with props only. Easy to follow and test
-
-class Library extends Component {
+class Borrow extends Component {
   componentDidMount() {
     this.props.getBooks();
   }
   render() {
     return (
       <React.Fragment>
-        <IndexNav />
+        <UserNav />
         <div className="container">
           <div className="row">
             <div className="col-md-12">
@@ -30,18 +30,31 @@ class Library extends Component {
                       <th>Author</th>
                       <th>ISBN</th>
                       <th>Publisher</th>
-                      <th>Status</th>
+                      <th>Copies</th>
+                      <th />
                     </tr>
                   </thead>
                   <tbody>
                     {this.props.library.map(book => (
-                      <tr key={book.isbn}>
+                      <tr key={book.id}>
                         <td>{book.title}</td>
                         <td>{book.author}</td>
                         <td>{book.isbn}</td>
                         <td>{book.publisher}</td>
+                        <td>{book.quantity}</td>
                         <td>
-                          {book.availability ? "Available" : "Not Available"}
+                          {book.quantity === 0 ? (
+                            "Not Available"
+                          ) : (
+                            <Button
+                              className="btn btn-success"
+                              onClick={event =>
+                                this.props.borrowBook(event, book.id)
+                              }
+                            >
+                              Borrow
+                            </Button>
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -56,8 +69,8 @@ class Library extends Component {
   }
 }
 
-Library.propTypes = {
+Borrow.propTypes = {
   library: PropTypes.array.isRequired
 };
 
-export default Library;
+export default Borrow;

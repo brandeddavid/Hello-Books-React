@@ -26,6 +26,7 @@ class Register extends Component {
   };
   handleSubmit = event => {
     event.preventDefault();
+    this.props.toggleLoading();
     registerUser(this.state).then(res => {
       res.status === "success"
         ? this.setState({ registered: res.registered })
@@ -148,11 +149,19 @@ class Register extends Component {
                       value={this.state.confirm_password}
                     />
                   </div>
-                  <button type="submit" className="btn btn-primary">
-                    Register
-                  </button>
+                  <div>
+                    {this.props.loading ? (
+                      this.props.loader
+                    ) : (
+                      <button type="submit" className="btn btn-primary">
+                        Register
+                      </button>
+                    )}
+                  </div>
                 </form>
-                <p className="member-already">Already a member? <Link to="/login">Log in</Link></p>
+                <p className="member-already">
+                  Already a member? <Link to="/login">Log in</Link>
+                </p>
               </div>
             </div>
           </div>

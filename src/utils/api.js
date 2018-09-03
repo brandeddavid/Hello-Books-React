@@ -135,7 +135,7 @@ export const editBook = (bookData, bookId, accessToken) => {
     .catch(errorHandler);
 };
 
-export const deleteBook = (bookId, accessToken) => {
+export const removeBook = (bookId, accessToken) => {
   let url = `${baseURL}/book/${bookId}`;
   let axiosConfigAuth = {
     headers: {
@@ -152,8 +152,26 @@ export const deleteBook = (bookId, accessToken) => {
     .catch(errorHandler);
 };
 
+export const borrow = (bookId, accessToken) => {
+  let url = `${baseURL}/users/books/${bookId}`;
+  let axiosConfigAuth = {
+    headers: {
+      "Content-Type": "application/json",
+      AccessControlAllowOrigin: "*",
+      Authorization: "Bearer " + accessToken
+    }
+  };
+  let payload=null
+  return axios
+    .post(url, payload, axiosConfigAuth)
+    .then(res => {
+      return { status: "success", book: res.data.Book };
+    })
+    .catch(errorHandler);
+};
+
 export const notReturned = accessToken => {
-  let url = "http://localhost:5000/api/users/books?returned=false";
+  let url = `${baseURL}/users/books?returned=false`;
   let axiosConfigAuth = {
     headers: {
       "Content-Type": "application/json",
@@ -164,13 +182,31 @@ export const notReturned = accessToken => {
   return axios
     .get(url, axiosConfigAuth)
     .then(res => {
-      return {status: "success", borrowedBooks: res.data.unreturned}
+      return { status: "success", borrowedBooks: res.data.unreturned };
+    })
+    .catch(errorHandler);
+};
+
+export const returnABook = (bookId, accessToken) => {
+  let url = `${baseURL}/users/books/${bookId}`;
+  let axiosConfigAuth = {
+    headers: {
+      "Content-Type": "application/json",
+      AccessControlAllowOrigin: "*",
+      Authorization: "Bearer " + accessToken
+    }
+  };
+  let payload=null
+  return axios
+    .put(url, payload, axiosConfigAuth)
+    .then(res => {
+      return { status: "success", data: res.data };
     })
     .catch(errorHandler);
 };
 
 export const borrowingHistory = accessToken => {
-  let url = "http://localhost:5000/api/users/books";
+  let url = `${baseURL}/users/books`;
   let axiosConfigAuth = {
     headers: {
       "Content-Type": "application/json",
@@ -181,7 +217,7 @@ export const borrowingHistory = accessToken => {
   return axios
     .get(url, axiosConfigAuth)
     .then(res => {
-      return {status: "success", history: res.data.borrowHistory}
+      return { status: "success", history: res.data.borrowHistory };
     })
     .catch(errorHandler);
 };
