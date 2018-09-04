@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import UserNav from "../../navbars/usernav";
 import { Button } from "reactstrap";
-import "./loader.css";
 
 class Borrow extends Component {
   componentDidMount() {
