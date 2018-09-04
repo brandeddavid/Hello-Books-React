@@ -17,6 +17,7 @@ import Borrow from "./components/user/borrow/borrow";
 import PrivateRoute from "./utils/privateRoutes";
 import history from "./utils/history";
 import {
+  registerUser,
   fetchBooks,
   addBook,
   editBook,
@@ -35,19 +36,43 @@ class App extends Component {
       loading: false,
       user: {},
       loggedIn: false,
+      registered: false,
       isAdmin: null,
       library: [],
       renderModal: false,
       renderDeleteAlert: false,
       error: {},
       loginErrors: {},
+      regErrors: {},
       borrowedBooks: [],
       borrowedBooksHistory: []
     };
   }
 
+  noErrors = () => {
+    this.setState(() => ({
+      error: {},
+      regErrors: {},
+      loginErrors: {}
+    }));
+  };
+
   toggleLoading = () => {
     this.setState(() => ({ loading: !this.state.loading }));
+  };
+
+  register = regData => {
+    registerUser(regData).then(res => {
+      if (res.status === "success") {
+        this.setState(() => ({
+          registered: true,
+          regErrors: {},
+          loading: false
+        }));
+      } else {
+        this.setState(() => ({ regErrors: res.error, loading: false }));
+      }
+    });
   };
 
   logIn = loginData => {
@@ -252,10 +277,18 @@ class App extends Component {
             />
             <Route
               path="/register"
-              component={Register}
-              toggleLoading={this.toggleLoading}
-              loading={this.state.loading}
-              loader={<Loader />}
+              render={props => (
+                <Register
+                  {...props}
+                  noErrors={this.noErrors}
+                  register={this.register}
+                  registered={this.state.registered}
+                  regErrors={this.state.regErrors}
+                  toggleLoading={this.toggleLoading}
+                  loading={this.state.loading}
+                  loader={<Loader />}
+                />
+              )}
             />
             <Route
               path="/library"
