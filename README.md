@@ -1,2 +1,0 @@
-[![Build Status](https://travis-ci.org/brandeddavid/Hello-Books-React.svg?branch=master)](https://travis-ci.org/brandeddavid/Hello-Books-React)
-[![Coverage Status](https://coveralls.io/repos/github/brandeddavid/Hello-Books-React/badge.svg?branch=master)](https://coveralls.io/github/brandeddavid/Hello-Books-React?branch=master)
