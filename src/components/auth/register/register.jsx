@@ -63,6 +63,7 @@ class Register extends Component {
                       onChange={this.handleChange}
                       name="first_name"
                       value={this.state.first_name}
+                      required={true}
                     />
                   </div>
                   <div className="form-group">
@@ -80,6 +81,7 @@ class Register extends Component {
                       onChange={this.handleChange}
                       name="last_name"
                       value={this.state.last_name}
+                      required={true}
                     />
                   </div>
                   <div className="form-group">
@@ -97,6 +99,7 @@ class Register extends Component {
                       onChange={this.handleChange}
                       name="email"
                       value={this.state.email}
+                      required={true}
                     />
                   </div>
                   <div className="form-group">
@@ -114,6 +117,7 @@ class Register extends Component {
                       onChange={this.handleChange}
                       name="username"
                       value={this.state.username}
+                      required={true}
                     />
                   </div>
                   <div className="form-group">
@@ -131,6 +135,7 @@ class Register extends Component {
                       onChange={this.handleChange}
                       name="password"
                       value={this.state.password}
+                      required={true}
                     />
                   </div>
                   <div className="form-group">
@@ -148,6 +153,7 @@ class Register extends Component {
                       onChange={this.handleChange}
                       name="confirm_password"
                       value={this.state.confirm_password}
+                      required={true}
                     />
                   </div>
                   <div>

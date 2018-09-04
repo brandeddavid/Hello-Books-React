@@ -63,6 +63,7 @@ class Login extends Component {
                       onChange={this.handleChange}
                       name="username"
                       value={this.state.username}
+                      required={true}
                     />
                   </div>
                   <div className="form-group">
@@ -81,6 +82,7 @@ class Login extends Component {
                       onChange={this.handleChange}
                       name="password"
                       value={this.state.password}
+                      required={true}
                     />
                   </div>
                   <div>

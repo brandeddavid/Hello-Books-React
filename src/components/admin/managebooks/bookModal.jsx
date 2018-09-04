@@ -54,6 +54,7 @@ class BookModal extends Component {
                   name="title"
                   onChange={this.handleChange}
                   value={this.state.title}
+                  required={true}
                 />
               </div>
               <div className="form-group">
@@ -69,6 +70,7 @@ class BookModal extends Component {
                   name="author"
                   onChange={this.handleChange}
                   value={this.state.author}
+                  required={true}
                 />
               </div>
               <div className="form-group">
@@ -84,6 +86,7 @@ class BookModal extends Component {
                   name="isbn"
                   onChange={this.handleChange}
                   value={this.state.isbn}
+                  required={true}
                 />
               </div>
               <div className="form-group">
@@ -99,6 +102,7 @@ class BookModal extends Component {
                   name="publisher"
                   onChange={this.handleChange}
                   value={this.state.publisher}
+                  required={true}
                 />
               </div>
               <div className="form-group">
@@ -115,6 +119,7 @@ class BookModal extends Component {
                   onChange={this.handleChange}
                   value={this.state.quantity}
                   min="0"
+                  required={true}
                 />
               </div>
               <div>
