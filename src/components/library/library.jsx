@@ -57,7 +57,8 @@ class Library extends Component {
 }
 
 Library.propTypes = {
-  library: PropTypes.array.isRequired
+  library: PropTypes.array.isRequired,
+  loading: PropTypes.bool
 };
 
 export default Library;

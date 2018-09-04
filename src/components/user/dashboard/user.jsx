@@ -7,12 +7,15 @@ class UserDash extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: this.props.user
+      user: {}
     };
   }
   componentDidMount() {
     this.props.getUser();
     this.props.borrowed();
+    this.setState(() => ({
+      user: this.props.user
+    }));
   }
   render() {
     return (
