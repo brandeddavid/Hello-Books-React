@@ -26,7 +26,7 @@ class Login extends Component {
 
   render() {
     return this.props.loggedIn && !this.props.isAdmin ? (
-      <Redirect to="/user" />
+      <Redirect to="/user" {...this.props}/>
     ) : this.props.loggedIn && this.props.isAdmin ? (
       <Redirect to="/admin" />
     ) : (
@@ -39,8 +39,10 @@ class Login extends Component {
               <div className="login-form">
                 <legend>Login</legend>
                 <form onSubmit={this.handleSubmit}>
-                  {this.props.error.Message ? (
-                    <div className="error">{this.props.error.Message}</div>
+                  {this.props.loginErrors.Message ? (
+                    <div className="error">
+                      {this.props.loginErrors.Message}
+                    </div>
                   ) : (
                     ""
                   )}
@@ -48,8 +50,8 @@ class Login extends Component {
                     <label htmlFor="username">Username</label>
                     <br />
                     <span className="error">
-                      {this.props.error.username
-                        ? this.props.error.username
+                      {this.props.loginErrors.username
+                        ? this.props.loginErrors.username
                         : ""}
                     </span>
                     <input
@@ -61,14 +63,15 @@ class Login extends Component {
                       onChange={this.handleChange}
                       name="username"
                       value={this.state.username}
+                      required={true}
                     />
                   </div>
                   <div className="form-group">
                     <label htmlFor="password">Password</label>
                     <br />
                     <span className="error">
-                      {this.props.error.password
-                        ? this.props.error.password
+                      {this.props.loginErrors.password
+                        ? this.props.loginErrors.password
                         : ""}
                     </span>
                     <input
@@ -79,6 +82,7 @@ class Login extends Component {
                       onChange={this.handleChange}
                       name="password"
                       value={this.state.password}
+                      required={true}
                     />
                   </div>
                   <div>

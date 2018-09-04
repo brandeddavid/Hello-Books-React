@@ -17,11 +17,13 @@ import Borrow from "./components/user/borrow/borrow";
 import PrivateRoute from "./utils/privateRoutes";
 import history from "./utils/history";
 import {
+  registerUser,
   fetchBooks,
   addBook,
   editBook,
   removeBook,
   loginUser,
+  fetchUser,
   borrow,
   notReturned,
   returnABook,
@@ -35,18 +37,51 @@ class App extends Component {
       loading: false,
       user: {},
       loggedIn: false,
+      registered: false,
       isAdmin: null,
       library: [],
       renderModal: false,
       renderDeleteAlert: false,
       error: {},
+      loginErrors: {},
+      regErrors: {},
       borrowedBooks: [],
       borrowedBooksHistory: []
     };
   }
 
+  noErrors = () => {
+    this.setState(() => ({
+      error: {},
+      regErrors: {},
+      loginErrors: {}
+    }));
+  };
+
   toggleLoading = () => {
     this.setState(() => ({ loading: !this.state.loading }));
+  };
+
+  getUser = () => {
+    let accessToken = localStorage.getItem("accessToken");
+    fetchUser(accessToken).then(res => {
+      this.setState(() => ({ user: res.user }));
+    });
+  };
+
+  register = regData => {
+    registerUser(regData).then(res => {
+      if (res.status === "success") {
+        this.setState(() => ({
+          registered: true,
+          regErrors: {},
+          loading: false
+        }));
+        swal("Registration successful", "", "success");
+      } else {
+        this.setState(() => ({ regErrors: res.error, loading: false }));
+      }
+    });
   };
 
   logIn = loginData => {
@@ -58,12 +93,11 @@ class App extends Component {
         this.setState(() => ({
           loggedIn: true,
           isAdmin: res.user.is_admin,
-          user: res.user,
           loading: false
         }));
         swal("Logged In Successfully", { buttons: false, timer: 1000 });
       } else {
-        this.setState(() => ({ error: res.error, loading: false }));
+        this.setState(() => ({ loginErrors: res.error, loading: false }));
       }
     });
   };
@@ -72,7 +106,8 @@ class App extends Component {
     localStorage.removeItem("accessToken");
     this.setState(() => ({
       loggedIn: false,
-      isAdmin: null
+      isAdmin: null,
+      user: {}
     }));
   };
 
@@ -201,7 +236,7 @@ class App extends Component {
           );
           return { borrowedBooks, loading: false };
         });
-        swal("Returned successfully", "", "success");
+        swal("Returned successfully", { buttons: false, timer: 3000 });
       } else {
         this.setState(() => ({ loading: false }));
         swal(`${res.error.Message}`, "", "warning");
@@ -213,7 +248,6 @@ class App extends Component {
     let accessToken = localStorage.getItem("accessToken");
     this.toggleLoading();
     borrowingHistory(accessToken).then(res => {
-      console.log(res);
       res.status === "success"
         ? this.setState(() => ({
             borrowedBooksHistory: res.history,
@@ -239,7 +273,7 @@ class App extends Component {
               render={props => (
                 <Login
                   {...props}
-                  error={this.state.error}
+                  loginErrors={this.state.loginErrors}
                   loggedIn={this.state.loggedIn}
                   isAdmin={this.state.isAdmin}
                   logIn={this.logIn}
@@ -251,10 +285,18 @@ class App extends Component {
             />
             <Route
               path="/register"
-              component={Register}
-              toggleLoading={this.toggleLoading}
-              loading={this.state.loading}
-              loader={<Loader />}
+              render={props => (
+                <Register
+                  {...props}
+                  noErrors={this.noErrors}
+                  register={this.register}
+                  registered={this.state.registered}
+                  regErrors={this.state.regErrors}
+                  toggleLoading={this.toggleLoading}
+                  loading={this.state.loading}
+                  loader={<Loader />}
+                />
+              )}
             />
             <Route
               path="/library"
@@ -288,6 +330,7 @@ class App extends Component {
               component={UserDash}
               user={this.state.user}
               borrowed={this.borrowed}
+              getUser={this.getUser}
               borrowedBooks={this.state.borrowedBooks}
               returnBook={this.returnBook}
               loader={<Loader />}

@@ -14,10 +14,11 @@ class Register extends Component {
       email: "",
       username: "",
       password: "",
-      confirm_password: "",
-      registered: false,
-      error: {}
+      confirm_password: ""
     };
+  }
+  componentDidMount() {
+    this.props.noErrors();
   }
   handleChange = event => {
     this.setState({
@@ -27,14 +28,10 @@ class Register extends Component {
   handleSubmit = event => {
     event.preventDefault();
     this.props.toggleLoading();
-    registerUser(this.state).then(res => {
-      res.status === "success"
-        ? this.setState({ registered: res.registered })
-        : this.setState({ error: res.error });
-    });
+    this.props.register(this.state);
   };
   render() {
-    return this.state.registered ? (
+    return this.props.registered ? (
       <Redirect to="/login" />
     ) : (
       <React.Fragment>
@@ -47,13 +44,15 @@ class Register extends Component {
                 <legend>Register</legend>
                 <form onSubmit={this.handleSubmit}>
                   <div className="error">
-                    {this.state.error.Message ? this.state.error.Message : ""}
+                    {this.props.regErrors.Message
+                      ? this.props.regErrors.Message
+                      : ""}
                   </div>
                   <div className="form-group">
                     <label htmlFor="first_name">First Name</label>
                     <div className="error">
-                      {this.state.error.first_name
-                        ? this.state.error.first_name
+                      {this.props.regErrors.first_name
+                        ? this.props.regErrors.first_name
                         : ""}
                     </div>
                     <input
@@ -64,13 +63,14 @@ class Register extends Component {
                       onChange={this.handleChange}
                       name="first_name"
                       value={this.state.first_name}
+                      required={true}
                     />
                   </div>
                   <div className="form-group">
                     <label htmlFor="last_name">Last Name</label>
                     <div className="error">
-                      {this.state.error.last_name
-                        ? this.state.error.last_name
+                      {this.props.regErrors.last_name
+                        ? this.props.regErrors.last_name
                         : ""}
                     </div>
                     <input
@@ -81,12 +81,15 @@ class Register extends Component {
                       onChange={this.handleChange}
                       name="last_name"
                       value={this.state.last_name}
+                      required={true}
                     />
                   </div>
                   <div className="form-group">
                     <label htmlFor="email">Email</label>
                     <div className="error">
-                      {this.state.error.email ? this.state.error.email : ""}
+                      {this.props.regErrors.email
+                        ? this.props.regErrors.email
+                        : ""}
                     </div>
                     <input
                       type="email"
@@ -96,13 +99,14 @@ class Register extends Component {
                       onChange={this.handleChange}
                       name="email"
                       value={this.state.email}
+                      required={true}
                     />
                   </div>
                   <div className="form-group">
                     <label htmlFor="username">Username</label>
                     <div className="error">
-                      {this.state.error.username
-                        ? this.state.error.username
+                      {this.props.regErrors.username
+                        ? this.props.regErrors.username
                         : ""}
                     </div>
                     <input
@@ -113,13 +117,14 @@ class Register extends Component {
                       onChange={this.handleChange}
                       name="username"
                       value={this.state.username}
+                      required={true}
                     />
                   </div>
                   <div className="form-group">
                     <label htmlFor="password">Password</label>
                     <div className="error">
-                      {this.state.error.password
-                        ? this.state.error.password
+                      {this.props.regErrors.password
+                        ? this.props.regErrors.password
                         : ""}
                     </div>
                     <input
@@ -130,13 +135,14 @@ class Register extends Component {
                       onChange={this.handleChange}
                       name="password"
                       value={this.state.password}
+                      required={true}
                     />
                   </div>
                   <div className="form-group">
                     <label htmlFor="confirm_password">Confirm Password</label>
                     <div className="error">
-                      {this.state.error.confirm_password
-                        ? this.state.error.confirm_password
+                      {this.props.regErrors.confirm_password
+                        ? this.props.regErrors.confirm_password
                         : ""}
                     </div>
                     <input
@@ -147,6 +153,7 @@ class Register extends Component {
                       onChange={this.handleChange}
                       name="confirm_password"
                       value={this.state.confirm_password}
+                      required={true}
                     />
                   </div>
                   <div>
