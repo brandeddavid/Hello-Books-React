@@ -8,7 +8,6 @@ import "../../../static/css/admin.css";
 import IndexNav from "../../navbars/adminnav";
 
 class AdminDash extends Component {
-  state = {};
   render() {
     return (
       <React.Fragment>
