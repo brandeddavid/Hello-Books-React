@@ -17,9 +17,6 @@ class Register extends Component {
       confirm_password: ""
     };
   }
-  componentDidMount() {
-    this.props.noErrors();
-  }
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
