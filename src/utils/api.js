@@ -53,6 +53,20 @@ export const loginUser = userData => {
     });
 };
 
+export const fetchUser = accessToken => {
+  let url = `${baseURL}/user`;
+  let axiosConfigAuth = {
+    headers: {
+      "Content-Type": "application/json",
+      AccessControlAllowOrigin: "*",
+      Authorization: "Bearer " + accessToken
+    }
+  };
+  return axios.get(url, axiosConfigAuth).then(res => {
+    return { user: res.data.User };
+  });
+};
+
 export const logoutUser = accessToken => {
   let url = `${baseURL}/auth/logout`;
   let axiosConfigAuth = {
@@ -161,7 +175,7 @@ export const borrow = (bookId, accessToken) => {
       Authorization: "Bearer " + accessToken
     }
   };
-  let payload=null
+  let payload = null;
   return axios
     .post(url, payload, axiosConfigAuth)
     .then(res => {
@@ -196,7 +210,7 @@ export const returnABook = (bookId, accessToken) => {
       Authorization: "Bearer " + accessToken
     }
   };
-  let payload=null
+  let payload = null;
   return axios
     .put(url, payload, axiosConfigAuth)
     .then(res => {

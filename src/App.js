@@ -23,6 +23,7 @@ import {
   editBook,
   removeBook,
   loginUser,
+  fetchUser,
   borrow,
   notReturned,
   returnABook,
@@ -61,6 +62,13 @@ class App extends Component {
     this.setState(() => ({ loading: !this.state.loading }));
   };
 
+  getUser = () => {
+    let accessToken = localStorage.getItem("accessToken");
+    fetchUser(accessToken).then(res => {
+      this.setState(() => ({ user: res.user }));
+    });
+  };
+
   register = regData => {
     registerUser(regData).then(res => {
       if (res.status === "success") {
@@ -85,7 +93,6 @@ class App extends Component {
         this.setState(() => ({
           loggedIn: true,
           isAdmin: res.user.is_admin,
-          user: res.user,
           loading: false
         }));
         swal("Logged In Successfully", { buttons: false, timer: 1000 });
@@ -99,7 +106,8 @@ class App extends Component {
     localStorage.removeItem("accessToken");
     this.setState(() => ({
       loggedIn: false,
-      isAdmin: null
+      isAdmin: null,
+      user: {}
     }));
   };
 
@@ -240,7 +248,6 @@ class App extends Component {
     let accessToken = localStorage.getItem("accessToken");
     this.toggleLoading();
     borrowingHistory(accessToken).then(res => {
-      console.log(res);
       res.status === "success"
         ? this.setState(() => ({
             borrowedBooksHistory: res.history,
@@ -323,6 +330,7 @@ class App extends Component {
               component={UserDash}
               user={this.state.user}
               borrowed={this.borrowed}
+              getUser={this.getUser}
               borrowedBooks={this.state.borrowedBooks}
               returnBook={this.returnBook}
               loader={<Loader />}

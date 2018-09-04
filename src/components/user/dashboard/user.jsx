@@ -4,7 +4,14 @@ import UserNav from "../../navbars/usernav";
 import "./user.css";
 
 class UserDash extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: this.props.user
+    };
+  }
   componentDidMount() {
+    this.props.getUser();
     this.props.borrowed();
   }
   render() {

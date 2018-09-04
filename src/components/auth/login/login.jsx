@@ -26,7 +26,7 @@ class Login extends Component {
 
   render() {
     return this.props.loggedIn && !this.props.isAdmin ? (
-      <Redirect to="/user" />
+      <Redirect to="/user" {...this.props}/>
     ) : this.props.loggedIn && this.props.isAdmin ? (
       <Redirect to="/admin" />
     ) : (
