@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { mount, shallow } from "enzyme";
+import UserDash from "./components/user/dashboard/user";
 
 it("renders without crashing", () => {
   const div = document.createElement("div");
