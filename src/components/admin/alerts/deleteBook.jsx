@@ -13,7 +13,7 @@ class DeleteBook extends Component {
           <ModalBody>
             <p className="error">
             </p>
-            <p>Are you sure you want to delete book?</p>
+            <p className="confirm">Are you sure you want to delete book?</p>
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.props.toggleDeleteAlert}>
