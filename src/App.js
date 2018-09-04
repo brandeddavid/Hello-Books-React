@@ -69,6 +69,7 @@ class App extends Component {
           regErrors: {},
           loading: false
         }));
+        swal("Registration successful", "", "success");
       } else {
         this.setState(() => ({ regErrors: res.error, loading: false }));
       }
@@ -227,7 +228,7 @@ class App extends Component {
           );
           return { borrowedBooks, loading: false };
         });
-        swal("Returned successfully", "", "success");
+        swal("Returned successfully", { buttons: false, timer: 3000 });
       } else {
         this.setState(() => ({ loading: false }));
         swal(`${res.error.Message}`, "", "warning");
