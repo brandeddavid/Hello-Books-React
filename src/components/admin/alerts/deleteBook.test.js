@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { shallow } from "enzyme";
-import { spy } from "sinon";
 import DeleteBook from "./deleteBook";
 
 describe("Tests for Library", () => {
