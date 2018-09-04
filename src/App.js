@@ -40,6 +40,7 @@ class App extends Component {
       renderModal: false,
       renderDeleteAlert: false,
       error: {},
+      loginErrors: {},
       borrowedBooks: [],
       borrowedBooksHistory: []
     };
@@ -63,7 +64,7 @@ class App extends Component {
         }));
         swal("Logged In Successfully", { buttons: false, timer: 1000 });
       } else {
-        this.setState(() => ({ error: res.error, loading: false }));
+        this.setState(() => ({ loginErrors: res.error, loading: false }));
       }
     });
   };
@@ -239,7 +240,7 @@ class App extends Component {
               render={props => (
                 <Login
                   {...props}
-                  error={this.state.error}
+                  loginErrors={this.state.loginErrors}
                   loggedIn={this.state.loggedIn}
                   isAdmin={this.state.isAdmin}
                   logIn={this.logIn}

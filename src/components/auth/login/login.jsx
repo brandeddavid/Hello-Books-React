@@ -39,8 +39,10 @@ class Login extends Component {
               <div className="login-form">
                 <legend>Login</legend>
                 <form onSubmit={this.handleSubmit}>
-                  {this.props.error.Message ? (
-                    <div className="error">{this.props.error.Message}</div>
+                  {this.props.loginErrors.Message ? (
+                    <div className="error">
+                      {this.props.loginErrors.Message}
+                    </div>
                   ) : (
                     ""
                   )}
@@ -48,8 +50,8 @@ class Login extends Component {
                     <label htmlFor="username">Username</label>
                     <br />
                     <span className="error">
-                      {this.props.error.username
-                        ? this.props.error.username
+                      {this.props.loginErrors.username
+                        ? this.props.loginErrors.username
                         : ""}
                     </span>
                     <input
@@ -67,8 +69,8 @@ class Login extends Component {
                     <label htmlFor="password">Password</label>
                     <br />
                     <span className="error">
-                      {this.props.error.password
-                        ? this.props.error.password
+                      {this.props.loginErrors.password
+                        ? this.props.loginErrors.password
                         : ""}
                     </span>
                     <input
