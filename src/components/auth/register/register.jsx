@@ -88,7 +88,7 @@ class Register extends Component {
                     <label htmlFor="email">Email</label>
                     <div className="error">
                       {this.props.regErrors.email
-                        ? this.props.regErrors.email
+                        ? "Invalid Email"
                         : ""}
                     </div>
                     <input

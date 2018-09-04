@@ -264,7 +264,6 @@ class App extends Component {
     return (
       <Router>
         <div>
-          {/* {this.state.loggedIn ? <IndexNav /> : <AdminNav />} */}
           <Switch>
             <Route exact path="/" component={Index} />
             <Route path="/loader" component={Loader} />
@@ -275,7 +274,6 @@ class App extends Component {
                   {...props}
                   loginErrors={this.state.loginErrors}
                   loggedIn={this.state.loggedIn}
-                  isAdmin={this.state.isAdmin}
                   logIn={this.logIn}
                   toggleLoading={this.toggleLoading}
                   loader={<Loader />}
