@@ -13,7 +13,7 @@ class Index extends Component {
               <div className="row">
                 <div className="col-lg-12">
                   <div className="jumbotron">
-                    <h1 className="display-4"> Welcome to Hello Books </h1>
+                    <h1 className="display-4">Welcome to Hello Books</h1>
                     <p className="lead">
                       A library application that allows you to find and rent
                       your favorite books. We are here to help.
