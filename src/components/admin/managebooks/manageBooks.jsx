@@ -51,6 +51,13 @@ class ManageBooks extends Component {
               Add Book
             </Button>
           </div>
+          {this.props.library.length === 0 ? (
+            <span>
+              <h1 className="text-center error">No Books Available</h1>
+            </span>
+          ) : (
+            <h1 className="text-center">Available Books</h1>
+          )}
           {this.props.renderModal ? (
             <BookModal
               onHide={this.closeModal}
@@ -62,7 +69,7 @@ class ManageBooks extends Component {
               bookAdded={this.props.bookAdded}
               updateBook={this.props.updateBook}
               bookUpdated={this.props.bookUpdated}
-              error={this.props.error}
+              error={this.props.bookErrors}
               loader={this.props.loader}
               loading={this.props.loading}
             />
@@ -75,9 +82,9 @@ class ManageBooks extends Component {
               toggleDeleteAlert={this.props.toggleDeleteAlert}
               loader={this.props.loader}
               loading={this.props.loading}
+              error={this.props.deleteBookErrors}
             />
           ) : null}
-          {this.state.error ? <span>{this.state.error.Message}</span> : ""}
           {this.props.loading ? (
             this.props.loader
           ) : (
@@ -102,7 +109,7 @@ class ManageBooks extends Component {
                       <td>{book.isbn}</td>
                       <td>{book.publisher}</td>
                       <td>{book.quantity}</td>
-                      <td className="text-center">
+                      <td className="">
                         <button
                           onClick={() => this.renderEditModal(book)}
                           className="btn btn-primary"
@@ -110,7 +117,7 @@ class ManageBooks extends Component {
                           Edit
                         </button>
                       </td>
-                      <td className="text-center">
+                      <td className="">
                         <button
                           className="btn btn-danger"
                           onClick={() => this.deleteAlert(book)}

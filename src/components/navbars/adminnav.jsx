@@ -33,7 +33,7 @@ class AdminNav extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="">
+              <Link className="nav-link" to="#">
                 Manage Users
               </Link>
             </li>
