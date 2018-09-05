@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import UserNav from "../../navbars/usernav";
+import { Badge } from 'reactstrap';
+
 class BorrowHistory extends Component {
   componentDidMount() {
     this.props.borrowHistory();
@@ -38,9 +40,9 @@ class BorrowHistory extends Component {
                           <td>{book.author}</td>
                           <td>{book.isbn}</td>
                           <td>{book.borrowDate}</td>
-                          <td>{book.dueDate ? book.dueDate : "Returned"}</td>
+                          <td>{book.dueDate ? book.dueDate : <Badge color="success" pill>Returned</Badge>}</td>
                           <td>
-                            {book.returnDate ? book.returnDate : "Not Returned"}
+                            {book.returnDate ? book.returnDate : <Badge color="danger" pill>Not Returned</Badge>}
                           </td>
                         </tr>
                       ))}
