@@ -274,6 +274,7 @@ class App extends Component {
                   {...props}
                   loginErrors={this.state.loginErrors}
                   loggedIn={this.state.loggedIn}
+                  isAdmin={this.state.isAdmin}
                   logIn={this.logIn}
                   toggleLoading={this.toggleLoading}
                   loader={<Loader />}
