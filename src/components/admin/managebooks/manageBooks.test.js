@@ -78,7 +78,7 @@ describe("It renders add book modal", () => {
 });
 
 describe("It renders edit book modal", () => {
-  let getBooks, error, library, book, renderModal, wrapper, modal;
+  let getBooks, error, library, book, renderModal, wrapper, modal, updateBook;
   beforeEach(() => {
     getBooks = spy();
     error = {};
@@ -102,12 +102,14 @@ describe("It renders edit book modal", () => {
       quantity: 60,
       title: "Mentorship"
     };
+    updateBook = spy();
     renderModal = true;
     wrapper = shallow(
       <ManageBooks
         renderModal={renderModal}
         library={library}
         getBooks={getBooks}
+        updateBook={updateBook}
       />
     );
     modal = shallow(<BookModal error={error} book={book} />);
@@ -127,6 +129,13 @@ describe("It renders edit book modal", () => {
     expect(modal.state().isbn).toEqual("55555");
     expect(modal.state().publisher).toEqual("Mentorship");
     expect(modal.state().quantity).toEqual(60);
+  });
+  it("calls edit book function", () => {
+    modal
+      .find("button.save")
+      .hostNodes()
+      .simulate("click");
+    expect(updateBook).toHaveBeenCalled;
   });
 });
 

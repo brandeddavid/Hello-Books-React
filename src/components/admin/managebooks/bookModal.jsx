@@ -130,7 +130,7 @@ class BookModal extends Component {
                 {this.props.loading ? (
                   this.props.loader
                 ) : (
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary save">
                     Save
                   </button>
                 )}
