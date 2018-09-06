@@ -65,7 +65,7 @@ class ManageBooks extends Component {
               Add Book
             </Button>
           </div>
-          {this.props.library.length === 0 ? (
+          {this.props.library.length === 0 && !this.props.loading ? (
             <span>
               <h1 className="text-center error">No Books Available</h1>
             </span>
