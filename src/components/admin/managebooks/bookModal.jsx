@@ -22,7 +22,9 @@ class BookModal extends Component {
       <React.Fragment>
         <Modal isOpen={this.props.show} toggle={this.props.toggleModal}>
           <ModalHeader toggle={this.props.toggleModal}>
-            <div>{this.props.book ? "Edit Book Info" : "Add New Book"}</div>
+            <div className="header">
+              {this.props.book ? "Edit Book Info" : "Add New Book"}
+            </div>
           </ModalHeader>
           <ModalBody>
             <form

@@ -34,10 +34,11 @@ describe("Tests for Library", () => {
   });
 });
 
-describe("It renders book modal", () => {
+describe("It renders add book modal", () => {
   const getBooks = spy();
   const error = {};
   const library = [];
+  const book = null;
   const renderModal = true;
   const wrapper = shallow(
     <ManageBooks
@@ -46,8 +47,35 @@ describe("It renders book modal", () => {
       getBooks={getBooks}
     />
   );
-  const modal = shallow(<BookModal error={error} />);
+  const modal = shallow(<BookModal error={error} book={book} />);
   expect(modal).toHaveLength(1);
+  expect(modal.find("div.header").text()).toEqual("Add New Book");
+});
+
+describe("It renders edit book modal", () => {
+  const getBooks = spy();
+  const error = {};
+  const library = [];
+  const book = {
+    author: "Mentorship",
+    availability: true,
+    id: 63,
+    isbn: "55555",
+    publisher: "Mentorship",
+    quantity: 60,
+    title: "Mentorship"
+  };
+  const renderModal = true;
+  const wrapper = shallow(
+    <ManageBooks
+      renderModal={renderModal}
+      library={library}
+      getBooks={getBooks}
+    />
+  );
+  const modal = shallow(<BookModal error={error} book={book} />);
+  expect(modal).toHaveLength(1);
+  expect(modal.find("div.header").text()).toEqual("Edit Book Info");
 });
 
 describe("It renders delete modal", () => {
