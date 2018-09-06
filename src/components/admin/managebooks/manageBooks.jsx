@@ -15,7 +15,21 @@ class ManageBooks extends Component {
   }
   componentDidMount() {
     this.props.getBooks();
+    this.scrollListener = window.addEventListener("scroll", event => {
+      this.handleScroll(event);
+    });
   }
+
+  handleScroll = () => {
+    const { scrolling, totalPages, page } = this.props;
+    if (scrolling) return;
+    if (totalPages <= page) return;
+    const lastTr = document.querySelector("tr.book > td:last-child");
+    const lastTrOffset = lastTr.offsetTop + lastTr.clientHeight;
+    const pageOffset = window.pageYOffset + window.innerHeight;
+    var bottomOffset = 20;
+    if (pageOffset > lastTrOffset - bottomOffset) this.props.loadMore();
+  };
 
   renderAddModal = () => {
     this.props.toggleModal();
@@ -51,7 +65,7 @@ class ManageBooks extends Component {
               Add Book
             </Button>
           </div>
-          {this.props.library.length === 0 ? (
+          {this.props.library.length === 0 && !this.props.loading ? (
             <span>
               <h1 className="text-center error">No Books Available</h1>
             </span>
@@ -103,7 +117,7 @@ class ManageBooks extends Component {
                 </thead>
                 <tbody>
                   {this.props.library.map(book => (
-                    <tr key={book.id}>
+                    <tr key={book.id} className="book">
                       <td>{book.title}</td>
                       <td>{book.author}</td>
                       <td>{book.isbn}</td>
