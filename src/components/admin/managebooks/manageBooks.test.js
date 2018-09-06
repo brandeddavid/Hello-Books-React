@@ -24,7 +24,7 @@ describe("Tests for Library", () => {
     wrapper = shallow(<ManageBooks library={library} getBooks={getBooks} />);
   });
   it("renders all div", () => {
-    expect(wrapper.find("div").length).toEqual(3);
+    expect(wrapper.find("div").length).toEqual(7);
   });
   it("function get called", () => {
     expect(getBooks).toHaveBeenCalled;
@@ -42,7 +42,7 @@ describe("Tests for Library", () => {
   });
 });
 
-describe("It renders add book modal", () => {
+describe("it renders add book modal", () => {
   let getBooks, error, library, book, renderModal, wrapper, modal;
   beforeEach(() => {
     getBooks = spy();
@@ -77,7 +77,7 @@ describe("It renders add book modal", () => {
   });
 });
 
-describe("It renders edit book modal", () => {
+describe("it renders edit book modal", () => {
   let getBooks, error, library, book, renderModal, wrapper, modal, updateBook;
   beforeEach(() => {
     getBooks = spy();
@@ -139,7 +139,7 @@ describe("It renders edit book modal", () => {
   });
 });
 
-describe("It renders delete modal", () => {
+describe("it renders delete modal", () => {
   const getBooks = spy();
   const error = {};
   const library = [];
@@ -178,7 +178,7 @@ describe("it renders all buttons", () => {
   });
 });
 
-describe("It renders error message", () => {
+describe("it renders error message", () => {
   let getBooks, error, library, book, wrapper, modal;
   beforeEach(() => {
     getBooks = spy();
