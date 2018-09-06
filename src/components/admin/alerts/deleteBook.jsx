@@ -28,6 +28,7 @@ class DeleteBook extends Component {
                 Cancel
               </Button>
               <Button
+              className='delete'
                 color="danger"
                 onClick={event =>
                   this.props.deleteBook(event, this.props.book.id)

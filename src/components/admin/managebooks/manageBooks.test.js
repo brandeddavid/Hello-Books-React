@@ -32,6 +32,14 @@ describe("Tests for Library", () => {
   it("has current book null on mount", () => {
     expect(wrapper.state().currentBook).toEqual(null);
   });
+  it("header", () => {
+    expect(
+      wrapper
+        .find("h1")
+        .first()
+        .text()
+    ).toEqual("Available Books");
+  });
 });
 
 describe("It renders add book modal", () => {
@@ -71,7 +79,17 @@ describe("It renders edit book modal", () => {
   beforeEach(() => {
     getBooks = spy();
     error = {};
-    library = [];
+    library = [
+      {
+        author: "Mentorship",
+        availability: true,
+        id: 63,
+        isbn: "55555",
+        publisher: "Mentorship",
+        quantity: 60,
+        title: "Mentorship"
+      }
+    ];
     book = {
       author: "Mentorship",
       availability: true,
@@ -111,6 +129,7 @@ describe("It renders delete modal", () => {
   const error = {};
   const library = [];
   const renderModal = true;
+  const deleteBook = spy();
   const wrapper = shallow(
     <ManageBooks
       renderDeleteModal={renderModal}
@@ -118,6 +137,47 @@ describe("It renders delete modal", () => {
       getBooks={getBooks}
     />
   );
-  const modal = shallow(<DeleteBook error={error} />);
+  const modal = shallow(<DeleteBook error={error} deleteBook={deleteBook} />);
   expect(modal).toHaveLength(1);
+});
+
+describe("it renders all buttons", () => {
+  let library, getBooks, wrapper;
+  beforeEach(() => {
+    library = [
+      {
+        author: "Mentorship",
+        availability: true,
+        id: 63,
+        isbn: "55555",
+        publisher: "Mentorship",
+        quantity: 60,
+        title: "Mentorship"
+      }
+    ];
+    getBooks = spy();
+    wrapper = shallow(<ManageBooks library={library} getBooks={getBooks} />);
+  });
+  it("renders add book modal", () => {
+    expect(wrapper.find("button.add-book-btn"));
+  });
+});
+
+describe("It renders error message", () => {
+  let getBooks, error, library, book, wrapper, modal;
+  beforeEach(() => {
+    getBooks = spy();
+    error = {};
+    library = [];
+    book = null;
+    wrapper = shallow(<ManageBooks library={library} getBooks={getBooks} />);
+  });
+  it("renders error", () => {
+    expect(
+      wrapper
+        .find("h1")
+        .first()
+        .text()
+    ).toEqual("No Books Available");
+  });
 });
