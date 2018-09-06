@@ -62,6 +62,9 @@ describe("It renders add book modal", () => {
   it("renders add book modal", () => {
     expect(modal).toHaveLength(1);
   });
+  it("renders all divs", () => {
+    expect(modal.find("div").length).toEqual(12);
+  });
   it("renders header for add book", () => {
     expect(modal.find("div.header").text()).toEqual("Add New Book");
   });
@@ -111,6 +114,9 @@ describe("It renders edit book modal", () => {
   });
   it("renders add book modal", () => {
     expect(modal).toHaveLength(1);
+  });
+  it("renders all divs", () => {
+    expect(modal.find("div").length).toEqual(12);
   });
   it("renders header for add book", () => {
     expect(modal.find("div.header").text()).toEqual("Edit Book Info");

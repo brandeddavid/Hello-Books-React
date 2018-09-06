@@ -40,9 +40,11 @@ class BookModal extends Component {
               }
               className="add-book-form"
             >
-              <div className="error">
-                {this.props.error.Message ? this.props.error.Message : ""}
-              </div>
+              {this.props.error.Message ? (
+                <div className="error">{this.props.error.Message}</div>
+              ) : (
+                ""
+              )}
               <div className="form-group">
                 <label htmlFor="title">Title</label>
                 <div className="error">
