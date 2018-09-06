@@ -50,14 +50,14 @@ class App extends Component {
       borrowedBooks: [],
       borrowedBooksHistory: [],
       page: 1,
-      limit: 15,
+      limit: 8,
       totalPages: null,
       scrolling: false
     };
   }
 
   getBooks = () => {
-    this.toggleLoading();
+    if (!this.state.scrolling) this.toggleLoading();
     const { page, limit, library } = this.state;
     fetchBooks(page, limit).then(res => {
       console.log(res);
@@ -77,7 +77,7 @@ class App extends Component {
     this.setState(
       prevState => ({
         page: prevState.page + 1,
-        scrolling: true,
+        scrolling: true
       }),
       this.getBooks
     );
@@ -368,6 +368,10 @@ class App extends Component {
               deleteBook={this.deleteBook}
               loader={<Loader />}
               loading={this.state.loading}
+              page={this.state.page}
+              totalPages={this.state.totalPages}
+              scrolling={this.state.scrolling}
+              loadMore={this.loadMore}
             />
             <PrivateRoute
               path="/user"
