@@ -35,47 +35,75 @@ describe("Tests for Library", () => {
 });
 
 describe("It renders add book modal", () => {
-  const getBooks = spy();
-  const error = {};
-  const library = [];
-  const book = null;
-  const renderModal = true;
-  const wrapper = shallow(
-    <ManageBooks
-      renderModal={renderModal}
-      library={library}
-      getBooks={getBooks}
-    />
-  );
-  const modal = shallow(<BookModal error={error} book={book} />);
-  expect(modal).toHaveLength(1);
-  expect(modal.find("div.header").text()).toEqual("Add New Book");
+  let getBooks, error, library, book, renderModal, wrapper, modal;
+  beforeEach(() => {
+    getBooks = spy();
+    error = {};
+    library = [];
+    book = null;
+    renderModal = true;
+    wrapper = shallow(
+      <ManageBooks
+        renderModal={renderModal}
+        library={library}
+        getBooks={getBooks}
+      />
+    );
+    modal = shallow(<BookModal error={error} book={book} />);
+  });
+  it("renders add book modal", () => {
+    expect(modal).toHaveLength(1);
+  });
+  it("renders header for add book", () => {
+    expect(modal.find("div.header").text()).toEqual("Add New Book");
+  });
+  it("renders with state empty values", () => {
+    expect(modal.state().title).toEqual("");
+    expect(modal.state().author).toEqual("");
+    expect(modal.state().isbn).toEqual("");
+    expect(modal.state().publisher).toEqual("");
+    expect(modal.state().quantity).toEqual("");
+  });
 });
 
 describe("It renders edit book modal", () => {
-  const getBooks = spy();
-  const error = {};
-  const library = [];
-  const book = {
-    author: "Mentorship",
-    availability: true,
-    id: 63,
-    isbn: "55555",
-    publisher: "Mentorship",
-    quantity: 60,
-    title: "Mentorship"
-  };
-  const renderModal = true;
-  const wrapper = shallow(
-    <ManageBooks
-      renderModal={renderModal}
-      library={library}
-      getBooks={getBooks}
-    />
-  );
-  const modal = shallow(<BookModal error={error} book={book} />);
-  expect(modal).toHaveLength(1);
-  expect(modal.find("div.header").text()).toEqual("Edit Book Info");
+  let getBooks, error, library, book, renderModal, wrapper, modal;
+  beforeEach(() => {
+    getBooks = spy();
+    error = {};
+    library = [];
+    book = {
+      author: "Mentorship",
+      availability: true,
+      id: 63,
+      isbn: "55555",
+      publisher: "Mentorship",
+      quantity: 60,
+      title: "Mentorship"
+    };
+    renderModal = true;
+    wrapper = shallow(
+      <ManageBooks
+        renderModal={renderModal}
+        library={library}
+        getBooks={getBooks}
+      />
+    );
+    modal = shallow(<BookModal error={error} book={book} />);
+  });
+  it("renders add book modal", () => {
+    expect(modal).toHaveLength(1);
+  });
+  it("renders header for add book", () => {
+    expect(modal.find("div.header").text()).toEqual("Edit Book Info");
+  });
+  it("renders with book values", () => {
+    expect(modal.state().title).toEqual("Mentorship");
+    expect(modal.state().author).toEqual("Mentorship");
+    expect(modal.state().isbn).toEqual("55555");
+    expect(modal.state().publisher).toEqual("Mentorship");
+    expect(modal.state().quantity).toEqual(60);
+  });
 });
 
 describe("It renders delete modal", () => {
