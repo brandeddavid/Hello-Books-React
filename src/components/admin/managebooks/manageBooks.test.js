@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 import { spy } from "sinon";
 import ManageBooks from "./manageBooks";
+import BookModal from "./bookModal";
+import DeleteBook from "../alerts/deleteBook";
 
 describe("Tests for Library", () => {
   let library, getBooks, wrapper;
@@ -22,12 +24,44 @@ describe("Tests for Library", () => {
     wrapper = shallow(<ManageBooks library={library} getBooks={getBooks} />);
   });
   it("renders all div", () => {
-    expect(wrapper.find('div').length).toEqual(3);
+    expect(wrapper.find("div").length).toEqual(3);
   });
   it("function get called", () => {
     expect(getBooks).toHaveBeenCalled;
   });
   it("has current book null on mount", () => {
-    expect(wrapper.state().currentBook).toEqual(null)
+    expect(wrapper.state().currentBook).toEqual(null);
   });
+});
+
+describe("It renders book modal", () => {
+  const getBooks = spy();
+  const error = {};
+  const library = [];
+  const renderModal = true;
+  const wrapper = shallow(
+    <ManageBooks
+      renderModal={renderModal}
+      library={library}
+      getBooks={getBooks}
+    />
+  );
+  const modal = shallow(<BookModal error={error} />);
+  expect(modal).toHaveLength(1);
+});
+
+describe("It renders delete modal", () => {
+  const getBooks = spy();
+  const error = {};
+  const library = [];
+  const renderModal = true;
+  const wrapper = shallow(
+    <ManageBooks
+      renderDeleteModal={renderModal}
+      library={library}
+      getBooks={getBooks}
+    />
+  );
+  const modal = shallow(<DeleteBook error={error} />);
+  expect(modal).toHaveLength(1);
 });

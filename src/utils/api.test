@@ -1,0 +1,10 @@
+import { stub } from "sinon";
+import axios from "axios";
+import { baseURL, fetchBooks } from "./api";
+
+it("calls fetchBook endpoints", () => {
+  stub(axios, "get").resolves(new Promise({ data: {} }));
+  fetchBooks();
+  expect(axios.get.firstCall.args[0]).toEqual(`${baseURL}/books`);
+  axios.get.restore();
+});
