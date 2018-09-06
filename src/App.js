@@ -77,7 +77,7 @@ class App extends Component {
     this.setState(
       prevState => ({
         page: prevState.page + 1,
-        scrolling: true
+        scrolling: true,
       }),
       this.getBooks
     );

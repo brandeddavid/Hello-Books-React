@@ -19,8 +19,8 @@ class Library extends Component {
     const lastTr = document.querySelector("tr.book > td:last-child");
     const lastTrOffset = lastTr.offsetTop + lastTr.clientHeight;
     const pageOffset = window.pageYOffset + window.innerHeight;
-    var bottomOffset = 20
-    if (pageOffset > lastTrOffset-bottomOffset) this.props.loadMore()
+    var bottomOffset = 20;
+    if (pageOffset > lastTrOffset - bottomOffset) this.props.loadMore();
   };
   render() {
     return (
@@ -62,6 +62,7 @@ class Library extends Component {
                   </tbody>
                 </table>
               )}
+              {this.props.scrolling ? this.props.loader : ""}
             </div>
           </div>
         </div>
