@@ -48,9 +48,40 @@ class App extends Component {
       renderModal: false,
       renderDeleteAlert: false,
       borrowedBooks: [],
-      borrowedBooksHistory: []
+      borrowedBooksHistory: [],
+      page: 1,
+      limit: 15,
+      totalPages: null,
+      scrolling: false
     };
   }
+
+  getBooks = () => {
+    this.toggleLoading();
+    const { page, limit, library } = this.state;
+    fetchBooks(page, limit).then(res => {
+      console.log(res);
+      res.status === "success"
+        ? this.setState(() => ({
+            library: [...library, ...res.books],
+            loading: false,
+            totalPages: res.totalPages,
+            scrolling: false,
+            error: {}
+          }))
+        : this.setState(() => ({ error: res.error, loading: false }));
+    });
+  };
+
+  loadMore = () => {
+    this.setState(
+      prevState => ({
+        page: prevState.page + 1,
+        scrolling: true
+      }),
+      this.getBooks
+    );
+  };
 
   noErrors = () => {
     this.setState(() => ({
@@ -111,15 +142,6 @@ class App extends Component {
       isAdmin: null,
       user: {}
     }));
-  };
-
-  getBooks = () => {
-    this.toggleLoading();
-    fetchBooks().then(res => {
-      res.status === "success"
-        ? this.setState({ library: res.books, loading: false, error: {} })
-        : this.setState({ error: res.error, loading: false });
-    });
   };
 
   toggleModal = () => {
@@ -318,10 +340,14 @@ class App extends Component {
               render={props => (
                 <Library
                   {...props}
-                  {...this.state}
+                  library={this.state.library}
                   getBooks={this.getBooks}
                   loader={<Loader />}
                   loading={this.state.loading}
+                  page={this.state.page}
+                  totalPages={this.state.totalPages}
+                  scrolling={this.state.scrolling}
+                  loadMore={this.loadMore}
                 />
               )}
             />

@@ -5,7 +5,7 @@ const errorHandler = error => {
   return { status: "failure", error: err };
 };
 
-export const baseURL = "http://localhost:5000/api/v1";  
+export const baseURL = "http://localhost:5000/api/v1";
 // const baseURL = "https://banana-pie-71385.herokuapp.com/api/v1";
 const axiosConfig = {
   headers: {
@@ -88,12 +88,17 @@ export const logoutUser = accessToken => {
     });
 };
 
-export const fetchBooks = () => {
-  const url = `${baseURL}/books`;
+export const fetchBooks = (page, limit) => {
+  const url = `${baseURL}/books?page=${page}&limit=${limit}`;
   return axios
     .get(url, axiosConfig)
     .then(res => {
-      return { status: "success", books: res.data.Books };
+      return {
+        status: "success",
+        books: res.data.Books,
+        totalPages: res.data.totalPages,
+        currentPage: res.data.currentPage
+      };
     })
     .catch(error => {
       return { status: "failure", error: error.response.data };
