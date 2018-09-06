@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import IndexNav from "../navbars/indexnav";
+import "./library.css";
 
 // Stateless Component: Has no state and operates with props only. Easy to follow and test
 
