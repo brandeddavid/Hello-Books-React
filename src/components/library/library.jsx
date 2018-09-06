@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import IndexNav from "../navbars/indexnav";
 import "./library.css";
+import { Input } from "reactstrap";
 
 // Stateless Component: Has no state and operates with props only. Easy to follow and test
 
@@ -34,6 +35,18 @@ class Library extends Component {
                 <hr />
                 <h1>Book Library</h1>
                 <hr />
+              </div>
+              <div className="row">
+                <div className="col-md-4" />
+                <div className="col-md-4" />
+                <div className="col-md-4">
+                  <Input
+                    name="search"
+                    type="text"
+                    placeholder="Search..."
+                    className="search"
+                  />
+                </div>
               </div>
               {this.props.loading ? (
                 this.props.loader

@@ -5,6 +5,7 @@ import BookModal from "./bookModal";
 import DeleteBook from "../alerts/deleteBook";
 import IndexNav from "../../navbars/adminnav";
 import "../../../static/css/admin.css";
+import { Input } from "reactstrap";
 
 class ManageBooks extends Component {
   constructor(props) {
@@ -57,21 +58,6 @@ class ManageBooks extends Component {
       <React.Fragment>
         <IndexNav />
         <div className="container admin-container">
-          <div>
-            <Button
-              className="btn btn-lg btn-success add-book-btn"
-              onClick={() => this.renderAddModal()}
-            >
-              Add Book
-            </Button>
-          </div>
-          {this.props.library.length === 0 && !this.props.loading ? (
-            <span>
-              <h1 className="text-center error">No Books Available</h1>
-            </span>
-          ) : (
-            <h1 className="text-center">Available Books</h1>
-          )}
           {this.props.renderModal ? (
             <BookModal
               onHide={this.closeModal}
@@ -99,6 +85,34 @@ class ManageBooks extends Component {
               error={this.props.deleteBookErrors}
             />
           ) : null}
+          <div className="row">
+            <div className="col-md-2">
+              <div>
+                <Button
+                  className="btn btn-lg btn-success add-book-btn"
+                  onClick={() => this.renderAddModal()}
+                >
+                  Add Book
+                </Button>
+              </div>
+            </div>
+            <div className="col-md-6" />
+            <div className="col-md-4">
+              <Input
+                name="search"
+                type="text"
+                placeholder="Search..."
+                className="search"
+              />
+            </div>
+          </div>
+          {this.props.library.length === 0 && !this.props.loading ? (
+            <span>
+              <h1 className="text-center error">No Books Available</h1>
+            </span>
+          ) : (
+            <h1 className="text-center">Available Books</h1>
+          )}
           {this.props.loading ? (
             this.props.loader
           ) : (
