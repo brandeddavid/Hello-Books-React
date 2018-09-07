@@ -178,6 +178,7 @@ class ManageBooks extends Component {
               </table>
             </div>
           )}
+          {this.props.scrolling ? this.props.loader : ""}
         </div>
       </React.Fragment>
     );

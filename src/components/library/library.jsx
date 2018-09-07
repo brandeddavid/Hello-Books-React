@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import IndexNav from "../navbars/indexnav";
 import "./library.css";
-import { Input } from "reactstrap";
+import { Input, Badge } from "reactstrap";
 
 /**
  * Library component
@@ -74,7 +74,7 @@ class Library extends Component {
                         <td>{book.isbn}</td>
                         <td>{book.publisher}</td>
                         <td>
-                          {book.availability ? "Available" : "Not Available"}
+                          {book.availability ? <Badge color="success">Available</Badge> : <Badge color="danger">Not Available</Badge>}
                         </td>
                       </tr>
                     ))}

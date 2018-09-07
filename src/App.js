@@ -440,18 +440,22 @@ class App extends Component {
             />
             <PrivateRoute
               path="/borrow"
+              library={this.state.library}
               component={Borrow}
-              {...this.state}
               getBooks={this.getBooks}
               borrowBook={this.borrowBook}
               loading={this.state.loading}
               loader={<Loader />}
+              page={this.state.page}
+              totalPages={this.state.totalPages}
+              scrolling={this.state.scrolling}
+              loadMore={this.loadMore}
             />
             <PrivateRoute
               path="/history"
               component={BorrowHistory}
-              {...this.state}
               borrowHistory={this.borrowHistory}
+              borrowedBooksHistory={this.state.borrowedBooksHistory}
               loading={this.state.loading}
               loader={<Loader />}
             />
