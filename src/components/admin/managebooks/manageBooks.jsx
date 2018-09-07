@@ -5,6 +5,7 @@ import BookModal from "./bookModal";
 import DeleteBook from "../alerts/deleteBook";
 import IndexNav from "../../navbars/adminnav";
 import "../../../static/css/admin.css";
+import { Input } from "reactstrap";
 
 class ManageBooks extends Component {
   constructor(props) {
@@ -15,7 +16,21 @@ class ManageBooks extends Component {
   }
   componentDidMount() {
     this.props.getBooks();
+    this.scrollListener = window.addEventListener("scroll", event => {
+      this.handleScroll(event);
+    });
   }
+
+  handleScroll = () => {
+    const { scrolling, totalPages, page } = this.props;
+    if (scrolling) return;
+    if (totalPages <= page) return;
+    const lastTr = document.querySelector("tr.book > td:last-child");
+    const lastTrOffset = lastTr.offsetTop + lastTr.clientHeight;
+    const pageOffset = window.pageYOffset + window.innerHeight;
+    var bottomOffset = 20;
+    if (pageOffset > lastTrOffset - bottomOffset) this.props.loadMore();
+  };
 
   renderAddModal = () => {
     this.props.toggleModal();
@@ -43,14 +58,6 @@ class ManageBooks extends Component {
       <React.Fragment>
         <IndexNav />
         <div className="container admin-container">
-          <div>
-            <Button
-              className="btn btn-lg btn-success add-book-btn"
-              onClick={() => this.renderAddModal()}
-            >
-              Add Book
-            </Button>
-          </div>
           {this.props.renderModal ? (
             <BookModal
               onHide={this.closeModal}
@@ -62,7 +69,7 @@ class ManageBooks extends Component {
               bookAdded={this.props.bookAdded}
               updateBook={this.props.updateBook}
               bookUpdated={this.props.bookUpdated}
-              error={this.props.error}
+              error={this.props.bookErrors}
               loader={this.props.loader}
               loading={this.props.loading}
             />
@@ -75,9 +82,37 @@ class ManageBooks extends Component {
               toggleDeleteAlert={this.props.toggleDeleteAlert}
               loader={this.props.loader}
               loading={this.props.loading}
+              error={this.props.deleteBookErrors}
             />
           ) : null}
-          {this.state.error ? <span>{this.state.error.Message}</span> : ""}
+          <div className="row">
+            <div className="col-md-2">
+              <div>
+                <Button
+                  className="btn btn-lg btn-success add-book-btn"
+                  onClick={() => this.renderAddModal()}
+                >
+                  Add Book
+                </Button>
+              </div>
+            </div>
+            <div className="col-md-6" />
+            <div className="col-md-4">
+              <Input
+                name="search"
+                type="text"
+                placeholder="Search..."
+                className="search"
+              />
+            </div>
+          </div>
+          {this.props.library.length === 0 && !this.props.loading ? (
+            <span>
+              <h1 className="text-center error">No Books Available</h1>
+            </span>
+          ) : (
+            <h1 className="text-center">Available Books</h1>
+          )}
           {this.props.loading ? (
             this.props.loader
           ) : (
@@ -96,13 +131,13 @@ class ManageBooks extends Component {
                 </thead>
                 <tbody>
                   {this.props.library.map(book => (
-                    <tr key={book.id}>
+                    <tr key={book.id} className="book">
                       <td>{book.title}</td>
                       <td>{book.author}</td>
                       <td>{book.isbn}</td>
                       <td>{book.publisher}</td>
                       <td>{book.quantity}</td>
-                      <td className="text-center">
+                      <td className="">
                         <button
                           onClick={() => this.renderEditModal(book)}
                           className="btn btn-primary"
@@ -110,7 +145,7 @@ class ManageBooks extends Component {
                           Edit
                         </button>
                       </td>
-                      <td className="text-center">
+                      <td className="">
                         <button
                           className="btn btn-danger"
                           onClick={() => this.deleteAlert(book)}

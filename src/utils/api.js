@@ -5,8 +5,9 @@ const errorHandler = error => {
   return { status: "failure", error: err };
 };
 
-const baseURL = "http://localhost:5000/api/v1";
-let axiosConfig = {
+export const baseURL = "http://localhost:5000/api/v1";
+// const baseURL = "https://banana-pie-71385.herokuapp.com/api/v1";
+const axiosConfig = {
   headers: {
     "Content-Type": "application/json",
     AccessControlAllowOrigin: "*"
@@ -14,8 +15,8 @@ let axiosConfig = {
 };
 
 export const registerUser = userData => {
-  let url = `${baseURL}/auth/register`;
-  let payload = {
+  const url = `${baseURL}/auth/register`;
+  const payload = {
     first_name: userData.first_name,
     last_name: userData.last_name,
     email: userData.email,
@@ -34,8 +35,8 @@ export const registerUser = userData => {
 };
 
 export const loginUser = userData => {
-  let url = `${baseURL}/auth/login`;
-  let payload = {
+  const url = `${baseURL}/auth/login`;
+  const payload = {
     username: userData.username,
     password: userData.password
   };
@@ -54,8 +55,8 @@ export const loginUser = userData => {
 };
 
 export const fetchUser = accessToken => {
-  let url = `${baseURL}/user`;
-  let axiosConfigAuth = {
+  const url = `${baseURL}/user`;
+  const axiosConfigAuth = {
     headers: {
       "Content-Type": "application/json",
       AccessControlAllowOrigin: "*",
@@ -68,8 +69,8 @@ export const fetchUser = accessToken => {
 };
 
 export const logoutUser = accessToken => {
-  let url = `${baseURL}/auth/logout`;
-  let axiosConfigAuth = {
+  const url = `${baseURL}/auth/logout`;
+  const axiosConfigAuth = {
     headers: {
       "Content-Type": "application/json",
       AccessControlAllowOrigin: "*",
@@ -87,12 +88,17 @@ export const logoutUser = accessToken => {
     });
 };
 
-export const fetchBooks = () => {
-  let url = `${baseURL}/books`;
+export const fetchBooks = (page, limit) => {
+  const url = `${baseURL}/books?page=${page}&limit=${limit}`;
   return axios
     .get(url, axiosConfig)
     .then(res => {
-      return { status: "success", books: res.data.Books };
+      return {
+        status: "success",
+        books: res.data.Books,
+        totalPages: res.data.totalPages,
+        currentPage: res.data.currentPage
+      };
     })
     .catch(error => {
       return { status: "failure", error: error.response.data };
@@ -100,15 +106,15 @@ export const fetchBooks = () => {
 };
 
 export const addBook = (bookData, accessToken) => {
-  let url = `${baseURL}/books`;
-  let payload = {
+  const url = `${baseURL}/books`;
+  const payload = {
     title: bookData.title,
     author: bookData.author,
     isbn: bookData.isbn,
     publisher: bookData.publisher,
     quantity: bookData.quantity
   };
-  let axiosConfigAuth = {
+  const axiosConfigAuth = {
     headers: {
       "Content-Type": "application/json",
       AccessControlAllowOrigin: "*",
@@ -126,15 +132,15 @@ export const addBook = (bookData, accessToken) => {
 };
 
 export const editBook = (bookData, bookId, accessToken) => {
-  let url = `${baseURL}/book/${bookId}`;
-  let payload = {
+  const url = `${baseURL}/book/${bookId}`;
+  const payload = {
     title: bookData.title,
     author: bookData.author,
     isbn: bookData.isbn,
     publisher: bookData.publisher,
     quantity: bookData.quantity
   };
-  let axiosConfigAuth = {
+  const axiosConfigAuth = {
     headers: {
       "Content-Type": "application/json",
       AccessControlAllowOrigin: "*",
@@ -150,8 +156,8 @@ export const editBook = (bookData, bookId, accessToken) => {
 };
 
 export const removeBook = (bookId, accessToken) => {
-  let url = `${baseURL}/book/${bookId}`;
-  let axiosConfigAuth = {
+  const url = `${baseURL}/book/${bookId}`;
+  const axiosConfigAuth = {
     headers: {
       "Content-Type": "application/json",
       AccessControlAllowOrigin: "*",
@@ -167,15 +173,15 @@ export const removeBook = (bookId, accessToken) => {
 };
 
 export const borrow = (bookId, accessToken) => {
-  let url = `${baseURL}/users/books/${bookId}`;
-  let axiosConfigAuth = {
+  const url = `${baseURL}/users/books/${bookId}`;
+  const axiosConfigAuth = {
     headers: {
       "Content-Type": "application/json",
       AccessControlAllowOrigin: "*",
       Authorization: "Bearer " + accessToken
     }
   };
-  let payload = null;
+  const payload = null;
   return axios
     .post(url, payload, axiosConfigAuth)
     .then(res => {
@@ -185,8 +191,8 @@ export const borrow = (bookId, accessToken) => {
 };
 
 export const notReturned = accessToken => {
-  let url = `${baseURL}/users/books?returned=false`;
-  let axiosConfigAuth = {
+  const url = `${baseURL}/users/books?returned=false`;
+  const axiosConfigAuth = {
     headers: {
       "Content-Type": "application/json",
       AccessControlAllowOrigin: "*",
@@ -202,15 +208,15 @@ export const notReturned = accessToken => {
 };
 
 export const returnABook = (bookId, accessToken) => {
-  let url = `${baseURL}/users/books/${bookId}`;
-  let axiosConfigAuth = {
+  const url = `${baseURL}/users/books/${bookId}`;
+  const axiosConfigAuth = {
     headers: {
       "Content-Type": "application/json",
       AccessControlAllowOrigin: "*",
       Authorization: "Bearer " + accessToken
     }
   };
-  let payload = null;
+  const payload = null;
   return axios
     .put(url, payload, axiosConfigAuth)
     .then(res => {
@@ -220,8 +226,8 @@ export const returnABook = (bookId, accessToken) => {
 };
 
 export const borrowingHistory = accessToken => {
-  let url = `${baseURL}/users/books`;
-  let axiosConfigAuth = {
+  const url = `${baseURL}/users/books`;
+  const axiosConfigAuth = {
     headers: {
       "Content-Type": "application/json",
       AccessControlAllowOrigin: "*",

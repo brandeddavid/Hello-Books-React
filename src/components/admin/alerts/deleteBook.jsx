@@ -11,23 +11,33 @@ class DeleteBook extends Component {
             Delete Book
           </ModalHeader>
           <ModalBody>
-            <p className="error">
-            </p>
+            {this.props.error ? (
+              <p className="error">{this.props.error.Message}</p>
+            ) : (
+              ""
+            )}
+
             <p className="confirm">Are you sure you want to delete book?</p>
           </ModalBody>
-          <ModalFooter>
-            <Button color="secondary" onClick={this.props.toggleDeleteAlert}>
-              Cancel
-            </Button>
-            <Button
-              color="danger"
-              onClick={event =>
-                this.props.deleteBook(event, this.props.book.id)
-              }
-            >
-              Delete
-            </Button>
-          </ModalFooter>
+
+          {this.props.loading ? (
+            this.props.loader
+          ) : (
+            <ModalFooter>
+              <Button color="secondary" onClick={this.props.toggleDeleteAlert}>
+                Cancel
+              </Button>
+              <Button
+              className='delete'
+                color="danger"
+                onClick={event =>
+                  this.props.deleteBook(event, this.props.book.id)
+                }
+              >
+                Delete
+              </Button>
+            </ModalFooter>
+          )}
         </Modal>
       </div>
     );

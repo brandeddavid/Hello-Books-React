@@ -35,6 +35,11 @@ class App extends Component {
     super(props);
     this.state = {
       loading: false,
+      error: {},
+      loginErrors: {},
+      regErrors: {},
+      bookErrors: {},
+      deleteBookErrors: {},
       user: {},
       loggedIn: false,
       registered: false,
@@ -42,13 +47,41 @@ class App extends Component {
       library: [],
       renderModal: false,
       renderDeleteAlert: false,
-      error: {},
-      loginErrors: {},
-      regErrors: {},
       borrowedBooks: [],
-      borrowedBooksHistory: []
+      borrowedBooksHistory: [],
+      page: 1,
+      limit: 8,
+      totalPages: null,
+      scrolling: false
     };
   }
+
+  getBooks = () => {
+    if (!this.state.scrolling) this.toggleLoading();
+    const { page, limit, library } = this.state;
+    fetchBooks(page, limit).then(res => {
+      console.log(res);
+      res.status === "success"
+        ? this.setState(() => ({
+            library: [...library, ...res.books],
+            loading: false,
+            totalPages: res.totalPages,
+            scrolling: false,
+            error: {}
+          }))
+        : this.setState(() => ({ error: res.error, loading: false }));
+    });
+  };
+
+  loadMore = () => {
+    this.setState(
+      prevState => ({
+        page: prevState.page + 1,
+        scrolling: true
+      }),
+      this.getBooks
+    );
+  };
 
   noErrors = () => {
     this.setState(() => ({
@@ -111,15 +144,6 @@ class App extends Component {
     }));
   };
 
-  getBooks = () => {
-    this.toggleLoading();
-    fetchBooks().then(res => {
-      res.status === "success"
-        ? this.setState({ library: res.books, loading: false })
-        : this.setState({ error: res.error, loading: false });
-    });
-  };
-
   toggleModal = () => {
     this.setState(() => ({ renderModal: !this.state.renderModal }));
   };
@@ -133,11 +157,13 @@ class App extends Component {
         this.setState(() => ({
           library: [...this.state.library, res.book],
           renderModal: false,
-          loading: false
+          loading: false,
+          bookErrors: {},
+          error: {}
         }));
         swal(`Added ${res.book.title}`, { buttons: false, timer: 3000 });
       } else {
-        this.setState(() => ({ error: res.error, loading: false }));
+        this.setState(() => ({ bookErrors: res.error, loading: false }));
       }
     });
   };
@@ -155,28 +181,40 @@ class App extends Component {
             }
             return book;
           });
-          return { renderModal: false, library, loading: false };
+          return {
+            renderModal: false,
+            library,
+            loading: false,
+            bookErrors: {}
+          };
         });
         swal(`Updated ${res.book.title}`, { buttons: false, timer: 3000 });
       } else {
-        this.setState(prevState => ({ error: res.error, loading: false }));
+        this.setState(prevState => ({ bookErrors: res.error, loading: false }));
       }
     });
   };
 
   deleteBook = (event, bookId) => {
     event.preventDefault();
+    this.toggleLoading();
     let accessToken = localStorage.getItem("accessToken");
     removeBook(bookId, accessToken).then(res => {
       if (res.status === "success") {
         this.setState(() => {
           const library = this.state.library.filter(book => book.id !== bookId);
-          return { renderDeleteAlert: false, library };
+          return {
+            renderDeleteAlert: false,
+            library,
+            deleteBookErrors: {},
+            loading: false
+          };
         });
         swal("Book deleted successfully", { buttons: false, timer: 3000 });
       } else {
         this.setState(() => ({
-          error: res.error
+          deleteBookErrors: res.error,
+          loading: false
         }));
       }
     });
@@ -274,6 +312,7 @@ class App extends Component {
                   {...props}
                   loginErrors={this.state.loginErrors}
                   loggedIn={this.state.loggedIn}
+                  isAdmin={this.state.isAdmin}
                   logIn={this.logIn}
                   toggleLoading={this.toggleLoading}
                   loader={<Loader />}
@@ -301,27 +340,38 @@ class App extends Component {
               render={props => (
                 <Library
                   {...props}
-                  {...this.state}
+                  library={this.state.library}
                   getBooks={this.getBooks}
                   loader={<Loader />}
                   loading={this.state.loading}
+                  page={this.state.page}
+                  totalPages={this.state.totalPages}
+                  scrolling={this.state.scrolling}
+                  loadMore={this.loadMore}
                 />
               )}
             />
             <PrivateRoute path="/admin" component={AdminDash} {...this.state} />
             <PrivateRoute
               path="/managebooks"
+              renderModal={this.state.renderModal}
+              renderDeleteAlert={this.state.renderDeleteAlert}
+              library={this.state.library}
               component={ManageBooks}
-              {...this.state}
               getBooks={this.getBooks}
               toggleModal={this.toggleModal}
               newBook={this.newBook}
               updateBook={this.updateBook}
-              error={this.state.error}
+              bookErrors={this.state.bookErrors}
+              deleteBookErrors={this.state.deleteBookErrors}
               toggleDeleteAlert={this.toggleDeleteAlert}
               deleteBook={this.deleteBook}
               loader={<Loader />}
               loading={this.state.loading}
+              page={this.state.page}
+              totalPages={this.state.totalPages}
+              scrolling={this.state.scrolling}
+              loadMore={this.loadMore}
             />
             <PrivateRoute
               path="/user"

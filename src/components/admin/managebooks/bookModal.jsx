@@ -22,7 +22,9 @@ class BookModal extends Component {
       <React.Fragment>
         <Modal isOpen={this.props.show} toggle={this.props.toggleModal}>
           <ModalHeader toggle={this.props.toggleModal}>
-            <div>{this.props.book ? "Edit Book Info" : "Add New Book"}</div>
+            <div className="header">
+              {this.props.book ? "Edit Book Info" : "Add New Book"}
+            </div>
           </ModalHeader>
           <ModalBody>
             <form
@@ -38,9 +40,11 @@ class BookModal extends Component {
               }
               className="add-book-form"
             >
-              <div className="error">
-                {this.props.error.Message ? this.props.error.Message : ""}
-              </div>
+              {this.props.error.Message ? (
+                <div className="error">{this.props.error.Message}</div>
+              ) : (
+                ""
+              )}
               <div className="form-group">
                 <label htmlFor="title">Title</label>
                 <div className="error">
@@ -126,7 +130,7 @@ class BookModal extends Component {
                 {this.props.loading ? (
                   this.props.loader
                 ) : (
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary save">
                     Save
                   </button>
                 )}

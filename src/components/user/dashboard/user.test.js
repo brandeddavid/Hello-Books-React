@@ -36,6 +36,6 @@ describe("Tests for user dash", () => {
     expect(borrowed()).toHaveBeenCalled;
   });
   it("renders all div", () => {
-    expect(wrapper.find("div").length).toEqual(11);
+    expect(wrapper.find("div").length).toEqual(10);
   });
 });

@@ -7,7 +7,7 @@ class IndexNav extends Component {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-          <Link className="navbar-brand" to="#">
+          <Link className="navbar-brand" to="/">
             Hello Books
           </Link>
           <button

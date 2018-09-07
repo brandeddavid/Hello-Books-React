@@ -3,6 +3,7 @@ import { Redirect, Link } from "react-router-dom";
 import IndexNav from "../../navbars/indexnav";
 import "../../../static/css/forms.css";
 import "../../../static/css/main.css";
+import "./register.css";
 import { registerUser } from "../../../utils/api";
 
 class Register extends Component {
@@ -35,7 +36,10 @@ class Register extends Component {
         <IndexNav />
         <div className="container">
           <div className="row">
-            <div className="col-md-6" />
+            <div className="col-md-6 register-left text-center">
+              <h1>WELCOME AVID READER</h1>
+              <p>We are happy to have you here</p>
+            </div>
             <div className="col-md-6">
               <div className="registration-form">
                 <legend>Register</legend>
@@ -84,9 +88,7 @@ class Register extends Component {
                   <div className="form-group">
                     <label htmlFor="email">Email</label>
                     <div className="error">
-                      {this.props.regErrors.email
-                        ? "Invalid Email"
-                        : ""}
+                      {this.props.regErrors.email ? "Invalid Email" : ""}
                     </div>
                     <input
                       type="email"
