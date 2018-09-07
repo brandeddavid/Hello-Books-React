@@ -3,8 +3,15 @@ import PropTypes from "prop-types";
 import UserNav from "../../navbars/usernav";
 import { Button } from "reactstrap";
 
+/**
+ * Borrow books component
+ */
+
 class Borrow extends Component {
   componentDidMount() {
+    /**
+     * Gets all books on component mount
+     */
     this.props.getBooks();
   }
   render() {

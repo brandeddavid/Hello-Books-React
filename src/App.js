@@ -30,6 +30,11 @@ import {
   borrowingHistory
 } from "./utils/api";
 
+/**
+ * Main app file
+ * Manages state for all app components
+ */
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -57,6 +62,9 @@ class App extends Component {
   }
 
   getBooks = () => {
+    /**
+     * Gets all books
+     */
     if (!this.state.scrolling) this.toggleLoading();
     const { page, limit, library } = this.state;
     fetchBooks(page, limit).then(res => {
@@ -74,6 +82,9 @@ class App extends Component {
   };
 
   loadMore = () => {
+    /**
+     * Loads more books on scroll
+     */
     this.setState(
       prevState => ({
         page: prevState.page + 1,
@@ -92,10 +103,16 @@ class App extends Component {
   };
 
   toggleLoading = () => {
+    /**
+     * Toggles loading status
+     */
     this.setState(() => ({ loading: !this.state.loading }));
   };
 
   getUser = () => {
+    /**
+     * Gets user details
+     */
     let accessToken = localStorage.getItem("accessToken");
     fetchUser(accessToken).then(res => {
       this.setState(() => ({ user: res.user }));
@@ -103,6 +120,9 @@ class App extends Component {
   };
 
   register = regData => {
+    /**
+     * Registers new user
+     */
     registerUser(regData).then(res => {
       if (res.status === "success") {
         this.setState(() => ({
@@ -118,6 +138,9 @@ class App extends Component {
   };
 
   logIn = loginData => {
+    /**
+     * Logs in existing user
+     */
     loginUser(loginData).then(res => {
       if (res.status === "success") {
         localStorage.setItem("accessToken", res.accessToken);
@@ -136,6 +159,9 @@ class App extends Component {
   };
 
   logOut = () => {
+    /**
+     * Logs user out
+     */
     localStorage.removeItem("accessToken");
     this.setState(() => ({
       loggedIn: false,
@@ -145,10 +171,16 @@ class App extends Component {
   };
 
   toggleModal = () => {
+    /**
+     * Toggles modal status
+     */
     this.setState(() => ({ renderModal: !this.state.renderModal }));
   };
 
   newBook = (event, bookData) => {
+    /**
+     * Adds new book
+     */
     event.preventDefault();
     this.toggleLoading();
     let accessToken = localStorage.getItem("accessToken");
@@ -169,6 +201,9 @@ class App extends Component {
   };
 
   updateBook = (event, bookId, bookData) => {
+    /**
+     * Updates existing book information
+     */
     event.preventDefault();
     this.toggleLoading();
     let accessToken = localStorage.getItem("accessToken");
@@ -196,6 +231,9 @@ class App extends Component {
   };
 
   deleteBook = (event, bookId) => {
+    /**
+     * Deletes book
+     */
     event.preventDefault();
     this.toggleLoading();
     let accessToken = localStorage.getItem("accessToken");
@@ -221,12 +259,18 @@ class App extends Component {
   };
 
   toggleDeleteAlert = () => {
+    /**
+     * Toggles delete alert
+     */
     this.setState(() => ({
       renderDeleteAlert: !this.state.renderDeleteAlert
     }));
   };
 
   borrowBook = (event, bookId) => {
+    /**
+     * Handles user borrowing book
+     */
     event.preventDefault();
     this.toggleLoading();
     let accessToken = localStorage.getItem("accessToken");
@@ -250,6 +294,9 @@ class App extends Component {
   };
 
   borrowed = () => {
+    /**
+     * Gets all user's borrowed books
+     */
     let accessToken = localStorage.getItem("accessToken");
     this.toggleLoading();
     notReturned(accessToken).then(res => {
@@ -263,6 +310,9 @@ class App extends Component {
   };
 
   returnBook = (event, bookId) => {
+    /**
+     * Handles user returning book
+     */
     event.preventDefault();
     this.toggleLoading();
     let accessToken = localStorage.getItem("accessToken");
@@ -283,6 +333,9 @@ class App extends Component {
   };
 
   borrowHistory = () => {
+    /**
+     * Gets user's borrowing history
+     */
     let accessToken = localStorage.getItem("accessToken");
     this.toggleLoading();
     borrowingHistory(accessToken).then(res => {

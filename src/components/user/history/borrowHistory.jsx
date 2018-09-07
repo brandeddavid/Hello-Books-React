@@ -2,8 +2,15 @@ import React, { Component } from "react";
 import UserNav from "../../navbars/usernav";
 import { Badge } from 'reactstrap';
 
+/**
+ * Borrowing History component
+ */
+
 class BorrowHistory extends Component {
   componentDidMount() {
+    /**
+     * Gets all user borrowed books on component mount
+     */
     this.props.borrowHistory();
   }
   render() {

@@ -7,6 +7,10 @@ import { Link } from "react-router-dom";
 import "../../../static/css/admin.css";
 import IndexNav from "../../navbars/adminnav";
 
+/**
+ * Admin dashboard component
+ */
+
 class AdminDash extends Component {
   render() {
     return (

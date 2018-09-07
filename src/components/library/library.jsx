@@ -4,6 +4,11 @@ import IndexNav from "../navbars/indexnav";
 import "./library.css";
 import { Input } from "reactstrap";
 
+/**
+ * Library component
+ * Displays all books before user log in
+ */
+
 // Stateless Component: Has no state and operates with props only. Easy to follow and test
 
 class Library extends Component {

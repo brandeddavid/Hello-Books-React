@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
+/**
+ * Book modal component.
+ * Used for both add and edit book actions
+ */
 
 class BookModal extends Component {
   constructor(props) {

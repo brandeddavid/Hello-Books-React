@@ -16,6 +16,10 @@ import {
 import UserNav from "../../navbars/usernav";
 import "./user.css";
 
+/**
+ * User dashboard component
+ */
+
 class UserDash extends Component {
   constructor(props) {
     super(props);

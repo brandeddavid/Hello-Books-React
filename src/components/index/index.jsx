@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import "../../static/css/main.css";
 import IndexNav from "../navbars/indexnav";
 
+/**
+ * Applicationshome page component
+ */
+
 class Index extends Component {
   render() {
     return (

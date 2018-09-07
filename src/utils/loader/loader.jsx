@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 
+/**
+ * Application loader component
+ */
+
 class Loader extends Component {
   render() {
     return (
