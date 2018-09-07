@@ -9,8 +9,8 @@ const errorHandler = error => {
 };
 
 // base url
-export const baseURL = "http://localhost:5000/api/v1";
-// const baseURL = "https://banana-pie-71385.herokuapp.com/api/v1";
+// export const baseURL = "http://localhost:5000/api/v1";
+export const baseURL = "https://banana-pie-71385.herokuapp.com/api/v1";
 const axiosConfig = {
   headers: {
     "Content-Type": "application/json",
