@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * Index nav component
+ */
+
 class IndexNav extends Component {
   render() {
     

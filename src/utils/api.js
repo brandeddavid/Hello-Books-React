@@ -1,12 +1,16 @@
 import axios from "axios";
+/**
+ * Function to handle network calls
+ */
 
 const errorHandler = error => {
   const err = error.response ? error.response.data : { Message: error.message };
   return { status: "failure", error: err };
 };
 
-export const baseURL = "http://localhost:5000/api/v1";
-// const baseURL = "https://banana-pie-71385.herokuapp.com/api/v1";
+// base url
+// export const baseURL = "http://localhost:5000/api/v1";
+export const baseURL = "https://banana-pie-71385.herokuapp.com/api/v1";
 const axiosConfig = {
   headers: {
     "Content-Type": "application/json",
@@ -15,6 +19,11 @@ const axiosConfig = {
 };
 
 export const registerUser = userData => {
+  /**
+   * Calls register user api endpoint
+   * @argument userData
+   * @returns API response
+   */
   const url = `${baseURL}/auth/register`;
   const payload = {
     first_name: userData.first_name,
@@ -35,6 +44,11 @@ export const registerUser = userData => {
 };
 
 export const loginUser = userData => {
+  /**
+   * Calls login user api endpoint
+   * @argument userData
+   * @returns API response
+   */
   const url = `${baseURL}/auth/login`;
   const payload = {
     username: userData.username,
@@ -55,6 +69,11 @@ export const loginUser = userData => {
 };
 
 export const fetchUser = accessToken => {
+  /**
+   * Fetches user details
+   * @argument accessToken
+   * @returns user details
+   */
   const url = `${baseURL}/user`;
   const axiosConfigAuth = {
     headers: {
@@ -69,6 +88,11 @@ export const fetchUser = accessToken => {
 };
 
 export const logoutUser = accessToken => {
+  /**
+   * Logs user out
+   * @argument accessToken
+   * @returns API response
+   */
   const url = `${baseURL}/auth/logout`;
   const axiosConfigAuth = {
     headers: {
@@ -89,6 +113,11 @@ export const logoutUser = accessToken => {
 };
 
 export const fetchBooks = (page, limit) => {
+  /**
+   * Fetches all books
+   * @argument (page, limit)
+   * @returns API response
+   */
   const url = `${baseURL}/books?page=${page}&limit=${limit}`;
   return axios
     .get(url, axiosConfig)
@@ -106,6 +135,9 @@ export const fetchBooks = (page, limit) => {
 };
 
 export const addBook = (bookData, accessToken) => {
+  /**
+   * Adds new book
+   */
   const url = `${baseURL}/books`;
   const payload = {
     title: bookData.title,
@@ -132,6 +164,9 @@ export const addBook = (bookData, accessToken) => {
 };
 
 export const editBook = (bookData, bookId, accessToken) => {
+  /**
+   * Edits book info
+   */
   const url = `${baseURL}/book/${bookId}`;
   const payload = {
     title: bookData.title,
@@ -156,6 +191,9 @@ export const editBook = (bookData, bookId, accessToken) => {
 };
 
 export const removeBook = (bookId, accessToken) => {
+  /**
+   * Deletes book
+   */
   const url = `${baseURL}/book/${bookId}`;
   const axiosConfigAuth = {
     headers: {
@@ -173,6 +211,9 @@ export const removeBook = (bookId, accessToken) => {
 };
 
 export const borrow = (bookId, accessToken) => {
+  /**
+   * Calls borrow book API
+   */
   const url = `${baseURL}/users/books/${bookId}`;
   const axiosConfigAuth = {
     headers: {
@@ -191,6 +232,9 @@ export const borrow = (bookId, accessToken) => {
 };
 
 export const notReturned = accessToken => {
+  /**
+   * Gets all unreturned books
+   */
   const url = `${baseURL}/users/books?returned=false`;
   const axiosConfigAuth = {
     headers: {
@@ -208,6 +252,9 @@ export const notReturned = accessToken => {
 };
 
 export const returnABook = (bookId, accessToken) => {
+  /**
+   * Calls return book api endpoint
+   */
   const url = `${baseURL}/users/books/${bookId}`;
   const axiosConfigAuth = {
     headers: {
@@ -226,6 +273,9 @@ export const returnABook = (bookId, accessToken) => {
 };
 
 export const borrowingHistory = accessToken => {
+  /**
+   * Gets user's borrowing history
+   */
   const url = `${baseURL}/users/books`;
   const axiosConfigAuth = {
     headers: {

@@ -1,12 +1,32 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import UserNav from "../../navbars/usernav";
-import { Button } from "reactstrap";
+import { Button, Badge } from "reactstrap";
+
+/**
+ * Borrow books component
+ */
 
 class Borrow extends Component {
   componentDidMount() {
+    /**
+     * Gets all books on component mount
+     */
     this.props.getBooks();
+    this.scrollListener = window.addEventListener("scroll", event => {
+      this.handleScroll(event);
+    });
   }
+  handleScroll = () => {
+    const { scrolling, totalPages, page } = this.props;
+    if (scrolling) return;
+    if (totalPages <= page) return;
+    const lastTr = document.querySelector("tr.book > td:last-child");
+    const lastTrOffset = lastTr.offsetTop + lastTr.clientHeight;
+    const pageOffset = window.pageYOffset + window.innerHeight;
+    var bottomOffset = 20;
+    if (pageOffset > lastTrOffset - bottomOffset) this.props.loadMore();
+  };
   render() {
     return (
       <React.Fragment>
@@ -35,7 +55,7 @@ class Borrow extends Component {
                   </thead>
                   <tbody>
                     {this.props.library.map(book => (
-                      <tr key={book.id}>
+                      <tr key={book.id} className="book">
                         <td>{book.title}</td>
                         <td>{book.author}</td>
                         <td>{book.isbn}</td>
@@ -43,7 +63,7 @@ class Borrow extends Component {
                         <td>{book.quantity}</td>
                         <td>
                           {book.quantity === 0 ? (
-                            "Not Available"
+                            <Badge color="danger">Not Available</Badge>
                           ) : (
                             <Button
                               className="btn btn-success"
@@ -60,6 +80,7 @@ class Borrow extends Component {
                   </tbody>
                 </table>
               )}
+              {this.props.scrolling ? this.props.loader : ""}
             </div>
           </div>
         </div>

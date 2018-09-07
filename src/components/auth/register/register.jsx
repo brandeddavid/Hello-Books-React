@@ -6,6 +6,10 @@ import "../../../static/css/main.css";
 import "./register.css";
 import { registerUser } from "../../../utils/api";
 
+/**
+ * User registration component
+ */
+
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +28,9 @@ class Register extends Component {
     });
   };
   handleSubmit = event => {
+    /**
+     * Submits form content
+     */
     event.preventDefault();
     this.props.toggleLoading();
     this.props.register(this.state);

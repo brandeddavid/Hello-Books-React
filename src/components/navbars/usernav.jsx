@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+/**
+ * User nav component
+ */
 
 class UserNav extends Component {
   render() {

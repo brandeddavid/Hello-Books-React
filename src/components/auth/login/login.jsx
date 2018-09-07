@@ -4,6 +4,9 @@ import IndexNav from "../../navbars/indexnav";
 import "./login.css";
 import "../../../static/css/forms.css";
 import "../../../static/css/main.css";
+/**
+ * Login component
+ */
 
 class Login extends Component {
   constructor(props) {
@@ -14,6 +17,9 @@ class Login extends Component {
     };
   }
   handleSubmit = event => {
+    /**
+     * Handles form submission
+     */
     event.preventDefault();
     this.props.toggleLoading();
     this.props.logIn(this.state);

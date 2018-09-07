@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
+/**
+ * Delete book alert component
+ * Called after user opts to delete book
+ * Confirms user action
+ */
+
 class DeleteBook extends Component {
   render() {
     return (

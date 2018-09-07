@@ -6,6 +6,10 @@ import DeleteBook from "../alerts/deleteBook";
 import IndexNav from "../../navbars/adminnav";
 import "../../../static/css/admin.css";
 import { Input } from "reactstrap";
+/**
+ * Manage books component.
+ * Lists all books with add, edit and delete book actions
+ */
 
 class ManageBooks extends Component {
   constructor(props) {
@@ -15,6 +19,9 @@ class ManageBooks extends Component {
     };
   }
   componentDidMount() {
+    /**
+     * Runs when component mounts
+     */
     this.props.getBooks();
     this.scrollListener = window.addEventListener("scroll", event => {
       this.handleScroll(event);
@@ -22,6 +29,9 @@ class ManageBooks extends Component {
   }
 
   handleScroll = () => {
+    /**
+     * Scroll event listener
+     */
     const { scrolling, totalPages, page } = this.props;
     if (scrolling) return;
     if (totalPages <= page) return;
@@ -33,6 +43,9 @@ class ManageBooks extends Component {
   };
 
   renderAddModal = () => {
+    /**
+     * Renders book modal for add action
+     */
     this.props.toggleModal();
     this.setState({
       currentBook: null
@@ -40,6 +53,9 @@ class ManageBooks extends Component {
   };
 
   renderEditModal = book => {
+    /**
+     * Renders book modal for edit action
+     */
     this.props.toggleModal();
     this.setState({
       currentBook: book
@@ -47,6 +63,9 @@ class ManageBooks extends Component {
   };
 
   deleteAlert = book => {
+    /**
+     * Renders delete alert for delete action
+     */
     this.props.toggleDeleteAlert();
     this.setState({
       book: book
@@ -159,6 +178,7 @@ class ManageBooks extends Component {
               </table>
             </div>
           )}
+          {this.props.scrolling ? this.props.loader : ""}
         </div>
       </React.Fragment>
     );
