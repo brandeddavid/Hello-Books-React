@@ -44,4 +44,14 @@ describe("<App />", () => {
     expect(app).toHaveLength(1);
     app.instance().logIn(loginData);
   });
+  it("calls borrowed", () => {
+    const app = mount(<App />);
+    expect(app).toHaveLength(1);
+    app.instance().borrowed();
+  });
+  it("calls borrow history", () => {
+    const app = mount(<App />);
+    expect(app).toHaveLength(1);
+    app.instance().borrowHistory();
+  });
 });
