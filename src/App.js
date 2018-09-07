@@ -149,7 +149,8 @@ class App extends Component {
         this.setState(() => ({
           loggedIn: true,
           isAdmin: res.user.is_admin,
-          loading: false
+          loading: false,
+          loginErrors: {}
         }));
         swal("Logged In Successfully", { buttons: false, timer: 1000 });
       } else {
