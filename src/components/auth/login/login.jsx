@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import IndexNav from "../../navbars/indexnav";
+import "./login.css";
 import "../../../static/css/forms.css";
 import "../../../static/css/main.css";
 
@@ -34,7 +35,10 @@ class Login extends Component {
         <IndexNav />
         <div className="container">
           <div className="row">
-            <div className="col-md-6 login-left" />
+            <div className="col-md-6 login-left text-center">
+              <h1>WELCOME AVID READER</h1>
+              <p>We are happy to have you here</p>
+            </div>
             <div className="col-md-6">
               <div className="login-form">
                 <legend>Login</legend>
