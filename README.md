@@ -70,9 +70,9 @@ Testing
 
 ## Deployed Links
 
-API: https://stark-falls-93345.herokuapp.com/
+API: https://banana-pie-71385.herokuapp.com/
 
-Application: https://radiant-mesa-35329.herokuapp.com/
+Application: https://hello-bookz.herokuapp.com/
 
 # Contributor
 
